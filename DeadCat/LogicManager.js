@@ -163,7 +163,10 @@ Author: William Kendall
         object1.y += sy * amount;
     }
 
-
+    LogicManager.prototype.distance = function (object1, object2)
+    {
+        return Math.sqrt(Math.pow((object2.x + object2.collision.x + (object2.collision.width/2)) - (object1.x + object1.collision.x + (object1.collision.width/2)), 2) + Math.pow((object2.y + object2.collision.y + (object2.collision.height/2)) - (object1.y + object1.collision.y + (object1.collision.height/2)), 2))
+    }
 
 
     LogicManager.prototype.hitTest = function (object1, object2) {

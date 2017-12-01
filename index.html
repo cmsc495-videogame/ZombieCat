@@ -47,6 +47,7 @@
         var catlayer = game.LogicManager.getLayerByName("Cat1");
         //get the cat sprite
         cats = game.LogicManager.getObjectsByNameInLayer(catlayer, "Zombie");
+        console.log(cats[0].properties);
     }
 
     var catOldX = 0.0;
@@ -103,17 +104,18 @@
         }
 
 
-        for( var cat of cats) {
-            game.updateObject(cat);
-            catOldX = cat.x;
-            catOldY = cat.y;
-            game.LogicManager.moveToObjectX(cat, player, delta * 2 * Math.random());
-            if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
-                cat.x = catOldX;
-            }
-            game.LogicManager.moveToObjectY(cat, player, delta * 2* Math.random());
-            if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
-                cat.y = catOldY;
+        for (var cat of cats) {
+            if (game.LogicManager.distance(player, cat) <= cat.properties.sight) {
+                catOldX = cat.x;
+                catOldY = cat.y;
+                game.LogicManager.moveToObjectX(cat, player, delta * 2 * cat.properties.speed);
+                if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
+                    cat.x = catOldX;
+                }
+                game.LogicManager.moveToObjectY(cat, player, delta * 2 * cat.properties.speed);
+                if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
+                    cat.y = catOldY;
+                }
             }
         }
     }

@@ -95,6 +95,8 @@ Author: William Kendall
                 for (var obji = 0; obji < layer.objects.length; obji++) {
                     var obj = layer.objects[obji];
                     var newObj = new dcObject();
+                    if (obj.hasOwnProperty("properties"))
+                        newObj.properties = obj.properties;
                     if (obj.hasOwnProperty("name"))
                         newObj.name = obj.name;
                     newObj.visible = obj.visible;
