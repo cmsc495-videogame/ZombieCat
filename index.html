@@ -111,11 +111,11 @@
         if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
             cat.y = catOldY;
             cat.x = catOldX;
-            game.LogicManager.moveToObjectX(cat, player, delta * 4);
+            game.LogicManager.moveToObjectX(cat, player, delta * 2);
             if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
                 cat.y = catOldY;
                 cat.x = catOldX;
-                game.LogicManager.moveToObjectY(cat, player, delta * 4);
+                game.LogicManager.moveToObjectY(cat, player, delta * 2);
                 if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
                     cat.y = catOldY;
                     cat.x = catOldX;
