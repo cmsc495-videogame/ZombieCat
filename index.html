@@ -124,12 +124,21 @@
                     cat.y = catOldY;
                 }
 
-                cat.gid = catGid;
-                if(cat.x > catOldX)
-                    cat.gid = catAnimations.move_right;
-                else
-                    cat.gid = catAnimations.move_left;
+                cat.dx=cat.x-catOldX;
+                cat.dy=cat.y-catOldY;
 
+                cat.gid = catGid;
+                if(Math.abs(cat.dy)>Math.abs(cat.dx)){
+                    if(cat.dy >= 0)
+                        cat.gid = catAnimations.move_up;
+                    else
+                        cat.gid = catAnimations.move_down;
+                }else{
+                    if(cat.dx >= 0)
+                        cat.gid = catAnimations.move_right;
+                    else
+                        cat.gid = catAnimations.move_left;
+                }
 
 
                 game.updateObject(cat);
