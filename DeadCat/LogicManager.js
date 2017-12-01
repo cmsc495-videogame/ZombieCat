@@ -79,14 +79,89 @@ Author: William Kendall
         //update x,y of static layers
     };
 
+    LogicManager.prototype.moveToObject = function (object1, object2, amount) {
+        //lerp is not constant, but does make for a cool effect
+        //object1.x =  (1 - amount) * object1.x + amount * object2.x;
+        //object1.y =  (1 - amount) * object1.y + amount * object2.y;
+
+        //object1.position += (object2.position - object1.position).normalized * amount;
+
+        //vector movement
+        var sx = object2.x - object1.x;
+        var sy = object2.y - object1.y;
+
+        //distance
+        var distance = Math.sqrt(Math.pow(sx, 2) + Math.pow(sy, 2));
+
+        if( distance === 0)
+            return;
+
+        //normal vector
+        var inv = 1 / distance;
+        sx *= inv;
+        sy *= inv;
+
+        object1.x += sx * amount;
+        object1.y += sy * amount;
+    }
+
+    LogicManager.prototype.moveToObjectX = function (object1, object2, amount) {
+        //lerp is not constant, but does make for a cool effect
+        //object1.x =  (1 - amount) * object1.x + amount * object2.x;
+        //object1.y =  (1 - amount) * object1.y + amount * object2.y;
+
+        //object1.position += (object2.position - object1.position).normalized * amount;
+
+        //vector movement
+        var sx = object2.x - object1.x;
+        var sy = object2.y - object1.y;
+
+        //distance
+        var distance = Math.sqrt(Math.pow(sx, 2) + Math.pow(sy, 2));
+
+        if( distance === 0)
+            return;
+
+        var inv = 1 / distance;
+        sx *= inv;
+
+        object1.x += sx * amount;
+    }
+
+    LogicManager.prototype.moveToObjectY = function (object1, object2, amount) {
+        //lerp is not constant, but does make for a cool effect
+        //object1.x =  (1 - amount) * object1.x + amount * object2.x;
+        //object1.y =  (1 - amount) * object1.y + amount * object2.y;
+
+        //object1.position += (object2.position - object1.position).normalized * amount;
+
+        //vector movement
+        var sx = object2.x - object1.x;
+        var sy = object2.y - object1.y;
+
+        //distance
+        var distance = Math.sqrt(Math.pow(sx, 2) + Math.pow(sy, 2));
+
+        if( distance === 0)
+            return;
+
+        //normal vector
+        var inv = 1 / distance;
+        sy *= inv;
+
+        object1.y += sy * amount;
+    }
+
+
+
 
     LogicManager.prototype.hitTest = function (object1, object2) {
         //hit test between two objects
         //this is slow
         return (object1.x + object1.collision.x) + object1.collision.width > (object2.x + object2.collision.x) &&
             (object1.x + object1.collision.x) < (object2.x + object2.collision.x) + object2.collision.width &&
-            (object1.y + object1.collision.x ) + object1.collision.height > (object2.y + object2.collision.y) &&
-            (object1.y + object1.collision.x ) < (object2.y + object2.collision.y) + object2.collision.height;
+            (object1.y + object1.collision.y ) + object1.collision.height > (object2.y + object2.collision.y) &&
+            (object1.y + object1.collision.y ) < (object2.y + object2.collision.y) + object2.collision.height;
     };
 
     LogicManager.prototype.hitTestLayer = function (obj, layer) {
@@ -97,11 +172,11 @@ Author: William Kendall
                 if (layer.staticLayerChildren[tile].collision.hasCollision) {
                     //not sure if this makes hittest any faster
                     //a gpu would be great at this
-                    if (Math.sqrt(Math.pow(layer.staticLayerChildren[tile].x - obj.x, 2) + Math.pow(layer.staticLayerChildren[tile].y - obj.y, 2)) < obj.width + obj.height)
+                    if (Math.sqrt(Math.pow(layer.staticLayerChildren[tile].x - obj.x, 2) + Math.pow(layer.staticLayerChildren[tile].y - obj.y, 2)) < (obj.width+layer.staticLayerChildren[tile].width) +( obj.height + layer.staticLayerChildren[tile].height) * 1.5);
                         if ((obj.x + obj.collision.x) + obj.collision.width > (layer.staticLayerChildren[tile].x + layer.staticLayerChildren[tile].collision.x) &&
                             (obj.x + obj.collision.x) < (layer.staticLayerChildren[tile].x + layer.staticLayerChildren[tile].collision.x) + layer.staticLayerChildren[tile].collision.width &&
-                            (obj.y + obj.collision.x ) + obj.collision.height > (layer.staticLayerChildren[tile].y + layer.staticLayerChildren[tile].collision.y) &&
-                            (obj.y + obj.collision.x ) < (layer.staticLayerChildren[tile].y + layer.staticLayerChildren[tile].collision.y) + layer.staticLayerChildren[tile].collision.height == true) {
+                            (obj.y + obj.collision.y ) + obj.collision.height > (layer.staticLayerChildren[tile].y + layer.staticLayerChildren[tile].collision.y) &&
+                            (obj.y + obj.collision.y ) < (layer.staticLayerChildren[tile].y + layer.staticLayerChildren[tile].collision.y) + layer.staticLayerChildren[tile].collision.height == true) {
 //                        if (_self.hitTest(obj, layer.staticLayerChildren[tile]) == true) {
                             //console.log(layer.staticLayerChildren[tile].collision);
                             return true;

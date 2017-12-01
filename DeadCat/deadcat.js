@@ -176,7 +176,7 @@ Author: William Kendall
                         gObject.collision.width = _gidInformation[gObject.gid].objectgroup.objects[0].width;
                         gObject.collision.height = _gidInformation[gObject.gid].objectgroup.objects[0].height;
                         gObject.collision.x = _gidInformation[gObject.gid].objectgroup.objects[0].x;
-                        gObject.collision.y = _gidInformation[gObject.gid].objectgroup.objects[0].y - gObject.collision.height;
+                        gObject.collision.y = _gidInformation[gObject.gid].objectgroup.objects[0].y;
                         gObject.collision.hasCollision = true;
                     }
             }

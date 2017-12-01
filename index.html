@@ -16,6 +16,7 @@
 <p>CMSC495 Project</p>
 <div id="display"></div>
 <script type="text/javascript">
+/*This script is demo code that shows the game engine off*/
 
     var game = new DeadCat("maps/sandbox.json", setup, gameloop);
 
@@ -25,22 +26,33 @@
     var playerAnimation = {};
     var mapLayer = null;
 
+    var cat = null;
+
     function setup() {
+        //get map layer
         mapLayer = game.LogicManager.getLayerByName("Main");
-        console.log(mapLayer);
-        console.log(mapLayer.staticLayerChildren[0]);
-        console.log(mapLayer.staticLayerChildren[0].collision);
+        //get player layer (holds player and animations)
         var playerlayer = game.LogicManager.getLayerByName("Player");
-
+        //get the player sprite
         player = game.LogicManager.getObjectByNameInLayer(playerlayer, "PlayerSprite");
+        //center the whole map, by the player position
         game.LogicManager.centerObject(player);
+        //since we change the player gid to the animation gids, we need to save the original player gid
         oldPlayerGid = player.gid;
-
+        //copies the animations from the player layer to a list
         for (ani in playerlayer.children) {
             playerAnimation[playerlayer.children[ani].name] = playerlayer.children[ani].gid;
         }
+
+        //get the cat layer
+        var catlayer = game.LogicManager.getLayerByName("Cat1");
+        //get the cat sprite
+        cat = game.LogicManager.getObjectByNameInLayer(catlayer, "Zombie1");
+
     }
 
+    var catOldX = 0.0;
+    var catOldY = 0.0;
 
     function gameloop(game, delta) {
         var mvDelta = delta * 5;
@@ -80,6 +92,7 @@
             player.x -= moveX;
             player.y -= moveY;
 
+            //update the player because we may have changed to an animation
             game.updateObject(player);
             //since the collision of the player just got updated on the gui change
             //you can do a collision test after
@@ -89,6 +102,27 @@
                 game.LogicManager.setMapX(mapx);
                 game.LogicManager.setMapY(mapy);
             }
+        }
+
+        catOldX = cat.x;
+        catOldY = cat.y;
+        game.LogicManager.moveToObject(cat, player, delta * 2);
+        game.updateObject(cat);
+        if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
+            cat.y = catOldY;
+            cat.x = catOldX;
+            game.LogicManager.moveToObjectX(cat, player, delta * 4);
+            if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
+                cat.y = catOldY;
+                cat.x = catOldX;
+                game.LogicManager.moveToObjectY(cat, player, delta * 4);
+                if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
+                    cat.y = catOldY;
+                    cat.x = catOldX;
+                }
+
+            }
+
         }
 
     }
