@@ -56,7 +56,15 @@ Author: William Kendall
                 return layer.children[childObj];
         }
         return null;
+    };
 
+    LogicManager.prototype.getObjectsByNameInLayer = function (layer, name) {
+        var objects = [];
+        for (childObj in layer.children) {
+            if (layer.children[childObj].name == name)
+                objects.push( layer.children[childObj] );
+        }
+        return objects;
     };
 
     LogicManager.prototype.getLayerByName = function (name) {
@@ -87,8 +95,8 @@ Author: William Kendall
         //object1.position += (object2.position - object1.position).normalized * amount;
 
         //vector movement
-        var sx = object2.x - object1.x;
-        var sy = object2.y - object1.y;
+        var sx = (object2.x+object2.collision.x+(object2.collision.width/2)) - (object1.x+object1.collision.x+(object1.collision.width/2));
+        var sy = (object2.y+object2.collision.y+(object2.collision.height/2)) - (object1.y+object1.collision.y+(object1.collision.height/2));
 
         //distance
         var distance = Math.sqrt(Math.pow(sx, 2) + Math.pow(sy, 2));
@@ -113,8 +121,11 @@ Author: William Kendall
         //object1.position += (object2.position - object1.position).normalized * amount;
 
         //vector movement
-        var sx = object2.x - object1.x;
-        var sy = object2.y - object1.y;
+        //var sx = (object2.x+(object2.width/2)) - (object1.x+(object1.width/2));
+        //var sy = (object2.y+(object2.height/2)) - (object1.y+(object1.height/2));
+        var sx = (object2.x+object2.collision.x+(object2.collision.width/2)) - (object1.x+object1.collision.x+(object1.collision.width/2));
+        var sy = (object2.y+object2.collision.y+(object2.collision.height/2)) - (object1.y+object1.collision.y+(object1.collision.height/2));
+
 
         //distance
         var distance = Math.sqrt(Math.pow(sx, 2) + Math.pow(sy, 2));
@@ -136,8 +147,8 @@ Author: William Kendall
         //object1.position += (object2.position - object1.position).normalized * amount;
 
         //vector movement
-        var sx = object2.x - object1.x;
-        var sy = object2.y - object1.y;
+        var sx = (object2.x+object2.collision.x+(object2.collision.width/2)) - (object1.x+object1.collision.x+(object1.collision.width/2));
+        var sy = (object2.y+object2.collision.y+(object2.collision.height/2)) - (object1.y+object1.collision.y+(object1.collision.height/2));
 
         //distance
         var distance = Math.sqrt(Math.pow(sx, 2) + Math.pow(sy, 2));

@@ -26,8 +26,7 @@
     var playerAnimation = {};
     var mapLayer = null;
 
-    var cat = null;
-
+    var cats = null;
     function setup() {
         //get map layer
         mapLayer = game.LogicManager.getLayerByName("Main");
@@ -47,8 +46,7 @@
         //get the cat layer
         var catlayer = game.LogicManager.getLayerByName("Cat1");
         //get the cat sprite
-        cat = game.LogicManager.getObjectByNameInLayer(catlayer, "Zombie1");
-
+        cats = game.LogicManager.getObjectsByNameInLayer(catlayer, "Zombie");
     }
 
     var catOldX = 0.0;
@@ -104,27 +102,20 @@
             }
         }
 
-        catOldX = cat.x;
-        catOldY = cat.y;
-        game.LogicManager.moveToObject(cat, player, delta * 2);
-        game.updateObject(cat);
-        if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
-            cat.y = catOldY;
-            cat.x = catOldX;
-            game.LogicManager.moveToObjectX(cat, player, delta * 2);
+
+        for( var cat of cats) {
+            game.updateObject(cat);
+            catOldX = cat.x;
+            catOldY = cat.y;
+            game.LogicManager.moveToObjectX(cat, player, delta * 2 * Math.random());
+            if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
+                cat.x = catOldX;
+            }
+            game.LogicManager.moveToObjectY(cat, player, delta * 2* Math.random());
             if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
                 cat.y = catOldY;
-                cat.x = catOldX;
-                game.LogicManager.moveToObjectY(cat, player, delta * 2);
-                if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
-                    cat.y = catOldY;
-                    cat.x = catOldX;
-                }
-
             }
-
         }
-
     }
 
 </script>
