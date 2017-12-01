@@ -27,6 +27,9 @@
     var mapLayer = null;
 
     var cats = null;
+    var catAnimations = {};
+    var catGid = 0;
+
     function setup() {
         //get map layer
         mapLayer = game.LogicManager.getLayerByName("Main");
@@ -44,10 +47,14 @@
         }
 
         //get the cat layer
-        var catlayer = game.LogicManager.getLayerByName("Cat1");
+        var catLayer = game.LogicManager.getLayerByName("Cat1");
         //get the cat sprite
-        cats = game.LogicManager.getObjectsByNameInLayer(catlayer, "Zombie");
-        console.log(cats[0].properties);
+        cats = game.LogicManager.getObjectsByNameInLayer(catLayer, "Zombie");
+        catGid = cats[0].gid;
+        //get cat animations
+        for (ani in catLayer.children) { //really this stores everything in the layer.
+            catAnimations[catLayer.children[ani].name] = catLayer.children[ani].gid;
+        }
     }
 
     var catOldX = 0.0;
@@ -116,6 +123,16 @@
                 if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
                     cat.y = catOldY;
                 }
+
+                cat.gid = catGid;
+                if(cat.x > catOldX)
+                    cat.gid = catAnimations.move_right;
+                else
+                    cat.gid = catAnimations.move_left;
+
+
+
+                game.updateObject(cat);
             }
         }
     }
