@@ -112,52 +112,54 @@
         }
 
 
-        for (var cat of cats) {
+        for (var cat in cats) {
             //if the player is near, chase the player
-            if (game.LogicManager.distance(player, cat) <= cat.properties.sight )
-                cat.properties.chase = true;
+            if (game.LogicManager.distance(player, cats[cat]) <= cats[cat].properties.sight )
+                cats[cat].properties.chase = true;
 
 
-                if(cat.properties.chase && game.LogicManager.distance(player, cat)> 48)
+                if(cats[cat].properties.chase && game.LogicManager.distance(player, cats[cat])> 48)
                 {
-                catOldX = cat.x;
-                catOldY = cat.y;
-                game.LogicManager.moveToObjectX(cat, player, delta * 2 * cat.properties.speed);
-                if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
-                    cat.x = catOldX;
+                catOldX = cats[cat].x;
+                catOldY = cats[cat].y;
+                game.LogicManager.moveToObjectX(cats[cat], player, delta * 2 * cats[cat].properties.speed);
+                if (game.LogicManager.hitTestLayer(cats[cat], mapLayer)) {
+                    cats[cat].x = catOldX;
                 }
-                game.LogicManager.moveToObjectY(cat, player, delta * 2 * cat.properties.speed);
-                if (game.LogicManager.hitTestLayer(cat, mapLayer)) {
-                    cat.y = catOldY;
+                game.LogicManager.moveToObjectY(cats[cat], player, delta * 2 * cats[cat].properties.speed);
+                if (game.LogicManager.hitTestLayer(cats[cat], mapLayer)) {
+                    cats[cat].y = catOldY;
                 }
 
-                cat.dx=cat.x-catOldX;
-                cat.dy=cat.y-catOldY;
+                    cats[cat].dx=cats[cat].x-catOldX;
+                    cats[cat].dy=cats[cat].y-catOldY;
 
-                cat.gid = catGid;
-                if(Math.abs(cat.dy)>Math.abs(cat.dx)){
-                    if(cat.dy >= 0)
-                        cat.gid = Animations.cat_move_up;
+                    cats[cat].gid = catGid;
+                if(Math.abs(cats[cat].dy)>Math.abs(cats[cat].dx)){
+                    if(cats[cat].dy >= 0)
+                        cats[cat].gid = Animations.cat_move_up;
                     else
-                        cat.gid = Animations.cat_move_down;
+                        cats[cat].gid = Animations.cat_move_down;
                 }else{
-                    if(cat.dx >= 0)
-                        cat.gid = Animations.cat_move_right;
+                    if(cats[cat].dx >= 0)
+                        cats[cat].gid = Animations.cat_move_right;
                     else
-                        cat.gid = Animations.cat_move_left;
+                        cats[cat].gid = Animations.cat_move_left;
                 }
 
 
-                game.updateObject(cat);
+                game.updateObject(cats[cat]);
             }
         }
 
 
         //update animated tiles
-        for(var tile of objectLayer.children)
+        for(var tile in objectLayer.children)
         {
-            game.updateObject(tile);
+            game.updateObject(objectLayer.children[tile]);
         }
+
+        //update the zOrder of all objects
         game.LogicManager.yZOrder(objectLayer);
 
     }

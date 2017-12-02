@@ -178,7 +178,7 @@ Author: William Kendall
         //animation or set texture
         if (_gidInformation[gObject.gid])
             if (_gidInformation[gObject.gid].hasOwnProperty("animation")) {
-                gObject.animationTime += _gameDelta * 100;
+                gObject.animationTime += _gameDelta * 50;
                 if (gObject.animationFrame == -1 || gObject.animationTime >= _gidInformation[gObject.gid].animation[gObject.animationFrame].duration) {
                     gObject.animationTime = 0;
                     gObject.animationFrame += 1;
