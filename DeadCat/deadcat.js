@@ -213,7 +213,7 @@ Author: William Kendall
             else {
                 gObject.animationFrame = -1; //disable
                 gObject.animationTime = 0;
-                _GraphicsManager.bindTexture(gObject, gObject.gid);
+//                _GraphicsManager.bindTexture(gObject, gObject.gid); //uncomment to return to original gid
             }
 
 
