@@ -77,6 +77,7 @@ Author: William Kendall
                 newLayer.properties = layer.properties;
             if (layer.hasOwnProperty("name"))
                 newLayer.name = layer.name;
+                newLayer.visible = layer.visible;
 
             if (layer.type == "tilelayer") {
                 var posX = 0;
