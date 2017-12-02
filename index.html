@@ -30,6 +30,8 @@
     var catAnimations = {};
     var catGid = 0;
 
+    var animatedLayer;
+
     function setup() {
         //get map layer
         mapLayer = game.LogicManager.getLayerByName("Main");
@@ -55,6 +57,9 @@
         for (ani in catLayer.children) { //really this stores everything in the layer.
             catAnimations[catLayer.children[ani].name] = catLayer.children[ani].gid;
         }
+
+        //get animated objects
+        animatedLayer = game.LogicManager.getLayerByName("Animated");
     }
 
     var catOldX = 0.0;
@@ -150,6 +155,14 @@
                 game.updateObject(cat);
             }
         }
+
+
+        //update animated tiles
+        for(var tile of animatedLayer.children)
+        {
+            game.updateObject(tile);
+        }
+
     }
 
 </script>
