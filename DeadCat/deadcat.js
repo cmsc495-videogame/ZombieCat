@@ -38,6 +38,16 @@ Author: William Kendall
 
     }
 
+    function getTilesetInformation(gid)
+    {
+        for (var ts = 0; ts < _map.tilesets.length; ts++) {
+            if( _map.tilesets[ts].firstgid <= gid && (_map.tilesets[ts].tilecount + _map.tilesets[ts].firstgid) > gid )
+            {
+                return _map.tilesets[ts];
+            }
+        }
+        throw new Error("Tile set not found for gid: " + gid);
+    }
 
     function mapLoaded(rMap) {
         _map = rMap;
@@ -50,7 +60,7 @@ Author: William Kendall
             var tileset = _map.tilesets[ts];
 
             if (tileset.hasOwnProperty("tiles"))
-                for (tile in tileset.tiles) {
+                for (var tile in tileset.tiles) {
                     _gidInformation[parseInt(tile) + _map.tilesets[ts].firstgid] = tileset.tiles[tile];
                     _gidInformation[parseInt(tile) + _map.tilesets[ts].firstgid].firstgid = parseInt(_map.tilesets[ts].firstgid);
                 }
@@ -58,9 +68,11 @@ Author: William Kendall
 
 
         //load layers
+        var zIndex = 0; //zOrder of layer
         for (var lay = 0; lay < _map.layers.length; lay++) {
             var layer = _map.layers[lay];
             var newLayer = new dcLayer();
+            newLayer.zIndex  = zIndex;
             if (layer.hasOwnProperty("properties"))
                 newLayer.properties = layer.properties;
             if (layer.hasOwnProperty("name"))
@@ -76,11 +88,13 @@ Author: William Kendall
                             continue; //gid of 0 is nothing
                         }
                         var newTile = new dcObject();
+                        newTile.gid = layer.data[layerY * layer.width + layerX];
+                        var tileTileset = getTilesetInformation(newTile.gid);
+
                         newTile.x = posX;
                         newTile.y = posY;
-                        newTile.width = _map.tilewidth;
-                        newTile.height = _map.tileheight;
-                        newTile.gid = layer.data[layerY * layer.width + layerX];
+                        newTile.width = tileTileset.tilewidth;//_map.tilewidth;
+                        newTile.height = tileTileset.tileheight;//_map.tileheight;
                         _engine.updateObject(newTile);
                         newLayer.addChild(newTile);
 
@@ -113,6 +127,7 @@ Author: William Kendall
 
             //add new layer to layers array
             _layers.push(newLayer);
+            zIndex ++;
         }
 
         _GraphicsManager.ticker = _update;   //graphics manager maintains the frame rate, thus, the game loop
@@ -143,9 +158,14 @@ Author: William Kendall
                 }
 
                 _GraphicsManager.addChild(_layers[layer]);
-
-
             }
+
+            //resort layers by zIndex
+            _layers.sort(function(a,b){
+               if(a.zIndex > b.zIndex) return -1;
+               if(a.zIndex < b.zIndex) return 1;
+               return 0;
+            });
 
             gml = true; //game all setup
             _engine.LogicManager = new LogicManager(_layers, _GraphicsManager);

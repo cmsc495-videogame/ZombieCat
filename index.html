@@ -18,7 +18,7 @@
 <script type="text/javascript">
 /*This script is demo code that shows the game engine off*/
 
-    var game = new DeadCat("maps/sandbox.json", setup, gameloop);
+    var game = new DeadCat("maps/shipLevel.json", setup, gameloop);
 
     var player = null;
     var oldPlayerGid = 0;
@@ -33,7 +33,7 @@
 
     function setup() {
         //get map layer
-        mapLayer = game.LogicManager.getLayerByName("Main");
+        mapLayer = game.LogicManager.getLayerByName("Collision");
         //get player layer (holds player and animations)
         objectLayer = game.LogicManager.getLayerByName("Objects");
         //get the player sprite
@@ -53,8 +53,6 @@
         cats = game.LogicManager.getObjectsByNameInLayer(objectLayer, "Zombie");
         catGid = cats[0].gid;
 
-        //get animated objects
-        player.zOrder = -110;
 
     }
 
@@ -100,7 +98,7 @@
             player.y -= moveY;
 
             //update the player because we may have changed to an animation
-            game.updateObject(player);
+            //game.updateObject(player); //we will do this later
             //since the collision of the player just got updated on the gui change
             //you can do a collision test after
             if (game.LogicManager.hitTestLayer(player, mapLayer)) {
@@ -120,35 +118,36 @@
 
                 if(cats[cat].properties.chase && game.LogicManager.distance(player, cats[cat])> 48)
                 {
-                catOldX = cats[cat].x;
-                catOldY = cats[cat].y;
-                game.LogicManager.moveToObjectX(cats[cat], player, delta * 2 * cats[cat].properties.speed);
-                if (game.LogicManager.hitTestLayer(cats[cat], mapLayer)) {
-                    cats[cat].x = catOldX;
-                }
-                game.LogicManager.moveToObjectY(cats[cat], player, delta * 2 * cats[cat].properties.speed);
-                if (game.LogicManager.hitTestLayer(cats[cat], mapLayer)) {
-                    cats[cat].y = catOldY;
-                }
+
+                    catOldX = cats[cat].x;
+                    catOldY = cats[cat].y;
+                    game.LogicManager.moveToObjectX(cats[cat], player, delta * 2 * cats[cat].properties.speed);
+                    if (game.LogicManager.hitTestLayer(cats[cat], mapLayer)) {
+                        cats[cat].x = catOldX;
+                    }
+                    game.LogicManager.moveToObjectY(cats[cat], player, delta * 2 * cats[cat].properties.speed);
+                    if (game.LogicManager.hitTestLayer(cats[cat], mapLayer)) {
+                        cats[cat].y = catOldY;
+                    }
 
                     cats[cat].dx=cats[cat].x-catOldX;
                     cats[cat].dy=cats[cat].y-catOldY;
 
                     cats[cat].gid = catGid;
-                if(Math.abs(cats[cat].dy)>Math.abs(cats[cat].dx)){
-                    if(cats[cat].dy >= 0)
-                        cats[cat].gid = Animations.cat_move_up;
-                    else
-                        cats[cat].gid = Animations.cat_move_down;
-                }else{
-                    if(cats[cat].dx >= 0)
-                        cats[cat].gid = Animations.cat_move_right;
-                    else
-                        cats[cat].gid = Animations.cat_move_left;
-                }
+
+                    if(Math.abs(cats[cat].dy)>Math.abs(cats[cat].dx)){
+                        if(cats[cat].dy >= 0)
+                         cats[cat].gid = Animations.cat_move_forward;
+                        else
+                           cats[cat].gid = Animations.cat_move_back;
+                    }else{
+                        if(cats[cat].dx >= 0)
+                            cats[cat].gid = Animations.cat_move_right;
+                        else
+                            cats[cat].gid = Animations.cat_move_left;
+                    }
 
 
-                game.updateObject(cats[cat]);
             }
         }
 

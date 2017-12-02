@@ -48,7 +48,6 @@ Author: William Kendall
             PIXI.loader.add(_map.tilesets[ts].image, imagesLocation + _map.tilesets[ts].image);
         }
         PIXI.loader.load(imagesLoaded);
-
     }
 
     function imagesLoaded() {
@@ -59,9 +58,8 @@ Author: William Kendall
         for (var ts = 0; ts < _map.tilesets.length; ts++) {
             var tileset = _map.tilesets[ts];
             var gid = tileset.firstgid;
-            var width = tileset.imagewidth / tileset.tilewidth;
-            var height = tileset.imageheight / tileset.tileheight;
-            //console.log("Tile width: "+width +" Tile Height: "+ height);
+            var width = tileset.columns ;
+            var height = (tileset.tilecount / tileset.columns);
             for (var y = 0; y < height; y++) {
                 for (var x = 0; x < width; x++) {
                     _textures[gid] = new PIXI.Texture(PIXI.loader.resources[tileset.image].texture,
@@ -99,7 +97,8 @@ Author: William Kendall
         //this function takes a container and makes a sprite from it.
         //rendering is MUCH faster using only one texture
         //also solves texture bleeding
-        var brt = new PIXI.BaseRenderTexture(layer.width, layer.height);
+        var layerBounds = layer.getBounds();
+        var brt = new PIXI.BaseRenderTexture(layerBounds.x + layerBounds.width, layerBounds.y + layerBounds.height);
         var rt = new PIXI.RenderTexture(brt);
         _application.renderer.render(layer, rt);
         var sprite = new dcObject();

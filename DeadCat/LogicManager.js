@@ -182,21 +182,41 @@ Author: William Kendall
         //hit test between an object and a layer
         var objs = [];
         if (layer.properties.static == true)
+        {
             for (tile in layer.staticLayerChildren) {
                 if (layer.staticLayerChildren[tile].collision.hasCollision) {
                     //not sure if this makes hittest any faster
                     //a gpu would be great at this
-                    if (Math.sqrt(Math.pow(layer.staticLayerChildren[tile].x - obj.x, 2) + Math.pow(layer.staticLayerChildren[tile].y - obj.y, 2)) < (obj.width+layer.staticLayerChildren[tile].width) +( obj.height + layer.staticLayerChildren[tile].height) * 1.5);
-                        if ((obj.x + obj.collision.x) + obj.collision.width > (layer.staticLayerChildren[tile].x + layer.staticLayerChildren[tile].collision.x) &&
-                            (obj.x + obj.collision.x) < (layer.staticLayerChildren[tile].x + layer.staticLayerChildren[tile].collision.x) + layer.staticLayerChildren[tile].collision.width &&
-                            (obj.y + obj.collision.y ) + obj.collision.height > (layer.staticLayerChildren[tile].y + layer.staticLayerChildren[tile].collision.y) &&
-                            (obj.y + obj.collision.y ) < (layer.staticLayerChildren[tile].y + layer.staticLayerChildren[tile].collision.y) + layer.staticLayerChildren[tile].collision.height == true) {
+                    if (Math.sqrt(Math.pow(layer.staticLayerChildren[tile].x - obj.x, 2) + Math.pow(layer.staticLayerChildren[tile].y - obj.y, 2)) < (obj.width + layer.staticLayerChildren[tile].width) + ( obj.height + layer.staticLayerChildren[tile].height) * 1.5) ;
+                    if ((obj.x + obj.collision.x) + obj.collision.width > (layer.staticLayerChildren[tile].x + layer.staticLayerChildren[tile].collision.x) &&
+                        (obj.x + obj.collision.x) < (layer.staticLayerChildren[tile].x + layer.staticLayerChildren[tile].collision.x) + layer.staticLayerChildren[tile].collision.width &&
+                        (obj.y + obj.collision.y ) + obj.collision.height > (layer.staticLayerChildren[tile].y + layer.staticLayerChildren[tile].collision.y) &&
+                        (obj.y + obj.collision.y ) < (layer.staticLayerChildren[tile].y + layer.staticLayerChildren[tile].collision.y) + layer.staticLayerChildren[tile].collision.height == true) {
 //                        if (_self.hitTest(obj, layer.staticLayerChildren[tile]) == true) {
-                            //console.log(layer.staticLayerChildren[tile].collision);
-                            return true;
-                        }
+                        //console.log(layer.staticLayerChildren[tile].collision);
+                        return true;
+                    }
                 }
             }
+    }
+            else
+        {
+            for (tile in layer.children) {
+                if (layer.children[tile].collision.hasCollision) {
+                    //not sure if this makes hittest any faster
+                    //a gpu would be great at this
+                    if (Math.sqrt(Math.pow(layer.children[tile].x - obj.x, 2) + Math.pow(layer.children[tile].y - obj.y, 2)) < (obj.width + layer.children[tile].width) + ( obj.height + layer.children[tile].height) * 1.5) ;
+                    if ((obj.x + obj.collision.x) + obj.collision.width > (layer.children[tile].x + layer.children[tile].collision.x) &&
+                        (obj.x + obj.collision.x) < (layer.children[tile].x + layer.children[tile].collision.x) + layer.children[tile].collision.width &&
+                        (obj.y + obj.collision.y ) + obj.collision.height > (layer.children[tile].y + layer.children[tile].collision.y) &&
+                        (obj.y + obj.collision.y ) < (layer.children[tile].y + layer.children[tile].collision.y) + layer.children[tile].collision.height == true) {
+//                        if (_self.hitTest(obj, layer.children[tile]) == true) {
+                        //console.log(layer.children[tile].collision);
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     };
 
