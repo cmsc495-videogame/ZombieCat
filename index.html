@@ -112,7 +112,13 @@
 
 
         for (var cat of cats) {
-            if (game.LogicManager.distance(player, cat) <= cat.properties.sight && game.LogicManager.distance(player, cat)> 48) {
+            //if the player is near, chase the player
+            if (game.LogicManager.distance(player, cat) <= cat.properties.sight )
+                cat.properties.chase = true;
+
+            
+                if(cat.properties.chase && game.LogicManager.distance(player, cat)> 48)
+                {
                 catOldX = cat.x;
                 catOldY = cat.y;
                 game.LogicManager.moveToObjectX(cat, player, delta * 2 * cat.properties.speed);
