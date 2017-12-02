@@ -6,10 +6,10 @@ Author: William Kendall
 */
 
 !function ($w, PIXI, dcObject, dcLayer) {
-    var _graphics = null;
-    var _application = null;
-    var _map;
-    var _textures = [];
+    var _graphics = null; //this reference
+    var _application = null; //pixi application
+    var _map; //reference to the json map
+    var _textures = []; //textures
 
     GraphicsManager.prototype.resourcesLoaded = false;
 
@@ -93,6 +93,8 @@ Author: William Kendall
     };
 
     GraphicsManager.prototype.spriteFromLayer = function (layer) {
+        //returns a layer with one sprite from a layer of many sprites
+
         //slow
         //this function takes a container and makes a sprite from it.
         //rendering is MUCH faster using only one texture
@@ -120,12 +122,14 @@ Author: William Kendall
     GraphicsManager.prototype.addChild = function (child) {
         _application.stage.addChild(child);
     };
-
-
+/*
+    GraphicsManager.prototype.removeChild = function (child) {
+        _application.stage.removeChild(child);
+    };
+*/
     GraphicsManager.prototype.ticker = function (delta) {
         console.log("GE ticker");
     };
-
 
 
     $w._DeadCat_GraphicsManager = GraphicsManager;

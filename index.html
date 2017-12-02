@@ -23,43 +23,39 @@
     var player = null;
     var oldPlayerGid = 0;
     var animationDelta = 0;
-    var playerAnimation = {};
+    var Animations = {};
     var mapLayer = null;
 
     var cats = null;
-    var catAnimations = {};
     var catGid = 0;
 
-    var animatedLayer;
+    var objectLayer = null;
 
     function setup() {
         //get map layer
         mapLayer = game.LogicManager.getLayerByName("Main");
         //get player layer (holds player and animations)
-        var playerlayer = game.LogicManager.getLayerByName("Player");
+        objectLayer = game.LogicManager.getLayerByName("Objects");
         //get the player sprite
-        player = game.LogicManager.getObjectByNameInLayer(playerlayer, "PlayerSprite");
+        player = game.LogicManager.getObjectByNameInLayer(objectLayer, "PlayerSprite");
         //center the whole map, by the player position
         game.LogicManager.centerObject(player);
         //since we change the player gid to the animation gids, we need to save the original player gid
         oldPlayerGid = player.gid;
         //copies the animations from the player layer to a list
-        for (ani in playerlayer.children) {
-            playerAnimation[playerlayer.children[ani].name] = playerlayer.children[ani].gid;
+        for (ani in objectLayer.children) {
+            Animations[objectLayer.children[ani].name] = objectLayer.children[ani].gid;
         }
 
         //get the cat layer
         var catLayer = game.LogicManager.getLayerByName("Cat1");
         //get the cat sprite
-        cats = game.LogicManager.getObjectsByNameInLayer(catLayer, "Zombie");
+        cats = game.LogicManager.getObjectsByNameInLayer(objectLayer, "Zombie");
         catGid = cats[0].gid;
-        //get cat animations
-        for (ani in catLayer.children) { //really this stores everything in the layer.
-            catAnimations[catLayer.children[ani].name] = catLayer.children[ani].gid;
-        }
 
         //get animated objects
-        animatedLayer = game.LogicManager.getLayerByName("Animated");
+        player.zOrder = -110;
+
     }
 
     var catOldX = 0.0;
@@ -76,19 +72,19 @@
 
         if (game.KeyboardManager.keysPressed[87] == true) {
             moveY += mvDelta;
-            player.gid = playerAnimation.move_forward;
+            player.gid = Animations.player_move_forward;
         }
         if (game.KeyboardManager.keysPressed[83] == true) {
             moveY -= mvDelta;
-            player.gid = playerAnimation.move_back;
+            player.gid = Animations.player_move_back;
         }
         if (game.KeyboardManager.keysPressed[65] == true) {
             moveX += mvDelta;
-            player.gid = playerAnimation.move_left;
+            player.gid = Animations.player_move_left;
         }
         if (game.KeyboardManager.keysPressed[68] == true) {
             moveX -= mvDelta;
-            player.gid = playerAnimation.move_right;
+            player.gid = Animations.player_move_right;
         }
         if (moveX != 0 && moveY != 0) {
             moveX = moveX / 1.3;
@@ -141,14 +137,14 @@
                 cat.gid = catGid;
                 if(Math.abs(cat.dy)>Math.abs(cat.dx)){
                     if(cat.dy >= 0)
-                        cat.gid = catAnimations.move_up;
+                        cat.gid = Animations.cat_move_up;
                     else
-                        cat.gid = catAnimations.move_down;
+                        cat.gid = Animations.cat_move_down;
                 }else{
                     if(cat.dx >= 0)
-                        cat.gid = catAnimations.move_right;
+                        cat.gid = Animations.cat_move_right;
                     else
-                        cat.gid = catAnimations.move_left;
+                        cat.gid = Animations.cat_move_left;
                 }
 
 
@@ -158,10 +154,11 @@
 
 
         //update animated tiles
-        for(var tile of animatedLayer.children)
+        for(var tile of objectLayer.children)
         {
             game.updateObject(tile);
         }
+        game.LogicManager.yZOrder(objectLayer);
 
     }
 

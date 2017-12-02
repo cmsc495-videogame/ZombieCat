@@ -25,7 +25,6 @@ Author: William Kendall
         this.properties = {};
         this.properties.static = false;
 
-
     }
 
     $w._DeadCat_Layer = Layer;
@@ -59,6 +58,7 @@ Author: William Kendall
         this.collision.y = 0;
         this.collision.width = 0;
         this.collision.height = 0;
+
     }
 
     $w._DeadCat_Object = gObject;

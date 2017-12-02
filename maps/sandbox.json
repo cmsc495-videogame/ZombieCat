@@ -40,7 +40,7 @@
         }, 
         {
          "draworder":"topdown",
-         "name":"Animated",
+         "name":"Objects",
          "objects":[
                 {
                  "gid":765,
@@ -65,17 +65,7 @@
                  "width":96,
                  "x":624,
                  "y":560
-                }],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":true,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "draworder":"topdown",
-         "name":"Cat1",
-         "objects":[
+                }, 
                 {
                  "gid":278,
                  "height":48,
@@ -246,7 +236,7 @@
                  "gid":280,
                  "height":48,
                  "id":45,
-                 "name":"move_up",
+                 "name":"cat_move_up",
                  "rotation":0,
                  "type":"",
                  "visible":false,
@@ -258,7 +248,7 @@
                  "gid":283,
                  "height":48,
                  "id":47,
-                 "name":"move_left",
+                 "name":"cat_move_left",
                  "rotation":0,
                  "type":"",
                  "visible":false,
@@ -270,7 +260,7 @@
                  "gid":286,
                  "height":48,
                  "id":48,
-                 "name":"move_right",
+                 "name":"cat_move_right",
                  "rotation":0,
                  "type":"",
                  "visible":false,
@@ -282,7 +272,7 @@
                  "gid":289,
                  "height":48,
                  "id":49,
-                 "name":"move_down",
+                 "name":"cat_move_down",
                  "rotation":0,
                  "type":"",
                  "visible":false,
@@ -577,17 +567,7 @@
                  "width":48,
                  "x":320,
                  "y":80
-                }],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":true,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "draworder":"topdown",
-         "name":"Player",
-         "objects":[
+                }, 
                 {
                  "gid":31,
                  "height":64,
@@ -604,7 +584,7 @@
                  "gid":109,
                  "height":64,
                  "id":27,
-                 "name":"move_forward",
+                 "name":"player_move_forward",
                  "rotation":0,
                  "type":"",
                  "visible":false,
@@ -616,7 +596,7 @@
                  "gid":122,
                  "height":64,
                  "id":28,
-                 "name":"move_left",
+                 "name":"player_move_left",
                  "rotation":0,
                  "type":"",
                  "visible":false,
@@ -628,7 +608,7 @@
                  "gid":135,
                  "height":64,
                  "id":29,
-                 "name":"move_back",
+                 "name":"player_move_back",
                  "rotation":0,
                  "type":"",
                  "visible":false,
@@ -640,7 +620,7 @@
                  "gid":148,
                  "height":64,
                  "id":30,
-                 "name":"move_right",
+                 "name":"player_move_right",
                  "rotation":0,
                  "type":"",
                  "visible":false,

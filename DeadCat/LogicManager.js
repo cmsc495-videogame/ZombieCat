@@ -200,5 +200,15 @@ Author: William Kendall
         return false;
     };
 
+    LogicManager.prototype.yZOrder = function(layer)
+    {
+        layer.children.sort(function(a,b){
+            if(a.height + a.y > b.height + b.y) return 1;
+            if(a.height + a.y < b.height + b.y) return -1;
+            return 0;
+        });
+    };
+
+
     $w._DeadCat_LogicManager = LogicManager;
 }(this, _DeadCat_Layer, _DeadCat_Object);

@@ -10,15 +10,15 @@ Author: William Kendall
     DeadCat.prototype.KeyboardManager = null;
     DeadCat.prototype.LogicManager = null;
 
-    var _engine;
+    var _engine; //this reference
     var _map = null;    //this is the Tiled JSON object
-    var _layers = null;
-    var _gidInformation = null;
+    var _layers = null; //layers made of game layers loaded from the json
+    var _gidInformation = null; //Gid of each tile (gid's are a tiled thing)
 
-    var _gameSetup = null;
-    var _gameupdate = null;
+    var _gameSetup = null; //setup callback
+    var _gameupdate = null; //update callback
 
-    var _gameDelta = 0;
+    var _gameDelta = 0; //time delta for game update loops
 
     function DeadCat(mapFile, gameSetup, gameLoop) {
         _engine = this;
@@ -111,7 +111,7 @@ Author: William Kendall
                 }
             }
 
-            //and new layer to layers array
+            //add new layer to layers array
             _layers.push(newLayer);
         }
 
@@ -119,7 +119,7 @@ Author: William Kendall
 
     }
 
-    var gml = false;
+    var gml = false; //engine is setup flag
 
     function _update(delta) {
         if (delta > 2) delta = 0.5; //Stop player from jumping from one spot to another after lag
@@ -128,11 +128,11 @@ Author: William Kendall
             //wait until resources loaded
             return;
         }
+
         if (gml === false) {
             //setup
-
             //do for each layer in layers array
-            for (layer in _layers) {
+            for (var layer in _layers) {
                 //bind all the textures to their objects
                 _GraphicsManager.bindTextures(_layers[layer]);
 
@@ -140,30 +140,22 @@ Author: William Kendall
                 if (_layers[layer].properties.static == true) {
                     //should remove the layer and add a texture for the hole layer
                     _layers[layer] = _GraphicsManager.spriteFromLayer(_layers[layer]);
-                    /*
-                    //newSprite.properties.static = true;
-                    newSprite.layer = _layers[layer];
-                    _layers[layer] =new dcLayer();
-                    _layers[layer].name = oldLayer.name;
-                    _layers[layer].addChild( newSprite );
-                    */
-                    _GraphicsManager.addChild(_layers[layer]);
                 }
-                else {
-                    _GraphicsManager.addChild(_layers[layer]);
-                }
+
+                _GraphicsManager.addChild(_layers[layer]);
+
+
             }
 
             gml = true; //game all setup
             _engine.LogicManager = new LogicManager(_layers, _GraphicsManager);
             _gameSetup();
-
         }
-
         //begin game loop
         _gameDelta = delta;
         _engine.LogicManager.update(delta);
         _gameupdate(_engine, delta);
+
 
     }
 
