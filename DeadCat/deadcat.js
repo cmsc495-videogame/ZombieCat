@@ -94,6 +94,8 @@ Author: William Kendall
 
                         newTile.x = posX;
                         newTile.y = posY;
+                        if(tileTileset.tileheight > _map.tileheight)
+                            newTile.y -= tileTileset.tileheight - _map.tileheight; // really not sure about position of larger than tile objects
                         newTile.width = tileTileset.tilewidth;//_map.tilewidth;
                         newTile.height = tileTileset.tileheight;//_map.tileheight;
                         _engine.updateObject(newTile);
@@ -114,12 +116,14 @@ Author: William Kendall
                         newObj.properties = obj.properties;
                     if (obj.hasOwnProperty("name"))
                         newObj.name = obj.name;
+                    newObj.gid = obj.gid;
+                    var objTileset = getTilesetInformation(newObj.gid);
                     newObj.visible = obj.visible;
                     newObj.x = obj.x;
-                    newObj.y = obj.y - obj.height; //tiled objects are reference from their bottom edge
-                    newObj.width = obj.width;
-                    newObj.height = obj.height;
-                    newObj.gid = obj.gid;
+                    //tiled documentation says the registration is offset by the image height
+                    newObj.y = obj.y - objTileset.tileheight; //tiled objects are reference from their bottom edge
+                    newObj.width = objTileset.tilewidth;
+                    newObj.height = objTileset.tileheight;
 
                     _engine.updateObject(newObj);
                     newLayer.addChild(newObj);

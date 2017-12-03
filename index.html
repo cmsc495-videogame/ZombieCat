@@ -24,7 +24,7 @@
     var oldPlayerGid = 0;
     var animationDelta = 0;
     var Animations = {};
-    var mapLayer = null;
+    var collisionLayer = null;
 
     var cats = null;
     var catGid = 0;
@@ -33,7 +33,7 @@
 
     function setup() {
         //get map layer
-        mapLayer = game.LogicManager.getLayerByName("Collision");
+        collisionLayer = game.LogicManager.getLayerByName("Collision");
         //get player layer (holds player and animations)
         objectLayer = game.LogicManager.getLayerByName("Objects");
         //get the player sprite
@@ -52,8 +52,6 @@
         //get the cat sprite
         cats = game.LogicManager.getObjectsByNameInLayer(objectLayer, "Zombie");
         catGid = cats[0].gid;
-
-
     }
 
     var catOldX = 0.0;
@@ -101,7 +99,7 @@
             //game.updateObject(player); //we will do this later
             //since the collision of the player just got updated on the gui change
             //you can do a collision test after
-            if (game.LogicManager.hitTestLayer(player, mapLayer)) {
+            if (game.LogicManager.hitTestLayer(player, collisionLayer)) {
                 player.x = oldx;
                 player.y = oldy;
                 game.LogicManager.setMapX(mapx);
@@ -122,11 +120,11 @@
                     catOldX = cats[cat].x;
                     catOldY = cats[cat].y;
                     game.LogicManager.moveToObjectX(cats[cat], player, delta * 2 * cats[cat].properties.speed);
-                    if (game.LogicManager.hitTestLayer(cats[cat], mapLayer)) {
+                    if (game.LogicManager.hitTestLayer(cats[cat], collisionLayer)) {
                         cats[cat].x = catOldX;
                     }
                     game.LogicManager.moveToObjectY(cats[cat], player, delta * 2 * cats[cat].properties.speed);
-                    if (game.LogicManager.hitTestLayer(cats[cat], mapLayer)) {
+                    if (game.LogicManager.hitTestLayer(cats[cat], collisionLayer)) {
                         cats[cat].y = catOldY;
                     }
 

@@ -64,7 +64,7 @@
          "opacity":1,
          "properties":
             {
-             "static":true
+             "static":false
             },
          "propertytypes":
             {
@@ -102,7 +102,7 @@
          "opacity":1,
          "properties":
             {
-             "static":true
+             "static":false
             },
          "propertytypes":
             {
@@ -127,8 +127,8 @@
                  "type":"",
                  "visible":true,
                  "width":64,
-                 "x":1712,
-                 "y":2376
+                 "x":1696,
+                 "y":2240
                 }, 
                 {
                  "gid":914,
@@ -679,8 +679,8 @@
                  "type":"",
                  "visible":true,
                  "width":48,
-                 "x":1568,
-                 "y":1520
+                 "x":1664,
+                 "y":1568
                 }, 
                 {
                  "gid":914,
@@ -736,7 +736,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":32,
+ "nextobjectid":35,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
