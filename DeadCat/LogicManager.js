@@ -78,7 +78,21 @@ Author: William Kendall
     };
 
 
+    LogicManager.prototype.positionAbsolute = function(layer, location)
+    {
+        //moves an object or layer to a position relative to the view window
+        if(location == "center") {
+            var movex = (_GraphicsManager.getWidth() - layer.width) / 2;
+            var movey = (_GraphicsManager.getHeight() - layer.height) / 2;
+            layer.x = movex;
+            layer.y = movey;
+        }
+
+    }
+
     LogicManager.prototype.centerObject = function (object) {
+        //moves the map so that the object is at the center of the screen
+
         var movex = (_GraphicsManager.getWidth() - object.width) / 2;
         var movey = (_GraphicsManager.getHeight() - object.height) / 2;
         _self.setMapY(movey - object.y);

@@ -36,6 +36,7 @@
     function setup() {
         //get the main menu
         mainMenuLayer = game.LogicManager.getLayerByName("MainMenu");
+        game.LogicManager.positionAbsolute( mainMenuLayer , "center");
 
         //get map layer
         collisionLayer = game.LogicManager.getLayerByName("Collision");
