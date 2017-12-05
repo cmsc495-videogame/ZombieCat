@@ -68,6 +68,16 @@ Author: William Kendall
 
     }
 
+    gObject.prototype.rect = function(color)
+    {
+        var graphics = new PIXI.Graphics();
+        //graphics.beginFill(0xFFFF00);
+        graphics.lineStyle(1, color);
+        graphics.drawRect(0, 0, _self.width, _self.height);
+        _self.addChild(graphics);
+    }
+
+
 
     $w._DeadCat_Object = gObject;
 }(this, PIXI);

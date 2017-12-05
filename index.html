@@ -145,11 +145,13 @@
 
                     catOldX = cats[cat].x;
                     catOldY = cats[cat].y;
-                    game.LogicManager.moveToObjectX(cats[cat], player, delta * 2 * cats[cat].properties.speed);
+
+
+                    game.LogicManager.moveToObjectX(cats[cat], player, delta * 2 * cats[cat].properties.speed );
                     if (game.LogicManager.hitTestLayer(cats[cat], collisionLayer)) {
                         cats[cat].x = catOldX;
                     }
-                    game.LogicManager.moveToObjectY(cats[cat], player, delta * 2 * cats[cat].properties.speed);
+                    game.LogicManager.moveToObjectY(cats[cat], player, delta * 2 * cats[cat].properties.speed );
                     if (game.LogicManager.hitTestLayer(cats[cat], collisionLayer)) {
                         cats[cat].y = catOldY;
                     }
