@@ -85,11 +85,30 @@
         player.gid = oldPlayerGid;
 
         var oldx = player.x;
-        var oldy = player.y;
+        var oldy = player.y
 
+        if(player.properties.health<=0){
+            //Game Over stuff
+        }
 
+        if(player.properties.attack_rechargeState>0){
+            player.properties.attack_rechargeState--;
+        }
+
+        //Attack button (Spacebar)
         if (game.KeyboardManager.keysPressed[32] == true) {
             player.gid = Animations.player_attack_stick_down;
+
+            //Attack cats nearby when attack is recharged
+            if(player.properties.attack_rechargeState==0){
+                for (var cat in cats) {
+                    if(game.LogicManager.distance(player, cats[cat])<=player.properties.attack_range)
+                        cats[cat].properties.health-=player.properties.attack_damage;
+                }
+                player.properties.attack_rechargeState = player.properties.attack_rechargeTime;
+
+            }
+
         }
 
         if (game.KeyboardManager.keysPressed[87] == true) {
@@ -136,8 +155,30 @@
 
         for (var cat in cats) {
             //if the player is near, chase the player
-            if (game.LogicManager.distance(player, cats[cat]) <= cats[cat].properties.sight )
-                cats[cat].properties.chase = true;
+            if(cats[cat].properties.state_dead == 0){
+                if (cats[cat].properties.health<=0){
+                    cats[cat].properties.state_dead=0;
+                    cats[cat].gid = Animations.cat_explode;
+                    continue;
+                }
+
+                if (game.LogicManager.distance(player, cats[cat]) <= cats[cat].properties.sight )
+                    cats[cat].properties.chase = true;
+
+
+                //Kills all cats that get close to player
+                /*
+                if(game.LogicManager.distance(player, cats[cat])<= cats[cat].properties.AttackDistance){
+                    cats[cat].properties.health=0;
+                }*/
+
+                //Cat Attacks when near and recharged
+                if(cats[cat].properties.attack_rechargeState==0){
+                    if(game.LogicManager.distance(player, cats[cat])<= cats[cat].properties.attack_range){
+                        player.properties.health -=cats[cat].properties.attack_damage;
+                        cats[cat].properties.attack_rechargeState = cats[cat].properties.attack_rechargeTime;
+                    }
+                }else cats[cat].properties.attack_rechargeTime--;
 
 
                 if(cats[cat].properties.chase && game.LogicManager.distance(player, cats[cat])> 48)
@@ -163,9 +204,9 @@
 
                     if(Math.abs(cats[cat].dy)>Math.abs(cats[cat].dx)){
                         if(cats[cat].dy >= 0)
-                         cats[cat].gid = Animations.cat_move_forward;
+                            cats[cat].gid = Animations.cat_move_forward;
                         else
-                           cats[cat].gid = Animations.cat_move_back;
+                            cats[cat].gid = Animations.cat_move_back;
                     }else{
                         if(cats[cat].dx >= 0)
                             cats[cat].gid = Animations.cat_move_right;
@@ -174,7 +215,9 @@
                     }
 
 
+                }
             }
+
         }
 
 

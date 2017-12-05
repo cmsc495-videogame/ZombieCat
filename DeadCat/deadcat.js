@@ -204,10 +204,10 @@ Author: William Kendall
         //animation or set texture
         if (_gidInformation[gObject.gid])
             if (_gidInformation[gObject.gid].hasOwnProperty("animation")) {
-                gObject.animationTime += _gameDelta * 50;
+                gObject.animationTime += _gameDelta * 50
                 if (_gidInformation[gObject.gid].animation.length <= gObject.animationFrame)
                     gObject.animationFrame = 0;
-                if (gObject.animationFrame == -1 || gObject.animationTime >= _gidInformation[gObject.gid].animation[gObject.animationFrame].duration) {
+                if (gObject.animationFrame == -1 || (gObject.animationTime >= _gidInformation[gObject.gid].animation[gObject.animationFrame].duration && _gidInformation[gObject.gid].animation[gObject.animationFrame].duration >0)) {
                     gObject.animationTime = 0;
                     gObject.animationFrame += 1;
                     if (_gidInformation[gObject.gid].animation.length === gObject.animationFrame)
