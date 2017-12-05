@@ -71,6 +71,13 @@
     var catOldY = 0.0;
 
     function gameloop(game, delta) {
+        //escape to show main menu
+        if (game.KeyboardManager.keysPressed[27] == true) {
+            mainMenuLayer.visible = true;
+            game.setLoop(menuloop);
+        }
+
+
         var mvDelta = delta * 5;
         var moveX = 0;
         var moveY = 0;
