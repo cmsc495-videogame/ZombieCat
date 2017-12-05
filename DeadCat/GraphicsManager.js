@@ -18,7 +18,7 @@ Author: William Kendall
 
         _graphics = this;
         _map = map;
-//        _spritePool = [];
+
 
         //Test browser surface
         var pixiSurfaceType = "WebGL";
@@ -69,6 +69,7 @@ Author: William Kendall
                 }
             }
         }
+
 
         _graphics.resourcesLoaded = true;
         _application.ticker.add(_graphics.ticker);

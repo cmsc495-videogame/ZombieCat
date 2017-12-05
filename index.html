@@ -87,6 +87,11 @@
         var oldx = player.x;
         var oldy = player.y;
 
+
+        if (game.KeyboardManager.keysPressed[32] == true) {
+            player.gid = Animations.player_attack_stick_down;
+        }
+
         if (game.KeyboardManager.keysPressed[87] == true) {
             moveY += mvDelta;
             player.gid = Animations.player_move_forward;

@@ -25,7 +25,12 @@ Author: William Kendall
         this.properties = {};
         this.properties.static = false;
         this.properties.gui = false;
+
+
     }
+
+
+
 
     $w._DeadCat_Layer = Layer;
 }(this, PIXI);
@@ -48,8 +53,10 @@ Author: William Kendall
     gObject.prototype.animationFrame = -1;
     gObject.prototype.animationTime = 0;
 
+    var _self;
     function gObject() {
         PIXI.Sprite.call(this);
+        _self = this;
         //constructor
 
         this.collision = {};
@@ -60,6 +67,7 @@ Author: William Kendall
         this.collision.height = 0;
 
     }
+
 
     $w._DeadCat_Object = gObject;
 }(this, PIXI);

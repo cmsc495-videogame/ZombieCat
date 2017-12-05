@@ -729,6 +729,54 @@
                  "width":48,
                  "x":2208,
                  "y":896
+                }, 
+                {
+                 "gid":797,
+                 "height":64,
+                 "id":66,
+                 "name":"player_attack_stick_up",
+                 "rotation":0,
+                 "type":"",
+                 "visible":false,
+                 "width":64,
+                 "x":1408,
+                 "y":2400
+                }, 
+                {
+                 "gid":836,
+                 "height":64,
+                 "id":69,
+                 "name":"player_attack_stick_right",
+                 "rotation":0,
+                 "type":"",
+                 "visible":false,
+                 "width":64,
+                 "x":1568,
+                 "y":2528
+                }, 
+                {
+                 "gid":810,
+                 "height":64,
+                 "id":70,
+                 "name":"player_attack_stick_left",
+                 "rotation":0,
+                 "type":"",
+                 "visible":false,
+                 "width":64,
+                 "x":1216,
+                 "y":2496
+                }, 
+                {
+                 "gid":823,
+                 "height":64,
+                 "id":75,
+                 "name":"player_attack_stick_down",
+                 "rotation":0,
+                 "type":"",
+                 "visible":false,
+                 "width":64,
+                 "x":1408,
+                 "y":2560
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -777,7 +825,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":62,
+ "nextobjectid":76,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
@@ -2298,7 +2346,91 @@
                          "tileid":151
                         }]
                 },
+             "156":
+                {
+                 "animation":[
+                        {
+                         "duration":100,
+                         "tileid":156
+                        }, 
+                        {
+                         "duration":100,
+                         "tileid":157
+                        }, 
+                        {
+                         "duration":100,
+                         "tileid":158
+                        }, 
+                        {
+                         "duration":100,
+                         "tileid":159
+                        }, 
+                        {
+                         "duration":100,
+                         "tileid":160
+                        }, 
+                        {
+                         "duration":100,
+                         "tileid":161
+                        }]
+                },
              "169":
+                {
+                 "animation":[
+                        {
+                         "duration":100,
+                         "tileid":169
+                        }, 
+                        {
+                         "duration":100,
+                         "tileid":170
+                        }, 
+                        {
+                         "duration":100,
+                         "tileid":171
+                        }, 
+                        {
+                         "duration":100,
+                         "tileid":172
+                        }, 
+                        {
+                         "duration":100,
+                         "tileid":173
+                        }, 
+                        {
+                         "duration":100,
+                         "tileid":174
+                        }]
+                },
+             "182":
+                {
+                 "animation":[
+                        {
+                         "duration":100,
+                         "tileid":182
+                        }, 
+                        {
+                         "duration":100,
+                         "tileid":183
+                        }, 
+                        {
+                         "duration":100,
+                         "tileid":184
+                        }, 
+                        {
+                         "duration":100,
+                         "tileid":185
+                        }, 
+                        {
+                         "duration":100,
+                         "tileid":186
+                        }, 
+                        {
+                         "duration":100,
+                         "tileid":187
+                        }]
+                },
+             "195":
                 {
                  "animation":[
                         {

@@ -78,17 +78,21 @@ Author: William Kendall
     };
 
 
-    LogicManager.prototype.positionAbsolute = function(layer, location)
+    LogicManager.prototype.positionAbsolute = function(obj, location)
     {
         //moves an object or layer to a position relative to the view window
         if(location == "center") {
-            var movex = (_GraphicsManager.getWidth() - layer.width) / 2;
-            var movey = (_GraphicsManager.getHeight() - layer.height) / 2;
-            layer.x = movex;
-            layer.y = movey;
+            var movex = (_GraphicsManager.getWidth() - obj.width) / 2;
+            var movey = (_GraphicsManager.getHeight() - obj.height) / 2;
+            obj.x = movex;
+            obj.y = movey;
+        }
+        if(location == "top-left") {
+            obj.x=0;
+            obj.y = 0;
         }
 
-    }
+        }
 
     LogicManager.prototype.centerObject = function (object) {
         //moves the map so that the object is at the center of the screen
@@ -251,6 +255,17 @@ Author: William Kendall
             return 0;
         });
     };
+
+
+    LogicManager.prototype.fitObjectToScreen = function(obj)
+    {
+        obj.x=0;
+        obj.y=0;
+        obj.width =_GraphicsManager.getWidth();
+        obj.height = _GraphicsManager.getHeight();
+    }
+
+
 
 
     $w._DeadCat_LogicManager = LogicManager;

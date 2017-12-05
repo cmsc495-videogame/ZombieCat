@@ -116,15 +116,17 @@ Author: William Kendall
                         newObj.properties =  _engine.Utils.extend(newObj.properties, obj.properties) ;
                     if (obj.hasOwnProperty("name"))
                         newObj.name = obj.name;
-                    newObj.gid = obj.gid;
-                    var objTileset = getTilesetInformation(newObj.gid);
-                    newObj.visible = obj.visible;
-                    newObj.x = obj.x;
-                    //tiled documentation says the registration is offset by the image height
-                    newObj.y = obj.y -obj.height;//- objTileset.tileheight; //tiled objects are reference from their bottom edge
-                    newObj.width = obj.width; //objTileset.tilewidth;
-                    newObj.height = obj.height;//objTileset.tileheight;
-                    _engine.updateObject(newObj);
+
+                        newObj.visible = obj.visible;
+                        newObj.x = obj.x;
+                        newObj.y = obj.y - obj.height;//- objTileset.tileheight; //tiled objects are reference from their bottom edge
+                        newObj.width = obj.width; //objTileset.tilewidth;
+                        newObj.height = obj.height;//objTileset.tileheight;
+                    if(obj.hasOwnProperty("gid")) {
+                        newObj.gid = obj.gid;
+                        var objTileset = getTilesetInformation(newObj.gid);
+                        _engine.updateObject(newObj);
+                    }
                     newLayer.addChild(newObj);
                 }
             }
@@ -203,6 +205,8 @@ Author: William Kendall
         if (_gidInformation[gObject.gid])
             if (_gidInformation[gObject.gid].hasOwnProperty("animation")) {
                 gObject.animationTime += _gameDelta * 50;
+                if (_gidInformation[gObject.gid].animation.length <= gObject.animationFrame)
+                    gObject.animationFrame = 0;
                 if (gObject.animationFrame == -1 || gObject.animationTime >= _gidInformation[gObject.gid].animation[gObject.animationFrame].duration) {
                     gObject.animationTime = 0;
                     gObject.animationFrame += 1;
