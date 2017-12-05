@@ -24,7 +24,7 @@ Author: William Kendall
 
         this.properties = {};
         this.properties.static = false;
-
+        this.properties.gui = false;
     }
 
     $w._DeadCat_Layer = Layer;

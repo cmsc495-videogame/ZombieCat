@@ -18,7 +18,7 @@
 <script type="text/javascript">
 /*This script is demo code that shows the game engine off*/
 
-    var game = new DeadCat("maps/shipLevel.json", setup, gameloop);
+    var game = new DeadCat("maps/shipLevel.json", setup, menuloop);
 
     var player = null;
     var oldPlayerGid = 0;
@@ -31,7 +31,12 @@
 
     var objectLayer = null;
 
+    var mainMenuLayer = null;
+
     function setup() {
+        //get the main menu
+        mainMenuLayer = game.LogicManager.getLayerByName("MainMenu");
+
         //get map layer
         collisionLayer = game.LogicManager.getLayerByName("Collision");
         //get player layer (holds player and animations)
@@ -53,6 +58,14 @@
         cats = game.LogicManager.getObjectsByNameInLayer(objectLayer, "Zombie");
         catGid = cats[0].gid;
     }
+
+    function menuloop(game, delta) {
+        if(game.KeyboardManager.keysPressed[13]) {
+            mainMenuLayer.visible = false;
+            game.setLoop(gameloop);
+        }
+    }
+
 
     var catOldX = 0.0;
     var catOldY = 0.0;

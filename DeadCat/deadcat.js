@@ -74,7 +74,7 @@ Author: William Kendall
             var newLayer = new dcLayer();
             newLayer.zIndex  = zIndex;
             if (layer.hasOwnProperty("properties"))
-                newLayer.properties = layer.properties;
+                newLayer.properties =  _engine.Utils.extend(newLayer.properties, layer.properties) ;
             if (layer.hasOwnProperty("name"))
                 newLayer.name = layer.name;
                 newLayer.visible = layer.visible;
@@ -113,7 +113,7 @@ Author: William Kendall
                     var obj = layer.objects[obji];
                     var newObj = new dcObject();
                     if (obj.hasOwnProperty("properties"))
-                        newObj.properties = obj.properties;
+                        newObj.properties =  _engine.Utils.extend(newObj.properties, obj.properties) ;
                     if (obj.hasOwnProperty("name"))
                         newObj.name = obj.name;
                     newObj.gid = obj.gid;
@@ -121,10 +121,9 @@ Author: William Kendall
                     newObj.visible = obj.visible;
                     newObj.x = obj.x;
                     //tiled documentation says the registration is offset by the image height
-                    newObj.y = obj.y - objTileset.tileheight; //tiled objects are reference from their bottom edge
-                    newObj.width = objTileset.tilewidth;
-                    newObj.height = objTileset.tileheight;
-
+                    newObj.y = obj.y -obj.height;//- objTileset.tileheight; //tiled objects are reference from their bottom edge
+                    newObj.width = obj.width; //objTileset.tilewidth;
+                    newObj.height = obj.height;//objTileset.tileheight;
                     _engine.updateObject(newObj);
                     newLayer.addChild(newObj);
                 }
@@ -220,7 +219,10 @@ Author: William Kendall
 //                _GraphicsManager.bindTexture(gObject, gObject.gid); //uncomment to return to original gid
             }
 
-
+        DeadCat.prototype.setLoop = function (loop)
+        {
+            _gameupdate = loop;
+        }
 
     };
 

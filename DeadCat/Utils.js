@@ -1,3 +1,11 @@
+/*
+Team Zombie Cat
+Dead Cat Game Engine - helper functions
+
+Author: William Kendall
+*/
+
+
 !function ($w) {
 
     function Utils() {
@@ -16,6 +24,15 @@
         xhttp.open("GET", fileName, true);
         xhttp.send();
     };
+
+
+    Utils.prototype.extend = function (obj, src) {
+        if(obj == null) return src;
+        for (var key in src) {
+            if (src.hasOwnProperty(key)) obj[key] = src[key];
+        }
+        return obj;
+    }
 
 
     //export module

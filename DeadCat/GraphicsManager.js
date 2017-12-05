@@ -18,7 +18,7 @@ Author: William Kendall
 
         _graphics = this;
         _map = map;
-        _spritePool = [];
+//        _spritePool = [];
 
         //Test browser surface
         var pixiSurfaceType = "WebGL";

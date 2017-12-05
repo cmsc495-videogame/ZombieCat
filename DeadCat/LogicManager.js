@@ -32,13 +32,15 @@ Author: William Kendall
     LogicManager.prototype.setMapX = function (x) {
         _mapX = x;
         for (layer in _layers) {
-            _layers[layer].x = x;
+            if(!_layers[layer].properties.gui)
+                _layers[layer].x = x;
         }
     };
     LogicManager.prototype.setMapY = function (y) {
         _mapY = y;
         for (layer in _layers) {
-            _layers[layer].y = y;
+            if(!_layers[layer].properties.gui)
+                _layers[layer].y = y;
         }
     };
 
@@ -88,6 +90,8 @@ Author: William Kendall
     };
 
     LogicManager.prototype.moveToObject = function (object1, object2, amount) {
+        //moves and object to another object
+
         //lerp is not constant, but does make for a cool effect
         //object1.x =  (1 - amount) * object1.x + amount * object2.x;
         //object1.y =  (1 - amount) * object1.y + amount * object2.y;
@@ -114,6 +118,9 @@ Author: William Kendall
     }
 
     LogicManager.prototype.moveToObjectX = function (object1, object2, amount) {
+        //moves and object to another object in horizontal direction
+
+
         //lerp is not constant, but does make for a cool effect
         //object1.x =  (1 - amount) * object1.x + amount * object2.x;
         //object1.y =  (1 - amount) * object1.y + amount * object2.y;
@@ -140,6 +147,8 @@ Author: William Kendall
     }
 
     LogicManager.prototype.moveToObjectY = function (object1, object2, amount) {
+        //moves and object to another object in vertical direction
+
         //lerp is not constant, but does make for a cool effect
         //object1.x =  (1 - amount) * object1.x + amount * object2.x;
         //object1.y =  (1 - amount) * object1.y + amount * object2.y;
