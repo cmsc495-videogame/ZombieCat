@@ -249,7 +249,8 @@ Author: William Kendall
     };
 
     $w.addEventListener("beforeunload", function(e){
-        _engine.destroy();
+        if(_engine)
+            _engine.destroy();
         console.log("Bye");
     }, false);
 
