@@ -51,6 +51,9 @@ Author: William Kendall
         return _GraphicsManager.getHeight();
     };
 
+    LogicManager.prototype.addGraphicsLayer = function (child){
+        _GraphicsManager.addChild(child);
+    };
 
     LogicManager.prototype.getObjectByNameInLayer = function (layer, name) {
         for (childObj in layer.children) {

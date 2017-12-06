@@ -41,6 +41,8 @@
     var cats = null;
     var catGid = 0;
 
+    var healthBar = null;
+
     var objectLayer = null;
 
     var mainMenuLayer = null;
@@ -55,7 +57,8 @@
         //get objects layer (holds player and animations)
         objectLayer = game.LogicManager.getLayerByName("Objects");
 
-        //setup the player
+        //setup the player-----------------------------------
+        //
         //get the player sprite
         player = game.LogicManager.getObjectByNameInLayer(objectLayer, "PlayerSprite");
         //center the whole map, by the player position
@@ -69,7 +72,8 @@
             Animations[objectLayer.children[ani].name] = objectLayer.children[ani].gid;
         }
 
-        //setup the cats
+        //setup the cats--------------------------------------
+        //
         //get the cat sprite
         cats = game.LogicManager.getObjectsByNameInLayer(objectLayer, "Zombie");
         catGid = cats[0].gid;
@@ -78,6 +82,34 @@
         {
             cats[cat].properties.speed = Math.random() * ((cats[cat].properties.speed+.4) - (cats[cat].properties.speed - 0.4)) + (cats[cat].properties.speed - 0.4);
         }
+
+
+        //Add HealthBar--------------------------------------
+        //
+        //Create the health bar
+        healthBar = new PIXI.DisplayObjectContainer();
+        healthBar.position.set(30, 30)
+        game.LogicManager.addGraphicsLayer(healthBar);
+
+        //Create the black background rectangle
+        var innerBar = new PIXI.Graphics();
+        innerBar.beginFill(0x000000);
+        innerBar.alpha = 0.5;
+        innerBar.drawRect(0, 0, 200,24);
+        innerBar.endFill();
+        healthBar.addChild(innerBar);
+
+        //Create the front red rectangle
+        var outerBar = new PIXI.Graphics();
+        outerBar.beginFill(0xFFFFFF);
+        outerBar.drawRect(0, 0, 200, 24);
+        outerBar.endFill();
+        outerBar.tint = 0x00FF00;
+        healthBar.addChild(outerBar);
+
+        healthBar.outer = outerBar
+        //----------------------------------------------------
+
     }
 
 
@@ -108,11 +140,27 @@
         var oldx = player.x;
         var oldy = player.y
 
+
+        //--Player Health----------------------------------------------
+        //
+
+        //Game Over action...
         if(player.properties.health<=0){
-            //Game Over stuff
+            //Game Over
+            //Pop up menu for now
+            mainMenuLayer.visible = true;
+            game.setLoop(menuloop);
         }
 
-        if(player.properties.attack_rechargeState>0){
+        //Update healthbar
+        updateHealthBar();
+
+
+        //--Attacking----------------------------------------------
+        //
+
+        //Reduce Attack Cooldown
+        if(player.properties.attack_rechargeState>0) {
             player.properties.attack_rechargeState--;
         }
 
@@ -137,6 +185,9 @@
 
             }
         }
+
+        //--Movement----------------------------------------------
+        //
 
         if (game.KeyboardManager.keysPressed[87] == true) {
             moveY += mvDelta;
@@ -183,6 +234,8 @@
             }
         }
 
+        //--Cat Logic----------------------------------------------
+        //
 
         for (var cat in cats) {
             //if the player is near, chase the player
@@ -204,14 +257,19 @@
                 }*/
 
                 //Cat Attacks when near and recharged
-                if(cats[cat].properties.attack_rechargeState==0){
+                if(cats[cat].properties.attack_rechargeState<=0){
                     if(game.LogicManager.distance(player, cats[cat])<= cats[cat].properties.attack_range){
                         player.properties.health -=cats[cat].properties.attack_damage;
                         cats[cat].properties.attack_rechargeState = cats[cat].properties.attack_rechargeTime;
+
+                        //Update healthbar
+                        updateHealthBar();
                     }
-                }else cats[cat].properties.attack_rechargeTime--;
+                }else cats[cat].properties.attack_rechargeState--;
 
 
+                //--Cat Movement----------------------------------------------
+                //
                 if(cats[cat].properties.chase && game.LogicManager.distance(player, cats[cat])> 48)
                 {
 
@@ -261,6 +319,25 @@
         //update the zOrder of all objects
         game.LogicManager.yZOrder(objectLayer);
 
+    }
+
+
+    //--Update Size of HealthBar----------------------------------------------
+    //
+    function updateHealthBar(){
+        healthBar.outer.width = player.properties.health*2;
+
+        //Health Bar to Green
+        if(player.properties.health>=70){
+            healthBar.outer.tint = 0x00FF00;
+        }else if(player.properties.health>=30) { //Health Bar to Yellow
+            healthBar.outer.tint = 0xFFFF00;
+        }else //Health Bar to Red
+            healthBar.outer.tint = 0xFF3300;
+
+        //Does not display health below 0
+        if(healthBar.outer.width<0)
+            healthBar.outer.width=0;
     }
 
 </script>
