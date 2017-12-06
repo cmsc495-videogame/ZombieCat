@@ -30,15 +30,27 @@ Author: William Kendall
         //setup the pixi renderer
         var renderingOptions = {
             transparent: false,
-            resolution: 1,
             backgroundColor: '0x000000',
             antialias: false,
+            resolution: $w.devicePixelRatio
         };
 
         _application = new PIXI.Application(800, 600, renderingOptions);
         $w.document.getElementById('display').appendChild(_application.view);
         //todo: check this function
         _application.ticker.speed = .5; //30 fps? maybe?
+
+        //fullscreen
+        //_application.renderer.view.style.width = 800;
+        //_application.renderer.view.style.height = 600;
+        var ratio = Math.min($w.innerWidth/800, $w.innerHeight/600);
+        _application.renderer.resize(Math.ceil(800 * ratio), Math.ceil(600 * ratio));
+        _application.stage.scale.x = _application.stage.scale.y = ratio;
+        $w.addEventListener("resize", function() {
+            var ratio = Math.min($w.innerWidth/800, $w.innerHeight/600);
+            _application.renderer.resize(Math.ceil(800 * ratio), Math.ceil(600 * ratio));
+            _application.stage.scale.x = _application.stage.scale.y = ratio;
+        });
 
 
         //load image(s)
@@ -113,10 +125,12 @@ Author: William Kendall
     };
 
     GraphicsManager.prototype.getWidth = function () {
-        return _application.renderer.width;
+        //returns the virtual width
+       return _application.renderer.width / _application.stage.scale.x;
     };
     GraphicsManager.prototype.getHeight = function () {
-        return _application.renderer.height;
+        //returns the virtual height
+        return _application.renderer.height / _application.stage.scale.y;
     };
 
     GraphicsManager.prototype.addChild = function (child) {

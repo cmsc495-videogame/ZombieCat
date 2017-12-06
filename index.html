@@ -13,8 +13,21 @@
 
 </head>
 <body>
-<p>CMSC495 Project</p>
+<!--<p>CMSC495 Project</p>-->
 <div id="display"></div>
+<style type="text/css">
+    html, body {
+        height: 100%;
+        margin: 0;
+        overflow:hidden;
+        background-color: black;
+    }
+
+    #display {
+        display: flex;
+        justify-content: center;
+    }
+</style>
 <script type="text/javascript">
 /*This script is demo code that shows the game engine off*/
 
@@ -57,7 +70,6 @@
         }
 
         //setup the cats
-        var catLayer = game.LogicManager.getLayerByName("Cat1");
         //get the cat sprite
         cats = game.LogicManager.getObjectsByNameInLayer(objectLayer, "Zombie");
         catGid = cats[0].gid;
@@ -124,7 +136,6 @@
                 player.properties.attack_rechargeState = player.properties.attack_rechargeTime;
 
             }
-
         }
 
         if (game.KeyboardManager.keysPressed[87] == true) {
