@@ -21,7 +21,6 @@
     var game = new DeadCat("maps/shipLevel.json", setup, menuloop);
 
     var player = null;
-    var oldPlayerGid = 0;
     var animationDelta = 0;
     var Animations = {};
     var collisionLayer = null;
@@ -40,25 +39,35 @@
 
         //get map layer
         collisionLayer = game.LogicManager.getLayerByName("Collision");
-        //get player layer (holds player and animations)
+        //get objects layer (holds player and animations)
         objectLayer = game.LogicManager.getLayerByName("Objects");
+
+        //setup the player
         //get the player sprite
         player = game.LogicManager.getObjectByNameInLayer(objectLayer, "PlayerSprite");
         //center the whole map, by the player position
         game.LogicManager.centerObject(player);
         //since we change the player gid to the animation gids, we need to save the original player gid
-        oldPlayerGid = player.gid;
+        player.oldPlayerGid = player.gid;
+        player.facing = "down";
+
         //copies the animations from the player layer to a list
         for (ani in objectLayer.children) {
             Animations[objectLayer.children[ani].name] = objectLayer.children[ani].gid;
         }
 
-        //get the cat layer
+        //setup the cats
         var catLayer = game.LogicManager.getLayerByName("Cat1");
         //get the cat sprite
         cats = game.LogicManager.getObjectsByNameInLayer(objectLayer, "Zombie");
         catGid = cats[0].gid;
+        //set some random speeds for the cats
+        for(var cat in cats)
+        {
+            cats[cat].properties.speed = Math.random() * ((cats[cat].properties.speed+.4) - (cats[cat].properties.speed - 0.4)) + (cats[cat].properties.speed - 0.4);
+        }
     }
+
 
     function menuloop(game, delta) {
         if(game.KeyboardManager.keysPressed[13]) {
@@ -82,7 +91,7 @@
         var mvDelta = delta * 5;
         var moveX = 0;
         var moveY = 0;
-        player.gid = oldPlayerGid;
+        player.gid = player.oldPlayerGid;
 
         var oldx = player.x;
         var oldy = player.y
@@ -97,7 +106,14 @@
 
         //Attack button (Spacebar)
         if (game.KeyboardManager.keysPressed[32] == true) {
-            player.gid = Animations.player_attack_stick_down;
+            if(player.facing =="down")
+                player.gid = Animations.player_attack_stick_down;
+            if(player.facing =="up")
+                player.gid = Animations.player_attack_stick_up;
+            if(player.facing =="left")
+                player.gid = Animations.player_attack_stick_left;
+            if(player.facing =="right")
+                player.gid = Animations.player_attack_stick_right;
 
             //Attack cats nearby when attack is recharged
             if(player.properties.attack_rechargeState==0){
@@ -114,18 +130,22 @@
         if (game.KeyboardManager.keysPressed[87] == true) {
             moveY += mvDelta;
             player.gid = Animations.player_move_forward;
+            player.facing="up";
         }
         if (game.KeyboardManager.keysPressed[83] == true) {
             moveY -= mvDelta;
             player.gid = Animations.player_move_back;
+            player.facing="down";
         }
         if (game.KeyboardManager.keysPressed[65] == true) {
             moveX += mvDelta;
             player.gid = Animations.player_move_left;
+            player.facing="left";
         }
         if (game.KeyboardManager.keysPressed[68] == true) {
             moveX -= mvDelta;
             player.gid = Animations.player_move_right;
+            player.facing="right";
         }
         if (moveX != 0 && moveY != 0) {
             moveX = moveX / 1.3;
