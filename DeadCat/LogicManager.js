@@ -89,10 +89,12 @@ Author: William Kendall
             var movey = (_GraphicsManager.getHeight() - obj.height) / 2;
             obj.x = movex;
             obj.y = movey;
+            return;
         }
         if(location == "top-left") {
             obj.x=0;
             obj.y = 0;
+            return;
         }
 
         }
@@ -192,6 +194,9 @@ Author: William Kendall
 
         object1.y += sy * amount;
     }
+
+
+
 
     LogicManager.prototype.distance = function (object1, object2)
     {

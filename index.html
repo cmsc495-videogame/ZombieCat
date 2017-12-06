@@ -44,13 +44,37 @@
     var healthBar = null;
 
     var objectLayer = null;
-
     var mainMenuLayer = null;
+    var hudLayer = null;
 
     function setup() {
         //get the main menu
         mainMenuLayer = game.LogicManager.getLayerByName("MainMenu");
         game.LogicManager.positionAbsolute( mainMenuLayer , "center");
+
+        //health bar layer
+        hudLayer = game.LogicManager.getLayerByName("HUD");
+        game.LogicManager.positionAbsolute( hudLayer , "top-left");
+        hudLayer.x +=20;
+        hudLayer.y+=20;
+        //create heath bar
+        healthBar = hudLayer.addGraphics();
+        //Create the black background rectangle
+        var innerBar = hudLayer.addGraphics();
+        innerBar.beginFill(0x000000);
+        innerBar.alpha = 0.5;
+        innerBar.drawRect(0, 0, 200,24);
+        innerBar.endFill();
+        healthBar.innerBar = innerBar;
+
+        //Create the front red rectangle
+        var outerBar = hudLayer.addGraphics()
+        outerBar.beginFill(0xFFFFFF);
+        outerBar.drawRect(0, 0, 200, 24);
+        outerBar.endFill();
+        outerBar.tint = 0x00FF00;
+        healthBar.outer = outerBar;
+
 
         //get map layer
         collisionLayer = game.LogicManager.getLayerByName("Collision");
@@ -87,6 +111,7 @@
         //Add HealthBar--------------------------------------
         //
         //Create the health bar
+        /*
         healthBar = new PIXI.DisplayObjectContainer();
         healthBar.position.set(30, 30)
         game.LogicManager.addGraphicsLayer(healthBar);
@@ -108,6 +133,7 @@
         healthBar.addChild(outerBar);
 
         healthBar.outer = outerBar
+        */
         //----------------------------------------------------
 
     }
@@ -324,6 +350,7 @@
 
     //--Update Size of HealthBar----------------------------------------------
     //
+
     function updateHealthBar(){
         healthBar.outer.width = player.properties.health*2;
 

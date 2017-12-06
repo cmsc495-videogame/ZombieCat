@@ -883,13 +883,31 @@
         }, 
         {
          "draworder":"topdown",
+         "name":"HUD",
+         "objects":[],
+         "opacity":1,
+         "properties":
+            {
+             "gui":true
+            },
+         "propertytypes":
+            {
+             "gui":"bool"
+            },
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "name":"MainMenu",
          "objects":[
                 {
                  "gid":929,
                  "height":328,
                  "id":35,
-                 "name":"",
+                 "name":"main",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -911,7 +929,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":96,
+ "nextobjectid":97,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
