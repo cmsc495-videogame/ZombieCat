@@ -6,7 +6,7 @@ Author: William Kendall
 */
 
 !function ($w, PIXI, dcObject, dcLayer) {
-    var _graphics = null; //this reference
+    var _self = null; //this reference
     var _application = null; //pixi application
     var _map; //reference to the json map
     var _textures = []; //textures
@@ -16,7 +16,7 @@ Author: William Kendall
     function GraphicsManager(map) {
         //TODO: make setup functions non-static by taking in the setup options
 
-        _graphics = this;
+        _self = this;
         _map = map;
 
 
@@ -83,8 +83,8 @@ Author: William Kendall
         }
 
 
-        _graphics.resourcesLoaded = true;
-        _application.ticker.add(_graphics.ticker);
+        _self.resourcesLoaded = true;
+        _application.ticker.add(_self.ticker);
         //_application()
     }
 
@@ -144,6 +144,34 @@ Author: William Kendall
     GraphicsManager.prototype.ticker = function (delta) {
         console.log("GE ticker");
     };
+
+    GraphicsManager.prototype.destroy= function () {
+        //PIXI.destroy();
+
+        for(var key in _textures) {
+            _textures[key].destroy();
+            _textures[key] = null;
+        }
+        _textures = [];
+        _map = null;
+
+        for( var key in PIXI.loader.resources)
+        {
+            PIXI.loader.resources[key].texture.destroy();
+        }
+        PIXI.loader.resources = [];
+        $w.document.getElementById('display').removeChild(_application.view);
+        _application.stage.destroy(true);
+        _application.destroy(false);
+        _application = null;
+        while(PIXI.utils.TextureCache.length > 0)
+        {
+            PIXI.utils.TextureCache[0].destroy(true);
+            PIXI.utils.TextureCache.remove(0);
+        }
+
+
+    }
 
 
     $w._DeadCat_GraphicsManager = GraphicsManager;

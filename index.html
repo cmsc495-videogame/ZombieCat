@@ -31,7 +31,24 @@
 <script type="text/javascript">
 /*This script is demo code that shows the game engine off*/
 
-    var game = new DeadCat("maps/shipLevel.json", setup, menuloop);
+    var game;
+//    game = new DeadCat("maps/shipLevel.json", setup, menuloop);
+    game = new DeadCat("maps/mainmenu.json", mainMenuSetup, MainMenuLoop);
+//main menu
+    function mainMenuSetup()
+    {
+        mainMenuLayer = game.LogicManager.getLayerByName("MainMenu");
+        game.LogicManager.positionAbsolute( mainMenuLayer , "center");
+    }
+    function MainMenuLoop()
+    {
+        if(game.KeyboardManager.keysPressed[13]) {
+            game.destroy();
+            game = new DeadCat("maps/shipLevel.json", setup, menuloop);
+        }
+    }
+
+    //playable level
 
     var player = null;
     var animationDelta = 0;

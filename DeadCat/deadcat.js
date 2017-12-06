@@ -229,7 +229,29 @@ Author: William Kendall
             _gameupdate = loop;
         }
 
+        DeadCat.prototype.destroy = function ()
+        {
+            //does cleanup when closing the game engine
+            gml = false;
+            this.logicManager = null;
+            this.KeyboardManager = null;
+            for(var key in _layers)
+            {
+                for(var ckey in _layers[key].children)
+                {
+                    _layers[key].children[ckey].destroy(true);
+                }
+                _layers[key].destroy(true);
+            }
+            _GraphicsManager.destroy();
+        }
+
     };
+
+    $w.addEventListener("beforeunload", function(e){
+        _engine.destroy();
+        console.log("Bye");
+    }, false);
 
 
     $w.DeadCat = DeadCat;
