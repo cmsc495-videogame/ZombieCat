@@ -50,7 +50,7 @@
         game.LogicManager.positionAbsolute( mainMenuLayer , "center");
 
         var introMusic = game.LogicManager.getObjectByNameInLayer(mainMenuLayer, "intromusic");
-        game.AudioManager.PlaySound(introMusic.sound);
+        game.AudioManager.playSound(introMusic.sound);
     }
     function MainMenuLoop()
     {
@@ -207,7 +207,6 @@
         //Game Over action...
         if(player.properties.health<=0){
             //Game Over
-            levelMusic.DestroySound();//kill level audio
             //Pop up menu for now
             mainMenuLayer.visible = true;
             game.setLoop(menuloop);

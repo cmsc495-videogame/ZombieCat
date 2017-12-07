@@ -24,7 +24,7 @@ Last Updated 12/16/2017
         });
     }
 
-    AudioManager.prototype.PlaySound = function(soundFile) {
+    AudioManager.prototype.playSound = function(soundFile) {
         _sounds[soundFile].play();
     }
 
