@@ -17,6 +17,9 @@ Last Updated 12/16/2017
 
     AudioManager.prototype.loadSound = function(soundfile, looping)
     {
+        if(!looping) //just if someone forgot to add it to the map file
+            looping = false;
+
         _sounds[soundfile] = new Howl({  //create the sound from soundfile
             src: [soundfile],
             html5: true,
@@ -35,6 +38,7 @@ Last Updated 12/16/2017
             _sounds[key].unload();
             _sounds[key] = null;
         }
+        _sounds = null;
     }
 
     $w._DeadCat_AudioManager = AudioManager;
