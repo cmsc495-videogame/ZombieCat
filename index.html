@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <title>Zombie Cat</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.1/pixi.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.5/howler.js"></script>
     <script type="text/javascript" src="DeadCat/Utils.js"></script>
     <script type="text/javascript" src="DeadCat/Object.js"></script>
     <script type="text/javascript" src="DeadCat/GraphicsManager.js"></script>
     <script type="text/javascript" src="DeadCat/KeyboardManager.js"></script>
     <script type="text/javascript" src="DeadCat/LogicManager.js"></script>
+    <script type="text/javascript" src="DeadCat/AudioManager.js"></script>
     <script type="text/javascript" src="DeadCat/deadcat.js"></script>
 
 </head>
@@ -30,21 +32,34 @@
 </style>
 <script type="text/javascript">
 /*This script is demo code that shows the game engine off*/
+/*This script has somehow became the game*/
 
     var game;
 //    game = new DeadCat("maps/shipLevel.json", setup, menuloop);
     game = new DeadCat("maps/mainmenu.json", mainMenuSetup, MainMenuLoop);
 //main menu
+
+    //var introMusic = new _DeadCat_AudioManager("audio/music/SonOfABit08ChasedByARunningChupacabra.mp3",false); //create intro audio, non-looping
+    //var levelMusic = new _DeadCat_AudioManager("audio/music/Kubbi03UpInMyJam.mp3",true); //create level audio, looping
+    //levelMusic.PlaySound(); //play the level music
+    //introMusic.PlaySound();                       //play intro audio
+
     function mainMenuSetup()
     {
         mainMenuLayer = game.LogicManager.getLayerByName("MainMenu");
         game.LogicManager.positionAbsolute( mainMenuLayer , "center");
+
+        var introMusic = game.LogicManager.getObjectByNameInLayer(mainMenuLayer, "intromusic");
+        game.AudioManager.playSound(introMusic.sound);
     }
     function MainMenuLoop()
     {
         if(game.KeyboardManager.keysPressed[13]) {
+           // introMusic.DestroySound(); //stop and tear down intro audio
             game.destroy();
             game = new DeadCat("maps/shipLevel.json", setup, menuloop);
+
+
         }
     }
 
@@ -160,6 +175,7 @@
         if(game.KeyboardManager.keysPressed[13]) {
             mainMenuLayer.visible = false;
             game.setLoop(gameloop);
+
         }
     }
 
@@ -168,6 +184,7 @@
     var catOldY = 0.0;
 
     function gameloop(game, delta) {
+
         //escape to show main menu
         if (game.KeyboardManager.keysPressed[27] == true) {
             mainMenuLayer.visible = true;
