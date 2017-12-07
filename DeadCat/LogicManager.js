@@ -32,14 +32,14 @@ Author: William Kendall
     LogicManager.prototype.setMapX = function (x) {
         _mapX = x;
         for (layer in _layers) {
-            if(!_layers[layer].properties.gui)
+            if (!_layers[layer].properties.gui)
                 _layers[layer].x = x;
         }
     };
     LogicManager.prototype.setMapY = function (y) {
         _mapY = y;
         for (layer in _layers) {
-            if(!_layers[layer].properties.gui)
+            if (!_layers[layer].properties.gui)
                 _layers[layer].y = y;
         }
     };
@@ -51,7 +51,7 @@ Author: William Kendall
         return _GraphicsManager.getHeight();
     };
 
-    LogicManager.prototype.addGraphicsLayer = function (child){
+    LogicManager.prototype.addGraphicsLayer = function (child) {
         _GraphicsManager.addChild(child);
     };
 
@@ -67,7 +67,7 @@ Author: William Kendall
         var objects = [];
         for (childObj in layer.children) {
             if (layer.children[childObj].name == name)
-                objects.push( layer.children[childObj] );
+                objects.push(layer.children[childObj]);
         }
         return objects;
     };
@@ -81,23 +81,22 @@ Author: William Kendall
     };
 
 
-    LogicManager.prototype.positionAbsolute = function(obj, location)
-    {
+    LogicManager.prototype.positionAbsolute = function (obj, location) {
         //moves an object or layer to a position relative to the view window
-        if(location == "center") {
+        if (location == "center") {
             var movex = (_GraphicsManager.getWidth() - obj.width) / 2;
             var movey = (_GraphicsManager.getHeight() - obj.height) / 2;
             obj.x = movex;
             obj.y = movey;
             return;
         }
-        if(location == "top-left") {
-            obj.x=0;
+        if (location == "top-left") {
+            obj.x = 0;
             obj.y = 0;
             return;
         }
 
-        }
+    }
 
     LogicManager.prototype.centerObject = function (object) {
         //moves the map so that the object is at the center of the screen
@@ -122,13 +121,13 @@ Author: William Kendall
         //object1.position += (object2.position - object1.position).normalized * amount;
 
         //vector movement
-        var sx = (object2.x+object2.collision.x+(object2.collision.width/2)) - (object1.x+object1.collision.x+(object1.collision.width/2));
-        var sy = (object2.y+object2.collision.y+(object2.collision.height/2)) - (object1.y+object1.collision.y+(object1.collision.height/2));
+        var sx = (object2.x + object2.collision.x + (object2.collision.width / 2)) - (object1.x + object1.collision.x + (object1.collision.width / 2));
+        var sy = (object2.y + object2.collision.y + (object2.collision.height / 2)) - (object1.y + object1.collision.y + (object1.collision.height / 2));
 
         //distance
         var distance = Math.sqrt(Math.pow(sx, 2) + Math.pow(sy, 2));
 
-        if( distance === 0)
+        if (distance === 0)
             return;
 
         //normal vector
@@ -153,14 +152,14 @@ Author: William Kendall
         //vector movement
         //var sx = (object2.x+(object2.width/2)) - (object1.x+(object1.width/2));
         //var sy = (object2.y+(object2.height/2)) - (object1.y+(object1.height/2));
-        var sx = (object2.x+object2.collision.x+(object2.collision.width/2)) - (object1.x+object1.collision.x+(object1.collision.width/2));
-        var sy = (object2.y+object2.collision.y+(object2.collision.height/2)) - (object1.y+object1.collision.y+(object1.collision.height/2));
+        var sx = (object2.x + object2.collision.x + (object2.collision.width / 2)) - (object1.x + object1.collision.x + (object1.collision.width / 2));
+        var sy = (object2.y + object2.collision.y + (object2.collision.height / 2)) - (object1.y + object1.collision.y + (object1.collision.height / 2));
 
 
         //distance
         var distance = Math.sqrt(Math.pow(sx, 2) + Math.pow(sy, 2));
 
-        if( distance === 0)
+        if (distance === 0)
             return;
 
         var inv = 1 / distance;
@@ -179,13 +178,13 @@ Author: William Kendall
         //object1.position += (object2.position - object1.position).normalized * amount;
 
         //vector movement
-        var sx = (object2.x+object2.collision.x+(object2.collision.width/2)) - (object1.x+object1.collision.x+(object1.collision.width/2));
-        var sy = (object2.y+object2.collision.y+(object2.collision.height/2)) - (object1.y+object1.collision.y+(object1.collision.height/2));
+        var sx = (object2.x + object2.collision.x + (object2.collision.width / 2)) - (object1.x + object1.collision.x + (object1.collision.width / 2));
+        var sy = (object2.y + object2.collision.y + (object2.collision.height / 2)) - (object1.y + object1.collision.y + (object1.collision.height / 2));
 
         //distance
         var distance = Math.sqrt(Math.pow(sx, 2) + Math.pow(sy, 2));
 
-        if( distance === 0)
+        if (distance === 0)
             return;
 
         //normal vector
@@ -196,13 +195,14 @@ Author: William Kendall
     }
 
 
-
-
-    LogicManager.prototype.distance = function (object1, object2)
-    {
-        return Math.sqrt(Math.pow((object2.x + object2.collision.x + (object2.collision.width/2)) - (object1.x + object1.collision.x + (object1.collision.width/2)), 2) + Math.pow((object2.y + object2.collision.y + (object2.collision.height/2)) - (object1.y + object1.collision.y + (object1.collision.height/2)), 2))
+    LogicManager.prototype.distance = function (object1, object2) {
+        return Math.sqrt(Math.pow((object2.x + object2.collision.x + (object2.collision.width / 2)) - (object1.x + object1.collision.x + (object1.collision.width / 2)), 2) + Math.pow((object2.y + object2.collision.y + (object2.collision.height / 2)) - (object1.y + object1.collision.y + (object1.collision.height / 2)), 2))
     }
 
+    //Returns angle between objects in degrees
+    LogicManager.prototype.angle = function (object1, object2) {
+        return Math.atan2((object2.x - object1.x), (object1.y - object2.y)) * 180 / Math.PI;
+    }
 
     LogicManager.prototype.hitTest = function (object1, object2) {
         //hit test between two objects
@@ -216,8 +216,7 @@ Author: William Kendall
     LogicManager.prototype.hitTestLayer = function (obj, layer) {
         //hit test between an object and a layer
         var objs = [];
-        if (layer.properties.static == true)
-        {
+        if (layer.properties.static == true) {
             for (tile in layer.staticLayerChildren) {
                 if (layer.staticLayerChildren[tile].collision.hasCollision) {
                     //not sure if this makes hittest any faster
@@ -233,9 +232,8 @@ Author: William Kendall
                     }
                 }
             }
-    }
-            else
-        {
+        }
+        else {
             for (tile in layer.children) {
                 if (layer.children[tile].collision.hasCollision) {
                     //not sure if this makes hittest any faster
@@ -255,25 +253,21 @@ Author: William Kendall
         return false;
     };
 
-    LogicManager.prototype.yZOrder = function(layer)
-    {
-        layer.children.sort(function(a,b){
-            if(a.height + a.y > b.height + b.y) return 1;
-            if(a.height + a.y < b.height + b.y) return -1;
+    LogicManager.prototype.yZOrder = function (layer) {
+        layer.children.sort(function (a, b) {
+            if (a.height + a.y > b.height + b.y) return 1;
+            if (a.height + a.y < b.height + b.y) return -1;
             return 0;
         });
     };
 
 
-    LogicManager.prototype.fitObjectToScreen = function(obj)
-    {
-        obj.x=0;
-        obj.y=0;
-        obj.width =_GraphicsManager.getWidth();
+    LogicManager.prototype.fitObjectToScreen = function (obj) {
+        obj.x = 0;
+        obj.y = 0;
+        obj.width = _GraphicsManager.getWidth();
         obj.height = _GraphicsManager.getHeight();
     }
-
-
 
 
     $w._DeadCat_LogicManager = LogicManager;

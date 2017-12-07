@@ -685,15 +685,17 @@
                  "name":"PlayerSprite",
                  "properties":
                     {
+                     "attack_angle":90,
                      "attack_damage":30,
                      "attack_range":50,
                      "attack_rechargeState":0,
-                     "attack_rechargeTime":20,
+                     "attack_rechargeTime":30,
                      "health":100,
                      "state_animate":true
                     },
                  "propertytypes":
                     {
+                     "attack_angle":"int",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
