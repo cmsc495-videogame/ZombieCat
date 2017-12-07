@@ -147,7 +147,7 @@
 
 
     function menuloop(game, delta) {
-        if (game.KeyboardManager.keysPressed[13]) {
+        if (game.KeyboardManager.keysPressed[13] && player.properties.health > 0) {
             mainMenuLayer.visible = false;
             game.setLoop(gameloop);
         }
