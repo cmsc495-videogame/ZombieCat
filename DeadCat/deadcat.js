@@ -5,10 +5,11 @@ Dead Cat Game Engine
 Author: William Kendall
  */
 
-!function ($w, Utils, GraphicsManager, KeyboardManager, LogicManager, dcObject, dcLayer) {
+!function ($w, Utils, GraphicsManager, KeyboardManager, LogicManager, AudioManager, dcObject, dcLayer) {
     var _GraphicsManager = null;
     DeadCat.prototype.KeyboardManager = null;
     DeadCat.prototype.LogicManager = null;
+    DeadCat.prototype.AudioManager = null;
 
     var _engine; //this reference
     var _map = null;    //this is the Tiled JSON object
@@ -24,6 +25,7 @@ Author: William Kendall
         _engine = this;
         _engine.Utils = new Utils();
         _engine.KeyboardManager = new KeyboardManager();
+        _engine.AudioManager = new AudioManager();
 
         _layers = [];
         _gidInformation = [];
@@ -112,9 +114,18 @@ Author: William Kendall
                 for (var obji = 0; obji < layer.objects.length; obji++) {
                     var obj = layer.objects[obji];
                     var newObj = new dcObject();
-                    if (obj.hasOwnProperty("properties"))
-                        newObj.properties =  _engine.Utils.extend(newObj.properties, obj.properties) ;
-                    if (obj.hasOwnProperty("name"))
+                    if (obj.hasOwnProperty("properties")) {
+                        newObj.properties = _engine.Utils.extend(newObj.properties, obj.properties);
+                        for(var key in newObj.properties)
+                        {
+                            if(key =="sound")
+                            {
+                                _engine.AudioManager.loadSound(newObj.properties[key], newObj.properties["loop"])
+                                newObj.sound = newObj.properties[key];
+                            }
+                        }
+                    }
+                        if (obj.hasOwnProperty("name"))
                         newObj.name = obj.name;
 
                         newObj.visible = obj.visible;
@@ -235,6 +246,8 @@ Author: William Kendall
             gml = false;
             this.logicManager = null;
             this.KeyboardManager = null;
+            _engine.AudioManager.destroy();
+            _engine.AudioManager = null;
             for(var key in _layers)
             {
                 for(var ckey in _layers[key].children)
@@ -257,4 +270,4 @@ Author: William Kendall
 
     $w.DeadCat = DeadCat;
 
-}(this, Utils, _DeadCat_GraphicsManager, _DeadCat_KeyboardManager, _DeadCat_LogicManager, _DeadCat_Object, _DeadCat_Layer);
+}(this, Utils, _DeadCat_GraphicsManager, _DeadCat_KeyboardManager, _DeadCat_LogicManager, _DeadCat_AudioManager, _DeadCat_Object, _DeadCat_Layer);

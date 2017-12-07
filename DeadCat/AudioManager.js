@@ -6,29 +6,36 @@ Author: Kevin Helms
 Last Updated 12/16/2017
 */
 
-!function ($w) {
+!function ($w, Howl) {
 
-    var _self = null;
     //var SoundObj = null;
+    var _sounds = null;
 
-    function AudioManager(soundfile,looping) {
-        _self = this;
-       _self.SoundObj = new Howl({  //create the sound from soundfile
-          src: [soundfile],
+    function AudioManager() {
+       _sounds = {};
+    }
+
+    AudioManager.prototype.loadSound = function(soundfile, looping)
+    {
+        _sounds[soundfile] = new Howl({  //create the sound from soundfile
+            src: [soundfile],
             html5: true,
-           loop: looping
+            loop: looping
         });
     }
 
-    AudioManager.prototype.PlaySound = function() {
-        _self.SoundObj.play();
-    };
+    AudioManager.prototype.PlaySound = function(soundFile) {
+        _sounds[soundFile].play();
+    }
 
-    AudioManager.prototype.DestroySound = function() {
-        //_self.SoundObj.stop();
-        _self.SoundObj.unload();
-        _self.SoundObj = null;
-    };
+
+    AudioManager.prototype.destroy = function () {
+        for(var key in _sounds)
+        {
+            _sounds[key].unload();
+            _sounds[key] = null;
+        }
+    }
 
     $w._DeadCat_AudioManager = AudioManager;
-}(this);
+}(this, Howl);

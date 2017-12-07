@@ -8,13 +8,34 @@
                  "gid":1,
                  "height":460,
                  "id":1,
-                 "name":"",
+                 "name":"MainPicture",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":800,
                  "x":0,
                  "y":460
+                }, 
+                {
+                 "height":160,
+                 "id":3,
+                 "name":"intromusic",
+                 "properties":
+                    {
+                     "loop":true,
+                     "sound":"audio\/music\/SonOfABit08ChasedByARunningChupacabra.mp3"
+                    },
+                 "propertytypes":
+                    {
+                     "loop":"bool",
+                     "sound":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":160,
+                 "x":96,
+                 "y":0
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -22,7 +43,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":2,
+ "nextobjectid":5,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
