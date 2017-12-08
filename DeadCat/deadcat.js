@@ -114,25 +114,25 @@ Author: William Kendall
                 for (var obji = 0; obji < layer.objects.length; obji++) {
                     var obj = layer.objects[obji];
                     var newObj = new dcObject();
+                    if (obj.hasOwnProperty("name"))
+                        newObj.name = obj.name;
+
                     if (obj.hasOwnProperty("properties")) {
                         newObj.properties = _engine.Utils.extend(newObj.properties, obj.properties);
                         for(var key in newObj.properties)
                         {
                             if(key =="sound")
                             {
-                                _engine.AudioManager.loadSound(newObj.properties[key], newObj.properties["loop"])
-                                newObj.sound = newObj.properties[key];
+                                _engine.AudioManager.loadSound(newObj.name, newObj.properties[key], newObj.properties["loop"], newObj.properties["volume"], newObj.properties["rate"])
+                                //newObj.sound = newObj.properties[key];
                             }
                         }
                     }
-                        if (obj.hasOwnProperty("name"))
-                        newObj.name = obj.name;
-
-                        newObj.visible = obj.visible;
-                        newObj.x = obj.x;
-                        newObj.y = obj.y - obj.height;//- objTileset.tileheight; //tiled objects are reference from their bottom edge
-                        newObj.width = obj.width; //objTileset.tilewidth;
-                        newObj.height = obj.height;//objTileset.tileheight;
+                    newObj.visible = obj.visible;
+                    newObj.x = obj.x;
+                    newObj.y = obj.y - obj.height;//- objTileset.tileheight; //tiled objects are reference from their bottom edge
+                    newObj.width = obj.width; //objTileset.tilewidth;
+                    newObj.height = obj.height;//objTileset.tileheight;
                     if(obj.hasOwnProperty("gid")) {
                         newObj.gid = obj.gid;
                         var objTileset = getTilesetInformation(newObj.gid);

@@ -45,8 +45,8 @@
         mainMenuLayer = game.LogicManager.getLayerByName("MainMenu");
         game.LogicManager.positionAbsolute(mainMenuLayer, "center");
 
-        var introMusic = game.LogicManager.getObjectByNameInLayer(mainMenuLayer, "intromusic");
-        game.AudioManager.playSound(introMusic.sound);
+        //var introMusic = game.LogicManager.getObjectByNameInLayer(mainMenuLayer, "intromusic");
+        game.AudioManager.playSound("intromusic");
     }
 
     function MainMenuLoop() {
@@ -142,6 +142,10 @@
         for (var cat in cats) {
             cats[cat].properties.speed = Math.random() * ((cats[cat].properties.speed + .4) - (cats[cat].properties.speed - 0.4)) + (cats[cat].properties.speed - 0.4);
         }
+
+        //Set up sounds---------------------------------------
+        game.AudioManager.playSound("music_background");
+
     }
 
 
@@ -149,16 +153,24 @@
         if (game.KeyboardManager.keysPressed[13] && player.properties.health > 0) {
             mainMenuLayer.visible = false;
             game.setLoop(gameloop);
+            return;
         }
 
         //Restart current level by pressing 'r'
         if (game.KeyboardManager.keysPressed[82]) {
             LoadLevel(currentLevel);
+            return;
         }
 
-        //Loag Main Menu by pressing 'm'
+        //Load Main Menu by pressing 'm'
         if (game.KeyboardManager.keysPressed[77]) {
-            LoadLevel(0);
+            LoadLevel(0)
+            return;
+        }
+
+        //Toggle Background music
+        if (game.KeyboardManager.keysPressed[81]) {
+            game.AudioManager.toggleSound("music_background");
         }
     }
 
@@ -190,6 +202,7 @@
         //Game Over action...
         if (player.properties.health <= 0) {
             //Game Over
+            game.AudioManager.playSound(player.properties.sound_die);
             //Pop up menu for now
             mainMenuLayer.visible = true;
             game.setLoop(menuloop);
@@ -222,6 +235,11 @@
             var closestCat = null;
             var closestCatDistance = null;
             if (player.properties.attack_rechargeState == 0) {
+
+                //Player Attack sound
+                game.AudioManager.playSound(player.properties.sound_attack);
+                //------------------
+
                 console.log('attack');
                 for (var cat in cats) {
                     if (cats[cat].properties.state_dead != 1) {
@@ -243,6 +261,11 @@
                 }
                 if (closestCat) {
                     cats[closestCat].properties.health -= player.properties.attack_damage;
+
+                    //Sound - Cat_Hurt
+                    game.AudioManager.playSound(cats[cat].properties.sound_hurt);
+                    //------------------
+
                     //Debug: console.log('attack cat: ' + closestCat + '  to health: ' + cats[closestCat].properties.health);
                 }
                 player.properties.attack_rechargeState = player.properties.attack_rechargeTime;
@@ -288,6 +311,8 @@
             //Update player direction for attacks
             player.direction = Math.atan2(0 - moveX, moveY) * 180 / Math.PI;
 
+            //Play or continue playing movement sound.
+            game.AudioManager.resumeSound(player.properties.sound_move);
 
             //update the player because we may have changed to an animation
             //game.updateObject(player); //we will do this later
@@ -299,6 +324,8 @@
                 game.LogicManager.setMapX(mapx);
                 game.LogicManager.setMapY(mapy);
             }
+        }else{
+            game.AudioManager.stopSound(player.properties.sound_move);
         }
 
         //--Cat Logic----------------------------------------------
@@ -310,27 +337,40 @@
                 if (cats[cat].properties.health <= 0) {
                     cats[cat].properties.state_dead = 1;
                     cats[cat].gid = Animations.cat_explode;
+                    game.AudioManager.playSound(cats[cat].properties.sound_die);
                     continue;
                 }
 
                 //if (game.LogicManager.distance(player, cats[cat]) <= cats[cat].properties.sight)
                   //  cats[cat].properties.chase = true;
-                if(cats[cat].properties.chase == false)
-                if(game.LogicManager.lineOfSight(player, cats[cat], collisionLayer)) {
-                    cats[cat].properties.chase = true;
-                    console.log("Cat: " + cat + " can see you");
+                if(cats[cat].properties.chase == false){
+                    if(game.LogicManager.lineOfSight(player, cats[cat], collisionLayer)) {
+                        cats[cat].properties.chase = true;
+                        console.log("Cat: " + cat + " can see you");
+                        game.AudioManager.playSound(cats[cat].properties.sound_move);
+                    }
+                }else if(game.LogicManager.distance(player, cats[cat]) > cats[cat].properties.sight*1.2){
+                    game.AudioManager.stopSound(cats[cat].properties.sound_move);
+                    console.log("You gave cat: " + cat + " the slip");
+                    cats[cat].properties.chase = false;
                 }
+
 
                 //--Cat Attack----------------------------------------------
                 //
                 //Cat Attacks when near and recharged
-                if (cats[cat].properties.attack_rechargeState <= 0) {
+                if (cats[cat].properties.attack_rechargeState <= 0 && game.LogicManager.lineOfSight(player, cats[cat], collisionLayer)) {
                     if (game.LogicManager.distance(player, cats[cat]) <= cats[cat].properties.attack_range) {
-                        player.properties.health -= cats[cat].properties.attack_damage;
-                        cats[cat].properties.attack_rechargeState = cats[cat].properties.attack_rechargeTime;
+                        if(game.LogicManager.lineOfSight(player, cats[cat], collisionLayer)) {
+                            player.properties.health -= cats[cat].properties.attack_damage;
+                            cats[cat].properties.attack_rechargeState = cats[cat].properties.attack_rechargeTime;
 
-                        //Update healthbar
-                        updateHealthBar();
+                            //Cat attack sound
+                            game.AudioManager.playSound(cats[cat].properties.sound_attack);
+                            game.AudioManager.playSound(player.properties.sound_hurt);
+                            //Update healthbar
+                            updateHealthBar();
+                        }
                     }
                 } else cats[cat].properties.attack_rechargeState--;
 
@@ -368,6 +408,7 @@
                         else
                             cats[cat].gid = Animations.cat_move_left;
                     }
+                    game.AudioManager.resumeSound(cats[cat].properties.sound_move);
                 }
             }
         }
@@ -380,6 +421,8 @@
 
         //update the zOrder of all objects
         game.LogicManager.yZOrder(objectLayer);
+
+
 
     }
 

@@ -15,24 +15,43 @@ Last Updated 12/16/2017
        _sounds = {};
     }
 
-    AudioManager.prototype.loadSound = function(soundfile, looping)
+    AudioManager.prototype.loadSound = function(name, soundfile, looping, s_vol, s_rate)
     {
         if(!looping) //just if someone forgot to add it to the map file
             looping = false;
 
-        _sounds[soundfile] = new Howl({  //create the sound from soundfile
+        _sounds[name] = new Howl({  //create the sound from soundfile
             src: [soundfile],
             html5: true,
-            loop: looping
+            loop: looping,
+            volume: s_vol,
+            rate: s_rate
         });
     }
 
+    AudioManager.prototype.pauseSound = function(soundFile) {
+        _sounds[soundFile].pause();
+    }
     AudioManager.prototype.playSound = function(soundFile) {
         _sounds[soundFile].play();
     }
+    AudioManager.prototype.resumeSound = function(soundFile) {
+        if(!_sounds[soundFile].playing())
+            _sounds[soundFile].play();
+    }
+    AudioManager.prototype.stopSound = function(soundFile) {
+        _sounds[soundFile].stop();
+    }
+    AudioManager.prototype.toggleSound = function(soundFile) {
+        if(_sounds[soundFile].playing())
+            _sounds[soundFile].pause();
+        else
+            _sounds[soundFile].play();
+    }
 
 
-    AudioManager.prototype.destroy = function () {
+
+        AudioManager.prototype.destroy = function () {
         for(var key in _sounds)
         {
             _sounds[key].unload();

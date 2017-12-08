@@ -202,7 +202,7 @@ Author: William Kendall
 
     //Returns angle between objects in degrees
     LogicManager.prototype.angle = function (object1, object2) {
-        return Math.atan2((object2.x - object1.x), (object1.y - object2.y)) * 180 / Math.PI;
+        return Math.atan2((object2.x + object2.collision.x + (object2.collision.width / 2)) - (object1.x + object1.collision.x + (object1.collision.width / 2)), (object1.y + object1.collision.y + (object1.collision.height / 2)) - (object2.y + object2.collision.y + (object2.collision.height / 2))) * 180 / Math.PI;
     }
 
     LogicManager.prototype.hitTest = function (object1, object2) {
