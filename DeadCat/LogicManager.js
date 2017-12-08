@@ -272,6 +272,7 @@ Author: William Kendall
 
     LogicManager.prototype.lineOfSight = function(obj1, obj2, collisionLayer)
     {
+        //returns true if there is not a collision between obj1 and obj2
         if(!obj1.collisionCenter)
             obj1.collisionCenter = {};
         obj1.collisionCenter.x =obj1.x + (obj1.collision.width/2)+obj1.collision.x;
@@ -322,6 +323,7 @@ Author: William Kendall
 
     function lineIntersection(x1,y1,x2,y2,x3,y3,x4,y4)
     {
+        //returns true if the lines intersect
         var rx = (x2-x1);
         var ry = (y2-y1);
         var sx = (x4-x3);
