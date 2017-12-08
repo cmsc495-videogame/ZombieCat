@@ -142,7 +142,6 @@
         for (var cat in cats) {
             cats[cat].properties.speed = Math.random() * ((cats[cat].properties.speed + .4) - (cats[cat].properties.speed - 0.4)) + (cats[cat].properties.speed - 0.4);
         }
-
     }
 
 
@@ -314,8 +313,13 @@
                     continue;
                 }
 
-                if (game.LogicManager.distance(player, cats[cat]) <= cats[cat].properties.sight)
+                //if (game.LogicManager.distance(player, cats[cat]) <= cats[cat].properties.sight)
+                  //  cats[cat].properties.chase = true;
+                if(cats[cat].properties.chase == false)
+                if(game.LogicManager.lineOfSight(player, cats[cat], collisionLayer)) {
                     cats[cat].properties.chase = true;
+                    console.log("Cat: " + cat + " can see you");
+                }
 
                 //--Cat Attack----------------------------------------------
                 //

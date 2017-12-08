@@ -21,6 +21,7 @@ Author: William Kendall
         this.setMapX(0);
         this.setMapY(0);
         _self = this;
+
     }
 
     LogicManager.prototype.getMapX = function () {
@@ -267,6 +268,76 @@ Author: William Kendall
         obj.y = 0;
         obj.width = _GraphicsManager.getWidth();
         obj.height = _GraphicsManager.getHeight();
+    }
+
+    LogicManager.prototype.lineOfSight = function(obj1, obj2, collisionLayer)
+    {
+        if(!obj1.collisionCenter)
+            obj1.collisionCenter = {};
+        obj1.collisionCenter.x =obj1.x + (obj1.collision.width/2)+obj1.collision.x;
+        obj1.collisionCenter.y =obj1.y + (obj1.collision.height/2)+obj1.collision.y;
+        if(!obj2.collisionCenter)
+            obj2.collisionCenter = {};
+        obj2.collisionCenter.x =obj2.x + (obj2.collision.width/2)+obj2.collision.x;
+        obj2.collisionCenter.y =obj2.y + (obj2.collision.height/2)+obj2.collision.y;
+
+        var x = 0.0;
+        var x1 = 0.0;
+        var x2 = 0.0;
+        var y1 = 0.0;
+        var y2 = 0.0;
+        if (collisionLayer.properties.static == true) {
+            for (tile in collisionLayer.staticLayerChildren) {
+                if (collisionLayer.staticLayerChildren[tile].collision.hasCollision) {
+                    x1 = (collisionLayer.staticLayerChildren[tile].x + collisionLayer.staticLayerChildren[tile].collision.x);
+                    x2 = (collisionLayer.staticLayerChildren[tile].x + collisionLayer.staticLayerChildren[tile].collision.x +  collisionLayer.staticLayerChildren[tile].collision.width);
+                    y1 = (collisionLayer.staticLayerChildren[tile].y + collisionLayer.staticLayerChildren[tile].collision.y);
+                    y2 = (collisionLayer.staticLayerChildren[tile].y + collisionLayer.staticLayerChildren[tile].collision.y +  collisionLayer.staticLayerChildren[tile].collision.height);
+
+                    if(lineIntersection(obj1.collisionCenter.x,obj1.collisionCenter.y, obj2.collisionCenter.x, obj2.collisionCenter.y, x1,y1,x2,y2))
+                        return false;
+                    if(lineIntersection(obj1.collisionCenter.x,obj1.collisionCenter.y, obj2.collisionCenter.x, obj2.collisionCenter.y, x1,y2,x2,y1))
+                        return false;
+                }
+            }
+        }
+        else
+        {
+            for (tile in collisionLayer.children) {
+                if (collisionLayer.children[tile].collision.hasCollision) {
+                    x1 = (collisionLayer.children[tile].x + collisionLayer.children[tile].collision.x);
+                    x2 = (collisionLayer.children[tile].x + collisionLayer.children[tile].collision.x +  collisionLayer.children[tile].collision.width);
+                    y1 = (collisionLayer.children[tile].y + collisionLayer.children[tile].collision.y);
+                    y2 = (collisionLayer.children[tile].y + collisionLayer.children[tile].collision.y +  collisionLayer.children[tile].collision.height);
+
+                    if(lineIntersection(obj1.collisionCenter.x,obj1.collisionCenter.y, obj2.collisionCenter.x, obj2.collisionCenter.y, x1,y1,x2,y2))
+                        return false;
+                    if(lineIntersection(obj1.collisionCenter.x,obj1.collisionCenter.y, obj2.collisionCenter.x, obj2.collisionCenter.y, x1,y2,x2,y1))
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    function lineIntersection(x1,y1,x2,y2,x3,y3,x4,y4)
+    {
+        var rx = (x2-x1);
+        var ry = (y2-y1);
+        var sx = (x4-x3);
+        var sy = (y4-y3);
+        var t = cross2D(x3-x1,y3-y1,sx,sy) / cross2D(rx,ry,sx,sy);
+        var u = cross2D(x3-x1,y3-y1,rx,ry) / cross2D(rx,ry,sx,sy);
+       if(t >= 0 && t <= 1 && u >=0 && u <=1)
+           return true;
+       else
+           return false;
+    }
+
+    function cross2D(x1,y1,x2,y2)
+    {
+        //2d cross product = A*B = A.x*B.y - A.y*B.x
+        return ((x1*y2)-(y1*x2));
     }
 
 
