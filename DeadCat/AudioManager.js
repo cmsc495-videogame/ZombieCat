@@ -34,6 +34,7 @@ Last Updated 12/16/2017
     }
     AudioManager.prototype.playSound = function(soundFile) {
         _sounds[soundFile].play();
+        console.log(soundFile);
     }
     AudioManager.prototype.resumeSound = function(soundFile) {
         if(!_sounds[soundFile].playing())
