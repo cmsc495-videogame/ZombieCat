@@ -33,7 +33,6 @@ Last Updated 12/16/2017
         _sounds[soundFile].pause();
     }
     AudioManager.prototype.playSound = function(soundFile) {
-        console.log(soundFile);
         if(_sounds[soundFile])
             _sounds[soundFile].play();
     }

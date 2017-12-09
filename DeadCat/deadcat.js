@@ -138,7 +138,10 @@ Author: William Kendall
                     }
                     newObj.visible = obj.visible;
                     newObj.x = obj.x;
-                    newObj.y = obj.y - obj.height;//- objTileset.tileheight; //tiled objects are reference from their bottom edge
+                    if(obj.hasOwnProperty("gid")) //Tiled is so odd (only images are bottom referenced)
+                        newObj.y = obj.y - obj.height;//- objTileset.tileheight; //tiled objects are reference from their bottom edge
+                    else
+                        newObj.y = obj.y;
                     newObj.width = obj.width; //objTileset.tilewidth;
                     newObj.height = obj.height;//objTileset.tileheight;
                     if(obj.hasOwnProperty("gid")) {

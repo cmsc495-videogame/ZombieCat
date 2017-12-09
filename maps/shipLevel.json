@@ -313,7 +313,7 @@
                      "loop":false,
                      "rate":3,
                      "sound":"audio\/sfx_walking_dirt-shoes.wav",
-                     "volume":0.5
+                     "volume":1
                     },
                  "propertytypes":
                     {
@@ -363,7 +363,7 @@
                      "loop":true,
                      "rate":1,
                      "sound":"audio\/music_ChasedByARunningChupacabra.mp3",
-                     "volume":0.05
+                     "volume":0.3
                     },
                  "propertytypes":
                     {
@@ -1202,8 +1202,8 @@
                  "type":"",
                  "visible":true,
                  "width":64,
-                 "x":1327,
-                 "y":751
+                 "x":1326,
+                 "y":736
                 }, 
                 {
                  "gid":745,
@@ -1463,7 +1463,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":123,
+ "nextobjectid":125,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
