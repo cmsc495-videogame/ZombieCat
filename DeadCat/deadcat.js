@@ -22,6 +22,9 @@ Author: William Kendall
     var _gameDelta = 0; //time delta for game update loops
 
     function DeadCat(mapFile, gameSetup, gameLoop) {
+        //creates all the modules used by the engine
+        //also downloads the tiled map file
+
         _engine = this;
         _engine.Utils = new Utils();
         _engine.KeyboardManager = new KeyboardManager();
@@ -41,6 +44,9 @@ Author: William Kendall
     }
 
     function getTilesetInformation(gid)
+    //private function
+    //get information of a gid tile
+    //tiled stores gid by relative indexes, this will return non relative indexes
     {
         for (var ts = 0; ts < _map.tilesets.length; ts++) {
             if( _map.tilesets[ts].firstgid <= gid && (_map.tilesets[ts].tilecount + _map.tilesets[ts].firstgid) > gid )
@@ -52,6 +58,8 @@ Author: William Kendall
     }
 
     function mapLoaded(rMap) {
+        //loads the map file after it has been downloaded into the game engine
+
         _map = rMap;
 
         console.log(_map); //for debugging reasons
@@ -154,6 +162,8 @@ Author: William Kendall
     var gml = false; //engine is setup flag
 
     function _update(delta) {
+        //updates the game and any modules that have update functions
+
         if (delta > 2) delta = 0.5; //Stop player from jumping from one spot to another after lag
 
         if (_GraphicsManager.resourcesLoaded === false) {
@@ -237,6 +247,7 @@ Author: William Kendall
 
         DeadCat.prototype.setLoop = function (loop)
         {
+            //sets the main game loop
             _gameupdate = loop;
         }
 

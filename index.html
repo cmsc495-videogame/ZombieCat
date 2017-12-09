@@ -81,6 +81,9 @@
     var mainMenuLayer = null;
     var hudLayer = null;
 
+    var specialObjects = null; //for health or loading new maps
+
+
     function setup() {
         //get the main menu
         mainMenuLayer = game.LogicManager.getLayerByName("MainMenu");
@@ -104,7 +107,7 @@
         healthBar.innerBar = innerBar;
 
         //Create the front red rectangle
-        var outerBar = hudLayer.addGraphics()
+        var outerBar = hudLayer.addGraphics();
         outerBar.beginFill(0xFFFFFF);
         outerBar.drawRect(0, 0, 200, 24);
         outerBar.endFill();
@@ -116,6 +119,11 @@
         collisionLayer = game.LogicManager.getLayerByName("Collision");
         //get objects layer (holds player and animations)
         objectLayer = game.LogicManager.getLayerByName("Objects");
+
+        //get special objects layer
+        var specialLayer =  game.LogicManager.getLayerByName("Special");
+        specialObjects = game.LogicManager.getObjectsInLayer(specialLayer);
+
 
         //setup the player-----------------------------------
         //
@@ -371,6 +379,26 @@
                 }
             }
         }
+
+
+
+        //--Special objects Logic----------------------------------------------
+        //
+        for(var key in specialObjects)
+        {
+            //test if the player is hitting the object
+            if(specialObjects[key].visible && game.LogicManager.hitTest(player, specialObjects[key]))
+            {
+                switch(specialObjects[key].name) {
+                    case "health":
+                        player.properties.health = 100;
+                        updateHealthBar();
+                        specialObjects[key].visible = false;
+                        break;
+                }
+            }
+        }
+
 
 
         //update animated tiles

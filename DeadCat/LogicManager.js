@@ -73,6 +73,14 @@ Author: William Kendall
         return objects;
     };
 
+    LogicManager.prototype.getObjectsInLayer = function (layer) {
+        var objects = [];
+        for (childObj in layer.children) {
+                objects.push(layer.children[childObj]);
+        }
+        return objects;
+    };
+
     LogicManager.prototype.getLayerByName = function (name) {
         for (layer in _layers) {
             if (_layers[layer].name == name)
@@ -208,10 +216,16 @@ Author: William Kendall
     LogicManager.prototype.hitTest = function (object1, object2) {
         //hit test between two objects
         //this is slow
-        return (object1.x + object1.collision.x) + object1.collision.width > (object2.x + object2.collision.x) &&
-            (object1.x + object1.collision.x) < (object2.x + object2.collision.x) + object2.collision.width &&
-            (object1.y + object1.collision.y ) + object1.collision.height > (object2.y + object2.collision.y) &&
-            (object1.y + object1.collision.y ) < (object2.y + object2.collision.y) + object2.collision.height;
+        if(object2.hasCollision)
+            return (object1.x + object1.collision.x) + object1.collision.width > (object2.x + object2.collision.x) &&
+                (object1.x + object1.collision.x) < (object2.x + object2.collision.x) + object2.collision.width &&
+                (object1.y + object1.collision.y ) + object1.collision.height > (object2.y + object2.collision.y) &&
+                (object1.y + object1.collision.y ) < (object2.y + object2.collision.y) + object2.collision.height;
+        else
+            return (object1.x + object1.collision.x) + object1.collision.width > (object2.x) &&
+                (object1.x + object1.collision.x) < (object2.x ) + object2.width &&
+                (object1.y + object1.collision.y ) + object1.collision.height > (object2.y) &&
+                (object1.y + object1.collision.y ) < (object2.y ) + object2.height;
     };
 
     LogicManager.prototype.hitTestLayer = function (obj, layer) {
