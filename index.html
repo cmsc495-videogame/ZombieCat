@@ -245,7 +245,9 @@
             if (player.properties.attack_rechargeState == 0) {
 
                 //Player Attack sound
-                game.AudioManager.playSound(player.properties.sound_attack);
+                //game.AudioManager.playSound(player.properties.sound_attack);
+
+
                 //------------------
 
                 console.log('attack');
@@ -268,6 +270,9 @@
                     }
                 }
                 if (closestCat) {
+                    //player hit cat sound
+                    game.AudioManager.playSound(player.properties.sound_attack);
+
                     cats[closestCat].properties.health -= player.properties.attack_damage;
 
                     //Sound - Cat_Hurt
@@ -275,6 +280,11 @@
                     //------------------
 
                     //Debug: console.log('attack cat: ' + closestCat + '  to health: ' + cats[closestCat].properties.health);
+                }
+                else
+                {
+                    //no cat was attacked
+                    game.AudioManager.playSound(player.properties.sound_miss);
                 }
                 player.properties.attack_rechargeState = player.properties.attack_rechargeTime;
             }

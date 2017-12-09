@@ -176,8 +176,8 @@
                  "type":"",
                  "visible":true,
                  "width":20,
-                 "x":1990,
-                 "y":2978
+                 "x":2161,
+                 "y":2983
                 }, 
                 {
                  "height":20,
@@ -201,8 +201,8 @@
                  "type":"",
                  "visible":true,
                  "width":20,
-                 "x":1974.5,
-                 "y":2962.5
+                 "x":2289,
+                 "y":2945
                 }, 
                 {
                  "height":20,
@@ -226,8 +226,8 @@
                  "type":"",
                  "visible":true,
                  "width":20,
-                 "x":1982,
-                 "y":2970
+                 "x":1946,
+                 "y":3059
                 }, 
                 {
                  "height":20,
@@ -251,8 +251,8 @@
                  "type":"",
                  "visible":true,
                  "width":20,
-                 "x":1974.5,
-                 "y":2962.5
+                 "x":2301,
+                 "y":3123
                 }, 
                 {
                  "height":20,
@@ -276,8 +276,8 @@
                  "type":"",
                  "visible":true,
                  "width":20,
-                 "x":1974.5,
-                 "y":2962.5
+                 "x":1094,
+                 "y":862
                 }, 
                 {
                  "height":20,
@@ -301,8 +301,8 @@
                  "type":"",
                  "visible":true,
                  "width":20,
-                 "x":1974.5,
-                 "y":2962.5
+                 "x":1236,
+                 "y":865
                 }, 
                 {
                  "height":20,
@@ -326,8 +326,8 @@
                  "type":"",
                  "visible":true,
                  "width":20,
-                 "x":1974.5,
-                 "y":2962.5
+                 "x":1235,
+                 "y":790
                 }, 
                 {
                  "height":20,
@@ -351,8 +351,8 @@
                  "type":"",
                  "visible":true,
                  "width":20,
-                 "x":1974.5,
-                 "y":2962.5
+                 "x":1097,
+                 "y":793
                 }, 
                 {
                  "height":20,
@@ -376,8 +376,8 @@
                  "type":"",
                  "visible":true,
                  "width":20,
-                 "x":1975,
-                 "y":2963
+                 "x":1842,
+                 "y":2965
                 }, 
                 {
                  "height":20,
@@ -401,8 +401,33 @@
                  "type":"",
                  "visible":true,
                  "width":20,
-                 "x":1983,
-                 "y":2971
+                 "x":2065,
+                 "y":3025
+                }, 
+                {
+                 "height":20,
+                 "id":122,
+                 "name":"sfx_player_miss",
+                 "properties":
+                    {
+                     "loop":false,
+                     "rate":1,
+                     "sound":"audio\/qubodup-wobble1.wav",
+                     "volume":1
+                    },
+                 "propertytypes":
+                    {
+                     "loop":"bool",
+                     "rate":"float",
+                     "sound":"string",
+                     "volume":"float"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":20,
+                 "x":1094,
+                 "y":735
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1154,6 +1179,7 @@
                      "sound_attack":"sfx_player_attack",
                      "sound_die":"sfx_player_die",
                      "sound_hurt":"sfx_player_hurt",
+                     "sound_miss":"sfx_player_miss",
                      "sound_move":"sfx_player_walk",
                      "state_animate":true
                     },
@@ -1168,6 +1194,7 @@
                      "sound_attack":"string",
                      "sound_die":"string",
                      "sound_hurt":"string",
+                     "sound_miss":"string",
                      "sound_move":"string",
                      "state_animate":"bool"
                     },
@@ -1436,7 +1463,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":120,
+ "nextobjectid":123,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
