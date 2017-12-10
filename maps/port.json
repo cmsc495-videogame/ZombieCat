@@ -927,8 +927,152 @@
                  "type":"",
                  "visible":true,
                  "width":48,
-                 "x":4069,
-                 "y":3031
+                 "x":3259,
+                 "y":3066
+                }, 
+                {
+                 "gid":914,
+                 "height":48,
+                 "id":148,
+                 "name":"Zombie",
+                 "properties":
+                    {
+                     "AttackDistance":50,
+                     "attack_damage":5,
+                     "attack_range":50,
+                     "attack_rechargeState":0,
+                     "attack_rechargeTime":100,
+                     "chase":false,
+                     "health":50,
+                     "sight":500,
+                     "sound_attack":"sfx_cat_attack",
+                     "sound_die":"sfx_cat_die",
+                     "sound_hurt":"sfx_cat_hurt",
+                     "sound_move":"sfx_cat_walk",
+                     "speed":2,
+                     "state_animate":true,
+                     "state_dead":false
+                    },
+                 "propertytypes":
+                    {
+                     "AttackDistance":"int",
+                     "attack_damage":"int",
+                     "attack_range":"int",
+                     "attack_rechargeState":"int",
+                     "attack_rechargeTime":"int",
+                     "chase":"bool",
+                     "health":"int",
+                     "sight":"float",
+                     "sound_attack":"string",
+                     "sound_die":"string",
+                     "sound_hurt":"string",
+                     "sound_move":"string",
+                     "speed":"float",
+                     "state_animate":"bool",
+                     "state_dead":"bool"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":48,
+                 "x":1199,
+                 "y":725
+                }, 
+                {
+                 "gid":914,
+                 "height":48,
+                 "id":149,
+                 "name":"Zombie",
+                 "properties":
+                    {
+                     "AttackDistance":50,
+                     "attack_damage":5,
+                     "attack_range":50,
+                     "attack_rechargeState":0,
+                     "attack_rechargeTime":100,
+                     "chase":false,
+                     "health":50,
+                     "sight":500,
+                     "sound_attack":"sfx_cat_attack",
+                     "sound_die":"sfx_cat_die",
+                     "sound_hurt":"sfx_cat_hurt",
+                     "sound_move":"sfx_cat_walk",
+                     "speed":2,
+                     "state_animate":true,
+                     "state_dead":false
+                    },
+                 "propertytypes":
+                    {
+                     "AttackDistance":"int",
+                     "attack_damage":"int",
+                     "attack_range":"int",
+                     "attack_rechargeState":"int",
+                     "attack_rechargeTime":"int",
+                     "chase":"bool",
+                     "health":"int",
+                     "sight":"float",
+                     "sound_attack":"string",
+                     "sound_die":"string",
+                     "sound_hurt":"string",
+                     "sound_move":"string",
+                     "speed":"float",
+                     "state_animate":"bool",
+                     "state_dead":"bool"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":48,
+                 "x":3825,
+                 "y":2898
+                }, 
+                {
+                 "gid":914,
+                 "height":48,
+                 "id":150,
+                 "name":"Zombie",
+                 "properties":
+                    {
+                     "AttackDistance":50,
+                     "attack_damage":5,
+                     "attack_range":50,
+                     "attack_rechargeState":0,
+                     "attack_rechargeTime":100,
+                     "chase":false,
+                     "health":50,
+                     "sight":500,
+                     "sound_attack":"sfx_cat_attack",
+                     "sound_die":"sfx_cat_die",
+                     "sound_hurt":"sfx_cat_hurt",
+                     "sound_move":"sfx_cat_walk",
+                     "speed":2,
+                     "state_animate":true,
+                     "state_dead":false
+                    },
+                 "propertytypes":
+                    {
+                     "AttackDistance":"int",
+                     "attack_damage":"int",
+                     "attack_range":"int",
+                     "attack_rechargeState":"int",
+                     "attack_rechargeTime":"int",
+                     "chase":"bool",
+                     "health":"int",
+                     "sight":"float",
+                     "sound_attack":"string",
+                     "sound_die":"string",
+                     "sound_hurt":"string",
+                     "sound_move":"string",
+                     "speed":"float",
+                     "state_animate":"bool",
+                     "state_dead":"bool"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":48,
+                 "x":2743,
+                 "y":550
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1294,7 +1438,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":148,
+ "nextobjectid":151,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
@@ -4215,6 +4359,31 @@
                     }
                 },
              "59":
+                {
+                 "objectgroup":
+                    {
+                     "draworder":"index",
+                     "name":"",
+                     "objects":[
+                            {
+                             "height":32,
+                             "id":1,
+                             "name":"",
+                             "rotation":0,
+                             "type":"",
+                             "visible":true,
+                             "width":32,
+                             "x":0,
+                             "y":0
+                            }],
+                     "opacity":1,
+                     "type":"objectgroup",
+                     "visible":true,
+                     "x":0,
+                     "y":0
+                    }
+                },
+             "60":
                 {
                  "objectgroup":
                     {
