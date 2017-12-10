@@ -35,7 +35,7 @@
     /*This script has somehow became the game*/
 
     var game;
-    Levels = ["mainmenu.json", "shipLevel.json"];
+    Levels = ["mainmenu.json","shipLevel.json", "port.json"];
     game = new DeadCat("maps/" + Levels[0], mainMenuSetup, MainMenuLoop);
 
     //main menu
@@ -470,8 +470,9 @@
                         specialObjects[key].visible = false;
                         break;
                     case "load_x_level":
-                        console.log("next level");
-                        break;
+                        console.log("Peer Level");
+                        LoadLevel(2);
+                        return;
                 }
             }
         }
