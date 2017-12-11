@@ -523,6 +523,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -541,6 +545,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -571,6 +579,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -589,6 +601,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -619,6 +635,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -637,6 +657,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -667,6 +691,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -685,6 +713,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -715,6 +747,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -733,6 +769,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -763,6 +803,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -781,6 +825,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -811,6 +859,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -829,6 +881,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -859,6 +915,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -877,6 +937,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -907,6 +971,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -925,6 +993,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -955,6 +1027,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -973,6 +1049,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -1003,6 +1083,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -1021,6 +1105,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -1051,6 +1139,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -1069,6 +1161,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -1099,6 +1195,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -1117,6 +1217,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -1147,6 +1251,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -1165,6 +1273,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -1393,6 +1505,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -1411,6 +1527,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -1441,6 +1561,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -1459,6 +1583,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -1489,6 +1617,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -1507,6 +1639,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -1537,6 +1673,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -1555,6 +1695,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -1585,6 +1729,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -1603,6 +1751,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -1633,6 +1785,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -1651,6 +1807,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -1681,6 +1841,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -1699,6 +1863,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -1729,6 +1897,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -1747,6 +1919,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -1777,6 +1953,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -1795,6 +1975,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -1825,6 +2009,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -1843,6 +2031,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",
@@ -1873,6 +2065,10 @@
                  "properties":
                     {
                      "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
                      "attack_damage":5,
                      "attack_range":50,
                      "attack_rechargeState":0,
@@ -1891,6 +2087,10 @@
                  "propertytypes":
                     {
                      "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
                      "attack_damage":"int",
                      "attack_range":"int",
                      "attack_rechargeState":"int",

@@ -172,6 +172,7 @@
         //set some random speeds for the cats
         for (var cat in cats) {
             cats[cat].properties.speed = Math.random() * ((cats[cat].properties.speed + .4) - (cats[cat].properties.speed - 0.4)) + (cats[cat].properties.speed - 0.4);
+            cats[cat].defaultGid = cats[cat].gid;
         }
 
         //Set up sounds---------------------------------------
@@ -387,12 +388,12 @@
                 if(cats[cat].properties.chase == false){
                     if(game.LogicManager.lineOfSight(player, cats[cat], collisionLayer)) {
                         cats[cat].properties.chase = true;
-                        console.log("Cat: " + cat + " can see you");
+                        //console.log("Cat: " + cat + " can see you");
                         game.AudioManager.playSound(cats[cat].properties.sound_move);
                     }
                 }else if(game.LogicManager.distance(player, cats[cat]) > cats[cat].properties.sight*1.2){
                     game.AudioManager.stopSound(cats[cat].properties.sound_move);
-                    console.log("You gave cat: " + cat + " the slip");
+                    //console.log("You gave cat: " + cat + " the slip");
                     cats[cat].properties.chase = false;
                 }
 
@@ -436,18 +437,18 @@
                     cats[cat].dx = cats[cat].x - catOldX;
                     cats[cat].dy = cats[cat].y - catOldY;
 
-                    cats[cat].gid = catGid;
+                    cats[cat].gid = cats[cat].defaultGid;
 
                     if (Math.abs(cats[cat].dy) > Math.abs(cats[cat].dx)) {
                         if (cats[cat].dy >= 0)
-                            cats[cat].gid = Animations.cat_move_forward;
+                            cats[cat].gid = Animations[cats[cat].properties.ani_move_forward]; //Animations.cat_move_forward;
                         else
-                            cats[cat].gid = Animations.cat_move_back;
+                            cats[cat].gid = Animations[cats[cat].properties.ani_move_back]; // Animations.cat_move_back;
                     } else {
                         if (cats[cat].dx >= 0)
-                            cats[cat].gid = Animations.cat_move_right;
+                            cats[cat].gid = Animations[cats[cat].properties.ani_move_right]; //Animations.cat_move_right;
                         else
-                            cats[cat].gid = Animations.cat_move_left;
+                            cats[cat].gid = Animations[cats[cat].properties.ani_move_left]; //Animations.cat_move_left;
                     }
                     game.AudioManager.resumeSound(cats[cat].properties.sound_move);
                 }
