@@ -218,8 +218,8 @@
                  "type":"",
                  "visible":true,
                  "width":64,
-                 "x":331,
-                 "y":1577
+                 "x":297,
+                 "y":1575
                 }, 
                 {
                  "gid":745,
@@ -5026,6 +5026,31 @@
          "tileheight":48,
          "tiles":
             {
+             "0":
+                {
+                 "objectgroup":
+                    {
+                     "draworder":"index",
+                     "name":"",
+                     "objects":[
+                            {
+                             "height":22,
+                             "id":1,
+                             "name":"",
+                             "rotation":0,
+                             "type":"",
+                             "visible":true,
+                             "width":21,
+                             "x":12,
+                             "y":15
+                            }],
+                     "opacity":1,
+                     "type":"objectgroup",
+                     "visible":true,
+                     "x":0,
+                     "y":0
+                    }
+                },
              "11":
                 {
                  "animation":[
