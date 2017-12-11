@@ -83,9 +83,12 @@ Author: William Kendall
             var layer = _map.layers[lay];
             var newLayer = new dcLayer();
             newLayer.zIndex  = zIndex;
-            if (layer.hasOwnProperty("properties"))
-                newLayer.properties =  _engine.Utils.extend(newLayer.properties, layer.properties) ;
-            if (layer.hasOwnProperty("name"))
+            if (layer.hasOwnProperty("properties")) {
+                newLayer.properties = _engine.Utils.extend(newLayer.properties, layer.properties);
+            }
+            else
+                    newLayer.properties = {};
+                if (layer.hasOwnProperty("name"))
                 newLayer.name = layer.name;
                 newLayer.visible = layer.visible;
 

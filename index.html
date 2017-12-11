@@ -94,25 +94,27 @@
 
         //Create darkness-----------------------------------
         //Since the health bar is over the darkness, this must come first
-        var darkness = hudLayer.addGraphics()
-            .beginFill(0x000000)
-            .moveTo(0,0)
-            .lineTo(game.LogicManager.getWidth(),0)
-            .lineTo(game.LogicManager.getWidth(), game.LogicManager.getHeight())
-            .lineTo(0, game.LogicManager.getHeight())
-            .moveTo(game.LogicManager.getWidth()/2,game.LogicManager.getHeight()/2)
-            .arc(game.LogicManager.getWidth()/2,game.LogicManager.getHeight()/2,200,0,Math.PI*2)
-            .addHole();
-        darkness.alpha=0.90;
-        var totalDarkness = hudLayer.addGraphics()
-        totalDarkness.beginFill(0x000000)
-        totalDarkness.moveTo(0,0)
-        totalDarkness.lineTo(game.LogicManager.getWidth(),0)
-        totalDarkness.lineTo(game.LogicManager.getWidth(), game.LogicManager.getHeight())
-        totalDarkness.lineTo(0, game.LogicManager.getHeight())
-        totalDarkness.alpha=0.4;
-        //darkness.drawRect(0, 0, game.LogicManager.getWidth(), game.LogicManager.getHeight());
-
+        if(hudLayer.properties.hasOwnProperty("fow"))
+            if(hudLayer.properties.fow == true) {
+                var darkness = hudLayer.addGraphics()
+                    .beginFill(0x000000)
+                    .moveTo(0, 0)
+                    .lineTo(game.LogicManager.getWidth(), 0)
+                    .lineTo(game.LogicManager.getWidth(), game.LogicManager.getHeight())
+                    .lineTo(0, game.LogicManager.getHeight())
+                    .moveTo(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2)
+                    .arc(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2, 200, 0, Math.PI * 2)
+                    .addHole();
+                darkness.alpha = 0.90;
+                var totalDarkness = hudLayer.addGraphics()
+                totalDarkness.beginFill(0x000000)
+                totalDarkness.moveTo(0, 0)
+                totalDarkness.lineTo(game.LogicManager.getWidth(), 0)
+                totalDarkness.lineTo(game.LogicManager.getWidth(), game.LogicManager.getHeight())
+                totalDarkness.lineTo(0, game.LogicManager.getHeight())
+                totalDarkness.alpha = 0.4;
+                //darkness.drawRect(0, 0, game.LogicManager.getWidth(), game.LogicManager.getHeight());
+            }
 
         //----------------------------------------------------
 

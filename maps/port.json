@@ -2790,10 +2790,12 @@
          "opacity":1,
          "properties":
             {
+             "fow":true,
              "gui":true
             },
          "propertytypes":
             {
+             "fow":"bool",
              "gui":"bool"
             },
          "type":"objectgroup",
