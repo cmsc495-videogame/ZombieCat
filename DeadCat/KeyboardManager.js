@@ -18,6 +18,13 @@
         _kbm.keysPressed[key.which] = true;
     }
 
+    KeyboardManager.prototype.keyClicked = function(key) {
+        if(_kbm.keysPressed[key]){
+            _kbm.keysPressed[key]=false;
+            return true;
+        }
+        return false;
+    }
 
     $w._DeadCat_KeyboardManager = KeyboardManager;
 }(this);

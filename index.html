@@ -184,28 +184,26 @@
 
 
     function menuloop(game, delta) {
-        if ((game.KeyboardManager.keysPressed[13]||game.KeyboardManager.keysPressed[27]) && player.properties.health > 0) {
-            sleep(300);
+        if ((game.KeyboardManager.keyClicked(13)||game.KeyboardManager.keyClicked(27)) && player.properties.health > 0) {
             mainMenuLayer.visible = false;
             game.setLoop(gameloop);
             return;
         }
 
         //Restart current level by pressing 'r'
-        if (game.KeyboardManager.keysPressed[82]) {
+        if (game.KeyboardManager.keyClicked(82)) {
             LoadLevel(currentLevel);
             return;
         }
 
         //Load Main Menu by pressing 'm'
-        if (game.KeyboardManager.keysPressed[77]) {
+        if (game.KeyboardManager.keyClicked(77)) {
             LoadLevel(0)
             return;
         }
 
         //Toggle Background music
-        if (game.KeyboardManager.keysPressed[81]) {
-            sleep(300);
+        if (game.KeyboardManager.keyClicked(81)) {
             game.AudioManager.toggleSound("music_background");
         }
     }
@@ -217,8 +215,7 @@
     function gameloop(game, delta) {
 
         //escape to show pause menu
-        if (game.KeyboardManager.keysPressed[27] == true){
-            sleep(300);
+        if (game.KeyboardManager.keyClicked(27)){
             mainMenuLayer.visible = true;
             game.setLoop(menuloop);
         }
