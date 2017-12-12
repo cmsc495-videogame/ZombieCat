@@ -208,7 +208,7 @@ Author: William Kendall
         _gameDelta = delta;
         _engine.LogicManager.update(delta);
         _gameupdate(_engine, delta);
-
+        _engine.KeyboardManager.update();
 
     }
 
