@@ -184,7 +184,8 @@
 
 
     function menuloop(game, delta) {
-        if (game.KeyboardManager.keysPressed[13] && player.properties.health > 0) {
+        if ((game.KeyboardManager.keysPressed[13]||game.KeyboardManager.keysPressed[27]) && player.properties.health > 0) {
+            sleep(300);
             mainMenuLayer.visible = false;
             game.setLoop(gameloop);
             return;
@@ -204,6 +205,7 @@
 
         //Toggle Background music
         if (game.KeyboardManager.keysPressed[81]) {
+            sleep(300);
             game.AudioManager.toggleSound("music_background");
         }
     }
@@ -214,8 +216,9 @@
 
     function gameloop(game, delta) {
 
-        //escape to show main menu
-        if (game.KeyboardManager.keysPressed[27] == true) {
+        //escape to show pause menu
+        if (game.KeyboardManager.keysPressed[27] == true){
+            sleep(300);
             mainMenuLayer.visible = true;
             game.setLoop(menuloop);
         }
@@ -512,6 +515,16 @@
         //Does not display health below 0
         if (healthBar.outer.width < 0)
             healthBar.outer.width = 0;
+    }
+
+    //--Sleep Function-------------------------------------------------------
+    function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > milliseconds){
+                break;
+            }
+        }
     }
 
 </script>
