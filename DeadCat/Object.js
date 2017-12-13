@@ -2,7 +2,7 @@
 Team Zombie Cat
 Dead Cat Game Engine - Game Objects
 
-Author: William Kendall
+Authors: William Kendall, John Sakosky, Kevin Helms, Vladimir Roman, Benjamin Sheren
 */
 
 !function ($w, PIXI) {
@@ -32,6 +32,13 @@ Author: William Kendall
         var graphics = new PIXI.Graphics();
         this.addChild(graphics);
         return graphics;
+    }
+
+    Layer.prototype.addText = function()
+    {
+        var text = new PIXI.Text();
+        this.addChild(text);
+        return text;
     }
 
 

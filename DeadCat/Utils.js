@@ -2,7 +2,7 @@
 Team Zombie Cat
 Dead Cat Game Engine - helper functions
 
-Author: William Kendall
+Authors: William Kendall, John Sakosky, Kevin Helms, Vladimir Roman, Benjamin Sheren
 */
 
 
