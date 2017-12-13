@@ -144,6 +144,17 @@
         game.LogicManager.positionAbsolute(hudLayer, "top-left");
 
         //-------------------------------------------------------------
+        //--  Display Version Number  ---------------------------------
+        //-------------------------------------------------------------
+        {
+            //Create Label
+            var versionLabel = hudLayer.addText();
+            versionLabel.text = "ZombieCat v0.4.1";
+            versionLabel.style = {fill: "white", fontSize: 20};
+            versionLabel.position.set(600, 550);
+        }
+
+        //-------------------------------------------------------------
         //-- Create darkness ------------------------------------------
         //-------------------------------------------------------------
 
