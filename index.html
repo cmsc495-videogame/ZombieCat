@@ -401,12 +401,12 @@
                 var closestCat = null;
                 var closestCatDistance = null;
                 if (player.properties.attack_rechargeState <= 0 && player.properties.stamina >= player.properties.attack_stamina) {
-                    console.log('attack');
+                    //console.log('attack');
                     for (var cat in cats) {
                         if (cats[cat].properties.state_dead != true) {
                             var currentCatDistance = game.LogicManager.distance(player, cats[cat]);
                             if (currentCatDistance <= player.properties.attack_range) {
-                                if (Math.abs(game.LogicManager.angle(player, cats[cat]) - player.direction) <= player.properties.attack_angle) {
+                                if (Math.abs(game.LogicManager.angle(player, cats[cat])) - Math.abs(player.direction) <= player.properties.attack_angle) {
                                     if (closestCat) {
                                         if (currentCatDistance < closestCatDistance) {
                                             closestCat = cat;
