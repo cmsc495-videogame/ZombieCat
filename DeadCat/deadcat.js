@@ -2,7 +2,7 @@
 Team Zombie Cat
 Dead Cat Game Engine
 
-Author: William Kendall
+Authors: William Kendall, John Sakosky, Kevin Helms, Vladimir Roman, Benjamin Sheren
  */
 
 !function ($w, Utils, GraphicsManager, KeyboardManager, LogicManager, AudioManager, dcObject, dcLayer) {

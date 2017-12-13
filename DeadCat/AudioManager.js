@@ -2,7 +2,7 @@
 Team Zombie Cat
 Dead Cat Audio Manager - Sound Using Howler.js
 
-Author: Kevin Helms
+Authors: William Kendall, John Sakosky, Kevin Helms, Vladimir Roman, Benjamin Sheren
 Last Updated 12/16/2017
 */
 
