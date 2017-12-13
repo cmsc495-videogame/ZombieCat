@@ -28,6 +28,17 @@
     #display {
         display: flex;
         justify-content: center;
+
+        #position:fixed;
+        top:0px;
+        right:0px;
+        width:100%;
+        height:100%;
+        background-color:#000;
+        background-image:url('loading.gif');
+        background-repeat:no-repeat;
+        background-position:center;
+
     }
 </style>
 <script type="text/javascript">
@@ -144,91 +155,14 @@
         game.LogicManager.positionAbsolute(hudLayer, "top-left");
 
         //-------------------------------------------------------------
-        //-- Create darkness ------------------------------------------
+        //--  Display Version Number  ---------------------------------
         //-------------------------------------------------------------
-
-        //Since the health bar is over the darkness, this must come first
-        if (hudLayer.properties.hasOwnProperty("fow")) {
-            if (hudLayer.properties.fow == true) {
-                var darkness = hudLayer.addGraphics()
-                    .beginFill(0x000000)
-                    .moveTo(0, 0)
-                    .lineTo(game.LogicManager.getWidth(), 0)
-                    .lineTo(game.LogicManager.getWidth(), game.LogicManager.getHeight())
-                    .lineTo(0, game.LogicManager.getHeight())
-                    .moveTo(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2)
-                    .arc(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2, 200, 0, Math.PI * 2)
-                    .addHole();
-                darkness.alpha = 0.90;
-                var totalDarkness = hudLayer.addGraphics()
-                totalDarkness.beginFill(0x000000)
-                totalDarkness.moveTo(0, 0)
-                totalDarkness.lineTo(game.LogicManager.getWidth(), 0)
-                totalDarkness.lineTo(game.LogicManager.getWidth(), game.LogicManager.getHeight())
-                totalDarkness.lineTo(0, game.LogicManager.getHeight())
-                totalDarkness.alpha = 0.4;
-                //darkness.drawRect(0, 0, game.LogicManager.getWidth(), game.LogicManager.getHeight());
-            }
-        }
-
-        //-------------------------------------------------------------
-        //--  Status Bars  --------------------------------------------
-        //-------------------------------------------------------------
-
-        //Create Health Bar
         {
-            healthBar = hudLayer.addGraphics();
-
             //Create Label
-            var label = hudLayer.addText();
-            label.text = "Health:";
-            label.style = {fontSize: 12};
-            label.position.set(20, 5);
-            healthBar.label = label;
-
-            //Create the black background rectangle
-            var innerBar = hudLayer.addGraphics();
-            innerBar.beginFill(0x000000);
-            innerBar.alpha = 0.5;
-            innerBar.drawRect(20, 20, 200, 24);
-            innerBar.endFill();
-            healthBar.innerBar = innerBar;
-
-            //Create the front red rectangle
-            var outerBar = hudLayer.addGraphics();
-            outerBar.beginFill(0xFFFFFF);
-            outerBar.drawRect(20, 20, 200, 24);
-            outerBar.endFill();
-            outerBar.tint = 0x00FF00;
-            healthBar.outer = outerBar;
-        }
-
-        //Create Stamina Bar
-        {
-            staminaBar = hudLayer.addGraphics();
-
-            //Create Label
-            var label = hudLayer.addText();
-            label.text = "Stamina:";
-            label.style = {fontSize: 12};
-            label.position.set(20, 45);
-            healthBar.label = label;
-
-            //Create the black background rectangle
-            var innerBar = hudLayer.addGraphics();
-            innerBar.beginFill(0x000000);
-            innerBar.alpha = 0.5;
-            innerBar.drawRect(20, 60, 200, 24);
-            innerBar.endFill();
-            staminaBar.innerBar = innerBar;
-
-            //Create the front red rectangle
-            var outerBar = hudLayer.addGraphics();
-            outerBar.beginFill(0xFFFFFF);
-            outerBar.drawRect(20, 60, 200, 24);
-            outerBar.endFill();
-            outerBar.tint = 0x0000FF;
-            staminaBar.outer = outerBar;
+            var versionLabel = hudLayer.addText();
+            versionLabel.text = "ZombieCat v0.4.1";
+            versionLabel.style = {fill: "white", fontSize: 20};
+            versionLabel.position.set(600, 550);
         }
 
 
@@ -288,6 +222,95 @@
         //-------------------------------------------------------------
         //Set up sounds---------------------------------------
         game.AudioManager.playSound("music_background");
+
+
+        //-------------------------------------------------------------
+        //-- Create Fog of War ----------------------------------------
+        //-------------------------------------------------------------
+
+        //Since the health bar is over the darkness, this must come first
+        if (hudLayer.properties.hasOwnProperty("fow")) {
+            if (hudLayer.properties.fow == true) {
+                var darkness = hudLayer.addGraphics()
+                    .beginFill(0x000000)
+                    .moveTo(0, 0)
+                    .lineTo(game.LogicManager.getWidth(), 0)
+                    .lineTo(game.LogicManager.getWidth(), game.LogicManager.getHeight())
+                    .lineTo(0, game.LogicManager.getHeight())
+                    .moveTo(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2)
+                    .arc(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2, player.properties.fow_distance, 0, Math.PI * 2)
+                    .addHole();
+                darkness.alpha = 0.90;
+                var totalDarkness = hudLayer.addGraphics()
+                totalDarkness.beginFill(0x000000)
+                totalDarkness.moveTo(0, 0)
+                totalDarkness.lineTo(game.LogicManager.getWidth(), 0)
+                totalDarkness.lineTo(game.LogicManager.getWidth(), game.LogicManager.getHeight())
+                totalDarkness.lineTo(0, game.LogicManager.getHeight())
+                totalDarkness.alpha = 0.4;
+                //darkness.drawRect(0, 0, game.LogicManager.getWidth(), game.LogicManager.getHeight());
+            }
+        }
+
+        //-------------------------------------------------------------
+        //--  Status Bars  --------------------------------------------
+        //-------------------------------------------------------------
+
+        //Create Health Bar
+        {
+            healthBar = hudLayer.addGraphics();
+
+            //Create Label
+            var label = hudLayer.addText();
+            label.text = "Health:";
+            label.style = {fontSize: 12};
+            label.position.set(20, 5);
+            healthBar.label = label;
+
+            //Create the black background rectangle
+            var innerBar = hudLayer.addGraphics();
+            innerBar.beginFill(0x000000);
+            innerBar.alpha = 0.5;
+            innerBar.drawRect(20, 20, 200, 24);
+            innerBar.endFill();
+            healthBar.innerBar = innerBar;
+
+            //Create the front red rectangle
+            var outerBar = hudLayer.addGraphics();
+            outerBar.beginFill(0xFFFFFF);
+            outerBar.drawRect(20, 20, 200, 24);
+            outerBar.endFill();
+            outerBar.tint = 0x00FF00;
+            healthBar.outer = outerBar;
+        }
+
+        //Create Stamina Bar
+        {
+            staminaBar = hudLayer.addGraphics();
+
+            //Create Label
+            var label = hudLayer.addText();
+            label.text = "Stamina:";
+            label.style = {fontSize: 12};
+            label.position.set(20, 45);
+            staminaBar.label = label;
+
+            //Create the black background rectangle
+            var innerBar = hudLayer.addGraphics();
+            innerBar.beginFill(0x000000);
+            innerBar.alpha = 0.5;
+            innerBar.drawRect(20, 60, 200, 24);
+            innerBar.endFill();
+            staminaBar.innerBar = innerBar;
+
+            //Create the front red rectangle
+            var outerBar = hudLayer.addGraphics();
+            outerBar.beginFill(0xFFFFFF);
+            outerBar.drawRect(20, 60, 200, 24);
+            outerBar.endFill();
+            outerBar.tint = 0x0000FF;
+            staminaBar.outer = outerBar;
+        }
 
 
         //-------------------------------------------------------------
@@ -569,6 +592,21 @@
                     }
                     game.AudioManager.resumeSound(cats[cat].properties.sound_move);
                 }
+
+
+                //-----------------------------------------------------
+                //-- Cat Visability -----------------------------------
+                //-----------------------------------------------------
+
+                if (hudLayer.properties.hasOwnProperty("fow")) {
+                    if (hudLayer.properties.fow == true) {
+                        if(game.LogicManager.distance(player, cats[cat])<player.properties.fow_distance+10){
+                            cats[cat].visible = true;
+                        }else
+                            cats[cat].visible = false;
+                    }
+                }
+
             }
         }
 
