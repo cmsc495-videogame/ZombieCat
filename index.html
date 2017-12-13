@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Zombie Cat</title>
+    <title>Zombie Cat 0.4.1</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.1/pixi.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.5/howler.js"></script>
     <script type="text/javascript" src="DeadCat/Utils.js"></script>
@@ -28,19 +28,41 @@
     #display {
         display: flex;
         justify-content: center;
+
+        #position:fixed;
+        top:0px;
+        right:0px;
+        width:100%;
+        height:100%;
+        background-color:#000;
+        background-image:url('loading.gif');
+        background-repeat:no-repeat;
+        background-position:center;
+
     }
 </style>
 <script type="text/javascript">
     /*This script is demo code that shows the game engine off*/
     /*This script has somehow became the game*/
 
+    //#######################################################################
+    //  Main Variables
+
     var game;
-    Levels = ["mainmenu.json","shipLevel.json", "port.json"];
+    Levels = ["mainmenu.json", "shipLevel.json", "port.json"];
     game = new DeadCat("maps/" + Levels[0], mainMenuSetup, MainMenuLoop);
 
+    persistence = false;
+    persistence_health = 0;
+
+    //#######################################################################
+
+
+    //-----------------------------------------------------------------------
+    //## Menus and Levels ###################################################
+    //-----------------------------------------------------------------------
+
     //main menu
-
-
     function mainMenuSetup() {
         mainMenuLayer = game.LogicManager.getLayerByName("MainMenu");
         game.LogicManager.positionAbsolute(mainMenuLayer, "center");
@@ -56,6 +78,34 @@
         }
     }
 
+    //Pause Menu
+    function menuloop(game, delta) {
+        if ((game.KeyboardManager.keyClicked(13) || game.KeyboardManager.keyClicked(27)) && player.properties.health > 0) {
+            mainMenuLayer.visible = false;
+            game.setLoop(gameloop);
+            return;
+        }
+
+        //Restart current level by pressing 'r'
+        if (game.KeyboardManager.keyClicked(82)) {
+            //persistenceReset();
+            LoadLevel(currentLevel);
+            return;
+        }
+
+        //Load Main Menu by pressing 'm'
+        if (game.KeyboardManager.keyClicked(77)) {
+            LoadLevel(0)
+            return;
+        }
+
+        //Toggle Background music
+        if (game.KeyboardManager.keyClicked(81)) {
+            game.AudioManager.toggleSound("music_background");
+        }
+    }
+
+    //Level loader
     function LoadLevel(level) {
         game.destroy();
         if (level == 0)
@@ -63,7 +113,12 @@
         else
             game = new DeadCat("maps/" + Levels[level], setup, menuloop);
         currentLevel = level;
+
     }
+
+    //-----------------------------------------------------------------------
+    //-----------------------------------------------------------------------
+
 
     //playable level
     var currentLevel = 1;
@@ -74,8 +129,12 @@
 
     var cats = null;
     var catGid = 0;
+    var catOldX = 0.0;
+    var catOldY = 0.0;
 
     var healthBar = null;
+    var staminaBar = null;
+    var staminaTimer = 0;
 
     var objectLayer = null;
     var mainMenuLayer = null;
@@ -84,6 +143,9 @@
     var specialObjects = null; //for health or loading new maps
 
 
+    //-----------------------------------------------------------------------
+    //## SETUP ##############################################################
+    //-----------------------------------------------------------------------
     function setup() {
         //get the main menu
         mainMenuLayer = game.LogicManager.getLayerByName("MainMenu");
@@ -92,10 +154,83 @@
         hudLayer = game.LogicManager.getLayerByName("HUD");
         game.LogicManager.positionAbsolute(hudLayer, "top-left");
 
-        //Create darkness-----------------------------------
+        //-------------------------------------------------------------
+        //--  Display Version Number  ---------------------------------
+        //-------------------------------------------------------------
+        {
+            //Create Label
+            var versionLabel = hudLayer.addText();
+            versionLabel.text = "ZombieCat v0.4.1";
+            versionLabel.style = {fill: "white", fontSize: 20};
+            versionLabel.position.set(600, 550);
+        }
+
+
+        //-------------------------------------------------------------
+        //--  Map Layers  ---------------------------------------------
+        //-------------------------------------------------------------
+
+        //get map layer
+        collisionLayer = game.LogicManager.getLayerByName("Collision");
+
+        //get objects layer (holds player and animations)
+        objectLayer = game.LogicManager.getLayerByName("Objects");
+
+        //get special objects layer
+        var specialLayer = game.LogicManager.getLayerByName("Special");
+        specialObjects = game.LogicManager.getObjectsInLayer(specialLayer);
+
+
+        //-------------------------------------------------------------
+        //--  Player  -------------------------------------------------
+        //-------------------------------------------------------------
+
+        //get the player sprite
+        player = game.LogicManager.getObjectByNameInLayer(objectLayer, "PlayerSprite");
+        //center the whole map, by the player position
+        game.LogicManager.centerObject(player);
+        //since we change the player gid to the animation gids, we need to save the original player gid
+        player.oldPlayerGid = player.gid;
+        player.facing = "down";
+        player.direction = 270;  //Track direction of movement for attacks
+
+        //copies the animations from the player layer to a list
+        for (var ani in objectLayer.children) {
+            if (objectLayer.children.hasOwnProperty(ani)) {
+                Animations[objectLayer.children[ani].name] = objectLayer.children[ani].gid;
+            }
+        }
+
+
+        //-------------------------------------------------------------
+        //--  Cats  ---------------------------------------------------
+        //-------------------------------------------------------------
+
+        //get the cat sprite
+        cats = game.LogicManager.getObjectsByNameInLayer(objectLayer, "Zombie");
+        catGid = cats[0].gid;
+        //set some random speeds for the cats
+        for (var cat in cats) {
+            if (cats.hasOwnProperty(cat)) {
+                cats[cat].properties.speed = Math.random() * ((cats[cat].properties.speed + .4) - (cats[cat].properties.speed - 0.4)) + (cats[cat].properties.speed - 0.4);
+                cats[cat].defaultGid = cats[cat].gid;
+            }
+        }
+
+        //-------------------------------------------------------------
+        //--  Sounds  -------------------------------------------------
+        //-------------------------------------------------------------
+        //Set up sounds---------------------------------------
+        game.AudioManager.playSound("music_background");
+
+
+        //-------------------------------------------------------------
+        //-- Create Fog of War ----------------------------------------
+        //-------------------------------------------------------------
+
         //Since the health bar is over the darkness, this must come first
-        if(hudLayer.properties.hasOwnProperty("fow"))
-            if(hudLayer.properties.fow == true) {
+        if (hudLayer.properties.hasOwnProperty("fow")) {
+            if (hudLayer.properties.fow == true) {
                 var darkness = hudLayer.addGraphics()
                     .beginFill(0x000000)
                     .moveTo(0, 0)
@@ -103,7 +238,7 @@
                     .lineTo(game.LogicManager.getWidth(), game.LogicManager.getHeight())
                     .lineTo(0, game.LogicManager.getHeight())
                     .moveTo(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2)
-                    .arc(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2, 200, 0, Math.PI * 2)
+                    .arc(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2, player.properties.fow_distance, 0, Math.PI * 2)
                     .addHole();
                 darkness.alpha = 0.90;
                 var totalDarkness = hudLayer.addGraphics()
@@ -115,110 +250,87 @@
                 totalDarkness.alpha = 0.4;
                 //darkness.drawRect(0, 0, game.LogicManager.getWidth(), game.LogicManager.getHeight());
             }
-
-        //----------------------------------------------------
-
-        //Create Health Bar-----------------------------------
-        //
-        //create heath bar
-        healthBar = hudLayer.addGraphics();
-
-        //Create the black background rectangle
-        var innerBar = hudLayer.addGraphics();
-        innerBar.beginFill(0x000000);
-        innerBar.alpha = 0.5;
-        innerBar.drawRect(20, 20, 200, 24);
-        innerBar.endFill();
-        healthBar.innerBar = innerBar;
-
-        //Create the front red rectangle
-        var outerBar = hudLayer.addGraphics();
-        outerBar.beginFill(0xFFFFFF);
-        outerBar.drawRect(20, 20, 200, 24);
-        outerBar.endFill();
-        outerBar.tint = 0x00FF00;
-        healthBar.outer = outerBar;
-        //----------------------------------------------------
-
-        //get map layer
-        collisionLayer = game.LogicManager.getLayerByName("Collision");
-        //get objects layer (holds player and animations)
-        objectLayer = game.LogicManager.getLayerByName("Objects");
-
-        //get special objects layer
-        var specialLayer =  game.LogicManager.getLayerByName("Special");
-        specialObjects = game.LogicManager.getObjectsInLayer(specialLayer);
-
-
-        //setup the player-----------------------------------
-        //
-        //get the player sprite
-        player = game.LogicManager.getObjectByNameInLayer(objectLayer, "PlayerSprite");
-        //center the whole map, by the player position
-        game.LogicManager.centerObject(player);
-        //since we change the player gid to the animation gids, we need to save the original player gid
-        player.oldPlayerGid = player.gid;
-        player.facing = "down";
-        player.direction = 270;  //Track direction of movement for attacks
-
-        //copies the animations from the player layer to a list
-        for (ani in objectLayer.children) {
-            Animations[objectLayer.children[ani].name] = objectLayer.children[ani].gid;
         }
 
-        //setup the cats--------------------------------------
-        //
-        //get the cat sprite
-        cats = game.LogicManager.getObjectsByNameInLayer(objectLayer, "Zombie");
-        catGid = cats[0].gid;
-        //set some random speeds for the cats
-        for (var cat in cats) {
-            cats[cat].properties.speed = Math.random() * ((cats[cat].properties.speed + .4) - (cats[cat].properties.speed - 0.4)) + (cats[cat].properties.speed - 0.4);
-            cats[cat].defaultGid = cats[cat].gid;
+        //-------------------------------------------------------------
+        //--  Status Bars  --------------------------------------------
+        //-------------------------------------------------------------
+
+        //Create Health Bar
+        {
+            healthBar = hudLayer.addGraphics();
+
+            //Create Label
+            var label = hudLayer.addText();
+            label.text = "Health:";
+            label.style = {fontSize: 12};
+            label.position.set(20, 5);
+            healthBar.label = label;
+
+            //Create the black background rectangle
+            var innerBar = hudLayer.addGraphics();
+            innerBar.beginFill(0x000000);
+            innerBar.alpha = 0.5;
+            innerBar.drawRect(20, 20, 200, 24);
+            innerBar.endFill();
+            healthBar.innerBar = innerBar;
+
+            //Create the front red rectangle
+            var outerBar = hudLayer.addGraphics();
+            outerBar.beginFill(0xFFFFFF);
+            outerBar.drawRect(20, 20, 200, 24);
+            outerBar.endFill();
+            outerBar.tint = 0x00FF00;
+            healthBar.outer = outerBar;
         }
 
-        //Set up sounds---------------------------------------
-        game.AudioManager.playSound("music_background");
+        //Create Stamina Bar
+        {
+            staminaBar = hudLayer.addGraphics();
+
+            //Create Label
+            var label = hudLayer.addText();
+            label.text = "Stamina:";
+            label.style = {fontSize: 12};
+            label.position.set(20, 45);
+            staminaBar.label = label;
+
+            //Create the black background rectangle
+            var innerBar = hudLayer.addGraphics();
+            innerBar.beginFill(0x000000);
+            innerBar.alpha = 0.5;
+            innerBar.drawRect(20, 60, 200, 24);
+            innerBar.endFill();
+            staminaBar.innerBar = innerBar;
+
+            //Create the front red rectangle
+            var outerBar = hudLayer.addGraphics();
+            outerBar.beginFill(0xFFFFFF);
+            outerBar.drawRect(20, 60, 200, 24);
+            outerBar.endFill();
+            outerBar.tint = 0x0000FF;
+            staminaBar.outer = outerBar;
+        }
+
+
+        //-------------------------------------------------------------
+        //--  Other  --------------------------------------------------
+        //-------------------------------------------------------------
+
+        //Restore Persistent Info from previous level
+        persistenceRestore();
 
     }
 
 
-    function menuloop(game, delta) {
-        if ((game.KeyboardManager.keysPressed[13]||game.KeyboardManager.keysPressed[27]) && player.properties.health > 0) {
-            sleep(300);
-            mainMenuLayer.visible = false;
-            game.setLoop(gameloop);
-            return;
-        }
-
-        //Restart current level by pressing 'r'
-        if (game.KeyboardManager.keysPressed[82]) {
-            LoadLevel(currentLevel);
-            return;
-        }
-
-        //Load Main Menu by pressing 'm'
-        if (game.KeyboardManager.keysPressed[77]) {
-            LoadLevel(0)
-            return;
-        }
-
-        //Toggle Background music
-        if (game.KeyboardManager.keysPressed[81]) {
-            sleep(300);
-            game.AudioManager.toggleSound("music_background");
-        }
-    }
-
-
-    var catOldX = 0.0;
-    var catOldY = 0.0;
+    //------------------------------------------------------------------------------
+    //## GAME LOOP #################################################################
+    //------------------------------------------------------------------------------
 
     function gameloop(game, delta) {
 
         //escape to show pause menu
-        if (game.KeyboardManager.keysPressed[27] == true){
-            sleep(300);
+        if (game.KeyboardManager.keyClicked(27)) {
             mainMenuLayer.visible = true;
             game.setLoop(menuloop);
         }
@@ -233,8 +345,9 @@
         var oldy = player.y
 
 
-        //--Player Health----------------------------------------------
-        //
+        //-------------------------------------------------------------
+        //-- Player Health --------------------------------------------
+        //-------------------------------------------------------------
 
         //Game Over action...
         if (player.properties.health <= 0) {
@@ -249,166 +362,187 @@
         updateHealthBar();
 
 
-        //--Attacking----------------------------------------------
-        //
+        //-------------------------------------------------------------
+        //-- Attacking ------------------------------------------------
+        //-------------------------------------------------------------
+        {
+            //Reduce Attack Cooldown
+            if (player.properties.attack_rechargeState > 0) {
+                player.properties.attack_rechargeState--;
+            }
 
-        //Reduce Attack Cooldown
-        if (player.properties.attack_rechargeState > 0) {
-            player.properties.attack_rechargeState--;
-        }
+            //Recharge Stamina
+            if (player.properties.stamina < player.properties.stamina_max) {
+                if (staminaTimer <= new Date().getTime()) {
+                    if (player.properties.stamina + player.properties.stamina_rechargeRate >= player.properties.stamina_max) {
+                        player.properties.stamina = player.properties.stamina_max;
+                    } else {
+                        player.properties.stamina += player.properties.stamina_rechargeRate;
+                    }
+                    updateStaminaBar();
+                    staminaTimer = new Date().getTime() + 500
+                }
+            }
 
-        //Attack button (Spacebar)
-        if (game.KeyboardManager.keysPressed[32] == true) {
-            if (player.facing == "down")
-                player.gid = Animations.player_attack_stick_down;
-            if (player.facing == "up")
-                player.gid = Animations.player_attack_stick_up;
-            if (player.facing == "left")
-                player.gid = Animations.player_attack_stick_left;
-            if (player.facing == "right")
-                player.gid = Animations.player_attack_stick_right;
+            //Attack button (Spacebar)
+            if (game.KeyboardManager.keysPressed[32] === true) {
 
-            //Attack cats nearby when attack is recharged
-            var closestCat = null;
-            var closestCatDistance = null;
-            if (player.properties.attack_rechargeState == 0) {
+                //Play animation
+                if (player.facing === "down")
+                    player.gid = Animations.player_attack_stick_down;
+                if (player.facing === "up")
+                    player.gid = Animations.player_attack_stick_up;
+                if (player.facing === "left")
+                    player.gid = Animations.player_attack_stick_left;
+                if (player.facing === "right")
+                    player.gid = Animations.player_attack_stick_right;
 
-                //Player Attack sound
-                //game.AudioManager.playSound(player.properties.sound_attack);
-
-
-                //------------------
-
-                console.log('attack');
-                for (var cat in cats) {
-                    if (cats[cat].properties.state_dead != 1) {
-                        var currentCatDistance = game.LogicManager.distance(player, cats[cat]);
-                        if (currentCatDistance <= player.properties.attack_range) {
-                            if (Math.abs(game.LogicManager.angle(player, cats[cat]) - player.direction) <= player.properties.attack_angle) {
-                                if (closestCat) {
-                                    if (currentCatDistance < closestCatDistance) {
+                //Attack cats nearby when attack is recharged
+                var closestCat = null;
+                var closestCatDistance = null;
+                if (player.properties.attack_rechargeState <= 0 && player.properties.stamina >= player.properties.attack_stamina) {
+                    console.log('attack');
+                    for (var cat in cats) {
+                        if (cats[cat].properties.state_dead != true) {
+                            var currentCatDistance = game.LogicManager.distance(player, cats[cat]);
+                            if (currentCatDistance <= player.properties.attack_range) {
+                                if (Math.abs(game.LogicManager.angle(player, cats[cat]) - player.direction) <= player.properties.attack_angle) {
+                                    if (closestCat) {
+                                        if (currentCatDistance < closestCatDistance) {
+                                            closestCat = cat;
+                                            closestCatDistance = currentCatDistance;
+                                        }
+                                    } else {
                                         closestCat = cat;
                                         closestCatDistance = currentCatDistance;
                                     }
-                                } else {
-                                    closestCat = cat;
-                                    closestCatDistance = currentCatDistance;
                                 }
                             }
                         }
                     }
-                }
-                if (closestCat) {
-                    //player hit cat sound
-                    game.AudioManager.playSound(player.properties.sound_attack);
 
-                    cats[closestCat].properties.health -= player.properties.attack_damage;
+                    // If there is a cat within range, attack it...
+                    if (closestCat) {
+                        //player hit_cat sound & Cat_hurt sound
+                        game.AudioManager.playSound(player.properties.sound_attack);
+                        game.AudioManager.playSound(cats[cat].properties.sound_hurt);
 
-                    //Sound - Cat_Hurt
-                    game.AudioManager.playSound(cats[cat].properties.sound_hurt);
-                    //------------------
+                        //Reduce cat's health
+                        cats[closestCat].properties.health -= player.properties.attack_damage;
 
-                    //Debug: console.log('attack cat: ' + closestCat + '  to health: ' + cats[closestCat].properties.health);
+                        //Debug: console.log('attack cat: ' + closestCat + '  to health: ' + cats[closestCat].properties.health);
+                    }
+                    else {
+                        //no cat was attacked, play miss sound
+                        game.AudioManager.playSound(player.properties.sound_miss);
+                    }
+
+                    //Reduce stamina and cooldown state
+                    player.properties.attack_rechargeState = player.properties.attack_rechargeTime;
+                    player.properties.stamina -= player.properties.attack_stamina;
+                    updateStaminaBar();
                 }
-                else
-                {
-                    //no cat was attacked
-                    game.AudioManager.playSound(player.properties.sound_miss);
-                }
-                player.properties.attack_rechargeState = player.properties.attack_rechargeTime;
             }
         }
 
-
-        //--Movement----------------------------------------------
-        //
-        if (game.KeyboardManager.keysPressed[87] == true) {
-            moveY += mvDelta;
-            player.gid = Animations.player_move_forward;
-            player.facing = "up";
-        }
-        if (game.KeyboardManager.keysPressed[83] == true) {
-            moveY -= mvDelta;
-            player.gid = Animations.player_move_back;
-            player.facing = "down";
-        }
-        if (game.KeyboardManager.keysPressed[65] == true) {
-            moveX += mvDelta;
-            player.gid = Animations.player_move_left;
-            player.facing = "left";
-        }
-        if (game.KeyboardManager.keysPressed[68] == true) {
-            moveX -= mvDelta;
-            player.gid = Animations.player_move_right;
-            player.facing = "right";
-        }
-        if (moveX != 0 && moveY != 0) {
-            moveX = moveX / 1.3;
-            moveY = moveY / 1.3;
-        }
-        if (moveX != 0 || moveY != 0) {
-            var mapx = game.LogicManager.getMapX();
-            var mapy = game.LogicManager.getMapY();
-            game.LogicManager.setMapX(mapx + moveX);
-            game.LogicManager.setMapY(mapy + moveY);
-            //everything on the map moved, so lets move the player back
-            player.x -= moveX;
-            player.y -= moveY;
-
-            //Update player direction for attacks
-            player.direction = Math.atan2(0 - moveX, moveY) * 180 / Math.PI;
-
-            //Play or continue playing movement sound.
-            game.AudioManager.resumeSound(player.properties.sound_move);
-
-            //update the player because we may have changed to an animation
-            //game.updateObject(player); //we will do this later
-            //since the collision of the player just got updated on the gui change
-            //you can do a collision test after
-            if (game.LogicManager.hitTestLayer(player, collisionLayer)) {
-                player.x = oldx;
-                player.y = oldy;
-                game.LogicManager.setMapX(mapx);
-                game.LogicManager.setMapY(mapy);
+        //-------------------------------------------------------------
+        //-- Player Movement ------------------------------------------
+        //-------------------------------------------------------------
+        {
+            if (game.KeyboardManager.keysPressed[87] === true) {
+                moveY += mvDelta;
+                player.gid = Animations.player_move_forward;
+                player.facing = "up";
             }
-        }else{
-            game.AudioManager.stopSound(player.properties.sound_move);
+            if (game.KeyboardManager.keysPressed[83] === true) {
+                moveY -= mvDelta;
+                player.gid = Animations.player_move_back;
+                player.facing = "down";
+            }
+            if (game.KeyboardManager.keysPressed[65] === true) {
+                moveX += mvDelta;
+                player.gid = Animations.player_move_left;
+                player.facing = "left";
+            }
+            if (game.KeyboardManager.keysPressed[68] === true) {
+                moveX -= mvDelta;
+                player.gid = Animations.player_move_right;
+                player.facing = "right";
+            }
+
+
+            if (moveX != 0 && moveY != 0) {
+                moveX = moveX / 1.3;
+                moveY = moveY / 1.3;
+            }
+            if (moveX != 0 || moveY != 0) {
+                var mapx = game.LogicManager.getMapX();
+                var mapy = game.LogicManager.getMapY();
+                game.LogicManager.setMapX(mapx + moveX);
+                game.LogicManager.setMapY(mapy + moveY);
+
+                //everything on the map moved, so lets move the player back
+                player.x -= moveX;
+                player.y -= moveY;
+
+                //Update player direction for attacks
+                player.direction = Math.atan2(0 - moveX, moveY) * 180 / Math.PI;
+
+                //Play or continue playing movement sound.
+                game.AudioManager.resumeSound(player.properties.sound_move);
+
+                //update the player because we may have changed to an animation
+                //game.updateObject(player); //we will do this later
+                //since the collision of the player just got updated on the gui change
+                //you can do a collision test after
+                if (game.LogicManager.hitTestLayer(player, collisionLayer)) {
+                    player.x = oldx;
+                    player.y = oldy;
+                    game.LogicManager.setMapX(mapx);
+                    game.LogicManager.setMapY(mapy);
+                }
+            } else {
+                //Play Player Movement Sound
+                game.AudioManager.stopSound(player.properties.sound_move);
+            }
         }
 
-        //--Cat Logic----------------------------------------------
-        //
+        //-------------------------------------------------------------
+        //-- Cat Logic & Movement -------------------------------------
+        //-------------------------------------------------------------
 
-        for (var cat in cats) {
+        for (cat in cats) {
             //if the player is near, chase the player
-            if (cats[cat].properties.state_dead == 0) {
+            if (cats.hasOwnProperty(cat) && cats[cat].properties.state_dead === false) {
                 if (cats[cat].properties.health <= 0) {
-                    cats[cat].properties.state_dead = 1;
+                    cats[cat].properties.state_dead = true;
                     cats[cat].gid = Animations.cat_explode;
                     game.AudioManager.playSound(cats[cat].properties.sound_die);
                     continue;
                 }
 
                 //if (game.LogicManager.distance(player, cats[cat]) <= cats[cat].properties.sight)
-                  //  cats[cat].properties.chase = true;
-                if(cats[cat].properties.chase == false){
-                    if(game.LogicManager.lineOfSight(player, cats[cat], collisionLayer)) {
+                //  cats[cat].properties.chase = true;
+                if (cats[cat].properties.chase === false) {
+                    if (game.LogicManager.lineOfSight(player, cats[cat], collisionLayer)) {
                         cats[cat].properties.chase = true;
                         //console.log("Cat: " + cat + " can see you");
                         game.AudioManager.playSound(cats[cat].properties.sound_move);
                     }
-                }else if(game.LogicManager.distance(player, cats[cat]) > cats[cat].properties.sight*1.2){
+                } else if (game.LogicManager.distance(player, cats[cat]) > cats[cat].properties.sight * 1.2) {
                     game.AudioManager.stopSound(cats[cat].properties.sound_move);
-                    //console.log("You gave cat: " + cat + " the slip");
+                    //Debug: console.log("You gave cat: " + cat + " the slip");
                     cats[cat].properties.chase = false;
                 }
 
 
-                //--Cat Attack----------------------------------------------
-                //
+                //-----------------------------------------------------
+                //-- Cat Attack ---------------------------------------
+                //-----------------------------------------------------
                 //Cat Attacks when near and recharged
                 if (cats[cat].properties.attack_rechargeState <= 0 && game.LogicManager.lineOfSight(player, cats[cat], collisionLayer)) {
                     if (game.LogicManager.distance(player, cats[cat]) <= cats[cat].properties.attack_range) {
-                        if(game.LogicManager.lineOfSight(player, cats[cat], collisionLayer)) {
+                        if (game.LogicManager.lineOfSight(player, cats[cat], collisionLayer)) {
                             player.properties.health -= cats[cat].properties.attack_damage;
                             cats[cat].properties.attack_rechargeState = cats[cat].properties.attack_rechargeTime;
 
@@ -422,8 +556,9 @@
                 } else cats[cat].properties.attack_rechargeState--;
 
 
-                //--Cat Movement----------------------------------------------
-                //
+                //-----------------------------------------------------
+                //-- Cat Movement -------------------------------------
+                //-----------------------------------------------------
                 if (cats[cat].properties.chase && game.LogicManager.distance(player, cats[cat]) > 48) {
 
                     catOldX = cats[cat].x;
@@ -457,32 +592,45 @@
                     }
                     game.AudioManager.resumeSound(cats[cat].properties.sound_move);
                 }
+
+
+                //-----------------------------------------------------
+                //-- Cat Visability -----------------------------------
+                //-----------------------------------------------------
+
+                if (hudLayer.properties.hasOwnProperty("fow")) {
+                    if (hudLayer.properties.fow == true) {
+                        if(game.LogicManager.distance(player, cats[cat])<player.properties.fow_distance+10){
+                            cats[cat].visible = true;
+                        }else
+                            cats[cat].visible = false;
+                    }
+                }
+
             }
         }
 
 
-
-        //--Special objects Logic----------------------------------------------
-        //
-        for(var key in specialObjects)
-        {
+        //-------------------------------------------------------------
+        //-- Special objects Logic ------------------------------------
+        //-------------------------------------------------------------
+        for (var key in specialObjects) {
             //test if the player is hitting the object
-            if(specialObjects[key].visible && game.LogicManager.hitTest(player, specialObjects[key]))
-            {
-                switch(specialObjects[key].name) {
+            if (specialObjects.hasOwnProperty(key) && specialObjects[key].visible && game.LogicManager.hitTest(player, specialObjects[key])) {
+                switch (specialObjects[key].name) {
                     case "health":
                         player.properties.health = 100;
                         updateHealthBar();
                         specialObjects[key].visible = false;
                         break;
                     case "load_x_level":
+                        persistenceSet();
                         console.log("Peer Level");
-                        LoadLevel(2);
+                        LoadLevel(++currentLevel);
                         return;
                 }
             }
         }
-
 
 
         //update animated tiles
@@ -490,16 +638,20 @@
             game.updateObject(objectLayer.children[tile]);
         }
 
-        //update the zOrder of all objects
+        //update the z-Order of all objects
         game.LogicManager.yZOrder(objectLayer);
-
-
 
     }
 
+    //##############################################################################
 
-    //--Update Size of HealthBar----------------------------------------------
-    //
+    //------------------------------------------------------------------------------
+    //--  Other Functions  ---------------------------------------------------------
+    //------------------------------------------------------------------------------
+
+    //-------------------------------------------------------------
+    //-- Update Status Bars ---------------------------------------
+    //-------------------------------------------------------------
 
     function updateHealthBar() {
         healthBar.outer.width = player.properties.health * 2;
@@ -517,15 +669,56 @@
             healthBar.outer.width = 0;
     }
 
+
+    function updateStaminaBar() {
+        staminaBar.outer.width = player.properties.stamina * 2;
+
+        //Health Bar to Green
+        if (player.properties.stamina >= 70) {
+            staminaBar.outer.tint = 0x0000FF;
+        } else if (player.properties.stamina >= 30) { //Health Bar to Yellow
+            staminaBar.outer.tint = 0xFFFF00;
+        } else //Health Bar to Red
+            staminaBar.outer.tint = 0xFF3300;
+
+        //Does not display health below 0
+        if (staminaBar.outer.width < 0)
+            staminaBar.outer.width = 0;
+    }
+
     //--Sleep Function-------------------------------------------------------
     function sleep(milliseconds) {
         var start = new Date().getTime();
         for (var i = 0; i < 1e7; i++) {
-            if ((new Date().getTime() - start) > milliseconds){
+            if ((new Date().getTime() - start) > milliseconds) {
                 break;
             }
         }
     }
+
+    //-------------------------------------------------------------
+    //-- Persistance Functions ------------------------------------
+    //-------------------------------------------------------------
+
+    //Create Persistence
+    function persistenceSet() {
+        persistence = true;
+        persistence_health = player.properties.health;
+    }
+
+    //Restore Persistence
+    function persistenceReset() {
+        player.properties.health = persistence_health;
+    }
+
+    //Reset Persistence
+    function persistenceRestore() {
+        if (persistence) {
+            player.properties.health = persistence_health;
+            updateHealthBar();
+        }
+    }
+
 
 </script>
 </body>

@@ -1,3 +1,10 @@
+/*
+Team Zombie Cat
+Dead Cat Game Engine - Keyboard Manager
+
+Authors: William Kendall, John Sakosky, Kevin Helms, Vladimir Roman, Benjamin Sheren
+*/
+
 !function ($w) {
 
     var _kbm = null;
@@ -24,6 +31,13 @@
         _kbm._justPressed[key.which] = false;
     }
 
+    KeyboardManager.prototype.keyClicked = function(key) {
+        if(_kbm.keysPressed[key]){
+            _kbm.keysPressed[key]=false;
+            return true;
+        }
+        return false;
+    }
 
     KeyboardManager.prototype.update = function()
     {

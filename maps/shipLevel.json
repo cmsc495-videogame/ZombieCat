@@ -1311,12 +1311,17 @@
                      "attack_range":50,
                      "attack_rechargeState":0,
                      "attack_rechargeTime":30,
+                     "attack_stamina":20,
+                     "fow_distance":200,
                      "health":100,
                      "sound_attack":"sfx_player_attack",
                      "sound_die":"sfx_player_die",
                      "sound_hurt":"sfx_player_hurt",
                      "sound_miss":"sfx_player_miss",
                      "sound_move":"sfx_player_walk",
+                     "stamina":100,
+                     "stamina_max":100,
+                     "stamina_rechargeRate":4,
                      "state_animate":true
                     },
                  "propertytypes":
@@ -1326,12 +1331,17 @@
                      "attack_range":"int",
                      "attack_rechargeState":"int",
                      "attack_rechargeTime":"int",
+                     "attack_stamina":"int",
+                     "fow_distance":"int",
                      "health":"int",
                      "sound_attack":"string",
                      "sound_die":"string",
                      "sound_hurt":"string",
                      "sound_miss":"string",
                      "sound_move":"string",
+                     "stamina":"int",
+                     "stamina_max":"int",
+                     "stamina_rechargeRate":"int",
                      "state_animate":"bool"
                     },
                  "rotation":0,
@@ -2126,10 +2136,12 @@
          "opacity":1,
          "properties":
             {
+             "fow":true,
              "gui":true
             },
          "propertytypes":
             {
+             "fow":"bool",
              "gui":"bool"
             },
          "type":"objectgroup",
@@ -2148,10 +2160,22 @@
                  "name":"main",
                  "rotation":0,
                  "type":"",
-                 "visible":true,
+                 "visible":false,
                  "width":430,
                  "x":0,
                  "y":320
+                }, 
+                {
+                 "gid":1010,
+                 "height":450,
+                 "id":138,
+                 "name":"main",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":800,
+                 "x":0,
+                 "y":450
                 }],
          "opacity":1,
          "properties":
@@ -2167,7 +2191,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":137,
+ "nextobjectid":140,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
@@ -4157,6 +4181,19 @@
          "tilecount":32,
          "tileheight":255,
          "tilewidth":255
+        }, 
+        {
+         "columns":1,
+         "firstgid":1010,
+         "image":"menu-pause.png",
+         "imageheight":450,
+         "imagewidth":800,
+         "margin":0,
+         "name":"menu-pause",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":450,
+         "tilewidth":800
         }],
  "tilewidth":32,
  "type":"map",
