@@ -42,6 +42,11 @@
     }
 </style>
 <script type="text/javascript">
+    Number.prototype.mod = function(n) { //javascript mod bug
+        return ((this%n)+n)%n;
+    };
+
+
     /*This script is demo code that shows the game engine off*/
     /*This script has somehow became the game*/
 
@@ -386,7 +391,6 @@
 
             //Attack button (Spacebar)
             if (game.KeyboardManager.keysPressed[32] === true) {
-
                 //Play animation
                 if (player.facing === "down")
                     player.gid = Animations.player_attack_stick_down;
@@ -406,7 +410,10 @@
                         if (cats[cat].properties.state_dead != true) {
                             var currentCatDistance = game.LogicManager.distance(player, cats[cat]);
                             if (currentCatDistance <= player.properties.attack_range) {
-                                if (Math.abs(game.LogicManager.angle(player, cats[cat]) - player.direction) <= player.properties.attack_angle) {
+                                var angle = game.LogicManager.angle(player, cats[cat]) - player.direction;
+                                angle += (angle>180) ? -360 : (angle < -180) ? 360 : 0;
+                                //console.log(angle);
+                                if (Math.abs(angle) <= player.properties.attack_angle) {
                                     if (closestCat) {
                                         if (currentCatDistance < closestCatDistance) {
                                             closestCat = cat;
@@ -486,7 +493,7 @@
                 player.y -= moveY;
 
                 //Update player direction for attacks
-                player.direction = Math.atan2(0 - moveX, moveY) * 180 / Math.PI;
+                player.direction = Math.atan2(0- moveX, moveY) * 180 / Math.PI;
 
                 //Play or continue playing movement sound.
                 game.AudioManager.resumeSound(player.properties.sound_move);
