@@ -89,6 +89,7 @@
         if(game.KeyboardManager.keyClicked(13))
         {
             letterLayer.visible = false;
+            letterLayer.removeChild(letterLayer.label);
             letterLayer.label = null;
             game.setLoop(gameloop);
         }
