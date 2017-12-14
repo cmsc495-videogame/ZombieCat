@@ -73,7 +73,7 @@
     //  Main Variables
 
     var game;
-    Levels = ["mainmenu.json", "shipLevel.json"]; //"port.json", "city.json"
+    Levels = ["mainmenu.json", "shipLevel.json", "port.json"]; //, "city.json"
     //testing: Levels = ["mainmenu.json" ,"city.json"];
     game = new DeadCat("maps/" + Levels[0], mainMenuSetup, MainMenuLoop);
 
@@ -100,6 +100,10 @@
         if (game.KeyboardManager.keysPressed[13]) {
             // introMusic.DestroySound(); //stop and tear down intro audio
             LoadLevel(1);
+        }
+        //Toggle Background music
+        if (game.KeyboardManager.keyClicked(81)) {
+            game.AudioManager.toggleSound("intromusic");
         }
     }
 
@@ -149,6 +153,11 @@
             game = new DeadCat("maps/" + Levels[0], mainMenuSetup, MainMenuLoop);
         else if(level >= Levels.length){
             document.getElementById("vid").style.visibility='visible';
+            document.getElementById("credits").addEventListener('ended', function(e) {
+                //document.getElementById("vid").style.visibility='hidden';
+                location.reload();
+            });
+
             document.getElementById("credits").play();
         }else
             game = new DeadCat("maps/" + Levels[level], setup, menuloop);
