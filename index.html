@@ -83,6 +83,17 @@
         }
     }
 
+
+    function youJustGotALetter(game, delta)
+    {
+        if(game.KeyboardManager.keyClicked(13))
+        {
+            letterLayer.visible = false;
+            letterLayer.label = null;
+            game.setLoop(gameloop);
+        }
+    }
+
     //Pause Menu
     function menuloop(game, delta) {
         if ((game.KeyboardManager.keyClicked(13) || game.KeyboardManager.keyClicked(27)) && player.properties.health > 0) {
@@ -147,6 +158,7 @@
 
     var specialObjects = null; //for health or loading new maps
 
+    var letterLayer = null;
 
     //-----------------------------------------------------------------------
     //## SETUP ##############################################################
@@ -158,6 +170,9 @@
 
         hudLayer = game.LogicManager.getLayerByName("HUD");
         game.LogicManager.positionAbsolute(hudLayer, "top-left");
+
+        letterLayer = game.LogicManager.getLayerByName("LETTER");
+        game.LogicManager.positionAbsolute(letterLayer, "top-left");
 
         //-------------------------------------------------------------
         //--  Display Version Number  ---------------------------------
@@ -531,7 +546,8 @@
                 //if (game.LogicManager.distance(player, cats[cat]) <= cats[cat].properties.sight)
                 //  cats[cat].properties.chase = true;
                 if (cats[cat].properties.chase === false) {
-                    if (game.LogicManager.lineOfSight(player, cats[cat], collisionLayer)) {
+                    if (game.LogicManager.lineOfSight(player, cats[cat], collisionLayer) &&
+                        game.LogicManager.distance(player, cats[cat]) <= cats[cat].properties.sight) {
                         cats[cat].properties.chase = true;
                         //console.log("Cat: " + cat + " can see you");
                         game.AudioManager.playSound(cats[cat].properties.sound_move);
@@ -625,6 +641,16 @@
             //test if the player is hitting the object
             if (specialObjects.hasOwnProperty(key) && specialObjects[key].visible && game.LogicManager.hitTest(player, specialObjects[key])) {
                 switch (specialObjects[key].name) {
+                    case "letter":
+                        letterLayer.label = letterLayer.addText();
+                        letterLayer.label.text = specialObjects[key].properties.text;
+                        letterLayer.label.style = {fill: "white", fontSize: 20};
+                        letterLayer.label.position.set(90,90);
+                        letterLayer.visible = true;
+
+                        specialObjects[key].visible = false;
+                        game.setLoop(youJustGotALetter);
+                        break;
                     case "health":
                         player.properties.health = 100;
                         updateHealthBar();

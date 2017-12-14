@@ -504,6 +504,26 @@
                  "width":48,
                  "x":810,
                  "y":4353
+                }, 
+                {
+                 "gid":990,
+                 "height":48,
+                 "id":140,
+                 "name":"letter",
+                 "properties":
+                    {
+                     "text":"To: ships company\n\nThings have been going south really fast.\nMy advice is that everyone finds their own way off of\nthe ship.\n\n- Captian Davis"
+                    },
+                 "propertytypes":
+                    {
+                     "text":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":48,
+                 "x":1168,
+                 "y":821
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2151,6 +2171,24 @@
         }, 
         {
          "draworder":"topdown",
+         "name":"LETTER",
+         "objects":[],
+         "opacity":1,
+         "properties":
+            {
+             "gui":true
+            },
+         "propertytypes":
+            {
+             "gui":"bool"
+            },
+         "type":"objectgroup",
+         "visible":false,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "name":"MainMenu",
          "objects":[
                 {
@@ -2191,7 +2229,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":140,
+ "nextobjectid":142,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
