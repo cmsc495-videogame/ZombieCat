@@ -207,8 +207,8 @@ Authors: William Kendall, John Sakosky, Kevin Helms, Vladimir Roman, Benjamin Sh
         //begin game loop
         _gameDelta = delta;
         _engine.LogicManager.update(delta);
+        _engine.KeyboardManager.update();
         _gameupdate(_engine, delta);
-
 
     }
 
