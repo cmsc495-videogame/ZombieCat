@@ -146,7 +146,7 @@
                  "name":"letter",
                  "properties":
                     {
-                     "text":"To: Shipping Yard\n\nReaserch on the ship has been a mistake.\nThe cats has mutated into making them only more violent.\nSomeone needs to stop these wayward kitties.\n\n- Captian Ben"
+                     "text":"To: Kevin\n\nIt is no longer safe here, I will be joining with the others\nto the north.\n\nStay safe,\nKendall"
                     },
                  "propertytypes":
                     {
@@ -166,7 +166,7 @@
                  "name":"letter",
                  "properties":
                     {
-                     "text":"To: Personel\n\nDo to recent events, the yard has incressed health packs\nshould you be attacked by a cat.\nLocations:\n-South by the main office in the parking lot\n-Center of the yard\n-West by the ocean"
+                     "text":"John's Diary - Day 39:\n\nA few weeks ago when this all started,\nI watched a homeless man get into a container in the shipping\nyard from across the fence. To my suprise, they soon\nloaded onto a ship with him inside."
                     },
                  "propertytypes":
                     {
@@ -178,6 +178,26 @@
                  "width":48,
                  "x":410,
                  "y":1692
+                }, 
+                {
+                 "gid":990,
+                 "height":48,
+                 "id":189,
+                 "name":"letter",
+                 "properties":
+                    {
+                     "text":"To: whom it concerns.\n\nTo many cats in the city. They ate most of our group.\nMy advice to you would be to hide. Perhaps in a food \nshipping container in the container yard. Supplys should last\na month.\n\nwe're sorry,\nThe others."
+                    },
+                 "propertytypes":
+                    {
+                     "text":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":48,
+                 "x":2530,
+                 "y":305
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2341,7 +2361,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":189,
+ "nextobjectid":190,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
