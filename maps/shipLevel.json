@@ -2156,7 +2156,7 @@
          "opacity":1,
          "properties":
             {
-             "fow":true,
+             "fow":false,
              "gui":true
             },
          "propertytypes":

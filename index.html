@@ -284,7 +284,7 @@
             //Create Label
             var label = hudLayer.addText();
             label.text = "Health:";
-            label.style = {fontSize: 12};
+            label.style = {fill: "white", fontSize: 12};
             label.position.set(20, 5);
             healthBar.label = label;
 
@@ -312,7 +312,7 @@
             //Create Label
             var label = hudLayer.addText();
             label.text = "Stamina:";
-            label.style = {fontSize: 12};
+            label.style = {fill: "white", fontSize: 12};
             label.position.set(20, 45);
             staminaBar.label = label;
 
@@ -659,7 +659,7 @@
                         break;
                     case "load_x_level":
                         persistenceSet();
-                        console.log("Peer Level");
+                        console.log("Loading Level...");
                         LoadLevel(++currentLevel);
                         return;
                 }
