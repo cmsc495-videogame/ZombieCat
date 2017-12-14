@@ -2212,7 +2212,7 @@
                     {
                      "loop":true,
                      "rate":1,
-                     "sound":"audio\/music_ChasedByARunningChupacabra.mp3",
+                     "sound":"audio\/music\/Level_Up_Kevin_MacLeod.mp3",
                      "volume":0.3
                     },
                  "propertytypes":

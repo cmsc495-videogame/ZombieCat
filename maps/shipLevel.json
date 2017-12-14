@@ -362,8 +362,8 @@
                     {
                      "loop":true,
                      "rate":1,
-                     "sound":"audio\/music_ChasedByARunningChupacabra.mp3",
-                     "volume":0.3
+                     "sound":"audio\/music\/8_Bit_March_Twin_Musicom.mp3",
+                     "volume":0.7
                     },
                  "propertytypes":
                     {
@@ -2183,7 +2183,7 @@
              "gui":"bool"
             },
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
