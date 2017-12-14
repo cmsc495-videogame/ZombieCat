@@ -198,6 +198,17 @@
                  "width":48,
                  "x":2530,
                  "y":305
+                }, 
+                {
+                 "height":3212.48484848485,
+                 "id":190,
+                 "name":"load_x_level",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":52,
+                 "x":4295.21212121212,
+                 "y":-4.72727272727263
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2361,7 +2372,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":190,
+ "nextobjectid":191,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
