@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Zombie Cat 0.4.1</title>
+    <title>Zombie Cat 0.4.2</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.1/pixi.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.5/howler.js"></script>
     <script type="text/javascript" src="DeadCat/Utils.js"></script>
@@ -16,7 +16,14 @@
 </head>
 <body>
 <!--<p>CMSC495 Project</p>-->
+<div id="vid">
+    <video id="credits">
+        <source src="credits.mp4" type="video/mp4" />
+    </video>
+</div>
+
 <div id="display"></div>
+
 <style type="text/css">
     html, body {
         height: 100%;
@@ -28,9 +35,37 @@
     #display {
         display: flex;
         justify-content: center;
+
+        #position:fixed;
+        top:0px;
+        right:0px;
+        width:100%;
+        height:100%;
+        background-color:#000;
+        background-image:url('loading.gif');
+        background-repeat:no-repeat;
+        background-position:center;
+        z-index: 0;
+    }
+    #vid{
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        z-index: 100;
+        visibility: hidden;
+    }
+    video{
+        width: 100%;
+        height: auto;
+        max-height: 100%;
     }
 </style>
 <script type="text/javascript">
+    Number.prototype.mod = function(n) { //javascript mod bug
+        return ((this%n)+n)%n;
+    };
+
+
     /*This script is demo code that shows the game engine off*/
     /*This script has somehow became the game*/
 
@@ -38,7 +73,8 @@
     //  Main Variables
 
     var game;
-    Levels = ["mainmenu.json", "shipLevel.json", "port.json"];
+    Levels = ["mainmenu.json", "shipLevel.json", "port.json", "city.json"];
+    //testing: Levels = ["mainmenu.json" ,"city.json"];
     game = new DeadCat("maps/" + Levels[0], mainMenuSetup, MainMenuLoop);
 
     persistence = false;
@@ -64,6 +100,22 @@
         if (game.KeyboardManager.keysPressed[13]) {
             // introMusic.DestroySound(); //stop and tear down intro audio
             LoadLevel(1);
+        }
+        //Toggle Background music
+        if (game.KeyboardManager.keyClicked(81)) {
+            game.AudioManager.toggleSound("intromusic");
+        }
+    }
+
+
+    function youJustGotALetter(game, delta)
+    {
+        if(game.KeyboardManager.keyClicked(13))
+        {
+            letterLayer.visible = false;
+            letterLayer.removeChild(letterLayer.label);
+            letterLayer.label = null;
+            game.setLoop(gameloop);
         }
     }
 
@@ -99,7 +151,15 @@
         game.destroy();
         if (level == 0)
             game = new DeadCat("maps/" + Levels[0], mainMenuSetup, MainMenuLoop);
-        else
+        else if(level >= Levels.length){
+            document.getElementById("vid").style.visibility='visible';
+            document.getElementById("credits").addEventListener('ended', function(e) {
+                //document.getElementById("vid").style.visibility='hidden';
+                location.reload();
+            });
+
+            document.getElementById("credits").play();
+        }else
             game = new DeadCat("maps/" + Levels[level], setup, menuloop);
         currentLevel = level;
 
@@ -131,6 +191,7 @@
 
     var specialObjects = null; //for health or loading new maps
 
+    var letterLayer = null;
 
     //-----------------------------------------------------------------------
     //## SETUP ##############################################################
@@ -143,103 +204,18 @@
         hudLayer = game.LogicManager.getLayerByName("HUD");
         game.LogicManager.positionAbsolute(hudLayer, "top-left");
 
+        letterLayer = game.LogicManager.getLayerByName("LETTER");
+        game.LogicManager.positionAbsolute(letterLayer, "top-left");
+
         //-------------------------------------------------------------
         //--  Display Version Number  ---------------------------------
         //-------------------------------------------------------------
         {
             //Create Label
             var versionLabel = hudLayer.addText();
-            versionLabel.text = "ZombieCat v0.4.1";
+            versionLabel.text = "ZombieCat v0.4.2";
             versionLabel.style = {fill: "white", fontSize: 20};
             versionLabel.position.set(600, 550);
-        }
-
-        //-------------------------------------------------------------
-        //-- Create darkness ------------------------------------------
-        //-------------------------------------------------------------
-
-        //Since the health bar is over the darkness, this must come first
-        if (hudLayer.properties.hasOwnProperty("fow")) {
-            if (hudLayer.properties.fow == true) {
-                var darkness = hudLayer.addGraphics()
-                    .beginFill(0x000000)
-                    .moveTo(0, 0)
-                    .lineTo(game.LogicManager.getWidth(), 0)
-                    .lineTo(game.LogicManager.getWidth(), game.LogicManager.getHeight())
-                    .lineTo(0, game.LogicManager.getHeight())
-                    .moveTo(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2)
-                    .arc(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2, 200, 0, Math.PI * 2)
-                    .addHole();
-                darkness.alpha = 0.90;
-                var totalDarkness = hudLayer.addGraphics()
-                totalDarkness.beginFill(0x000000)
-                totalDarkness.moveTo(0, 0)
-                totalDarkness.lineTo(game.LogicManager.getWidth(), 0)
-                totalDarkness.lineTo(game.LogicManager.getWidth(), game.LogicManager.getHeight())
-                totalDarkness.lineTo(0, game.LogicManager.getHeight())
-                totalDarkness.alpha = 0.4;
-                //darkness.drawRect(0, 0, game.LogicManager.getWidth(), game.LogicManager.getHeight());
-            }
-        }
-
-        //-------------------------------------------------------------
-        //--  Status Bars  --------------------------------------------
-        //-------------------------------------------------------------
-
-        //Create Health Bar
-        {
-            healthBar = hudLayer.addGraphics();
-
-            //Create Label
-            var label = hudLayer.addText();
-            label.text = "Health:";
-            label.style = {fontSize: 12};
-            label.position.set(20, 5);
-            healthBar.label = label;
-
-            //Create the black background rectangle
-            var innerBar = hudLayer.addGraphics();
-            innerBar.beginFill(0x000000);
-            innerBar.alpha = 0.5;
-            innerBar.drawRect(20, 20, 200, 24);
-            innerBar.endFill();
-            healthBar.innerBar = innerBar;
-
-            //Create the front red rectangle
-            var outerBar = hudLayer.addGraphics();
-            outerBar.beginFill(0xFFFFFF);
-            outerBar.drawRect(20, 20, 200, 24);
-            outerBar.endFill();
-            outerBar.tint = 0x00FF00;
-            healthBar.outer = outerBar;
-        }
-
-        //Create Stamina Bar
-        {
-            staminaBar = hudLayer.addGraphics();
-
-            //Create Label
-            var label = hudLayer.addText();
-            label.text = "Stamina:";
-            label.style = {fontSize: 12};
-            label.position.set(20, 45);
-            staminaBar.label = label;
-
-            //Create the black background rectangle
-            var innerBar = hudLayer.addGraphics();
-            innerBar.beginFill(0x000000);
-            innerBar.alpha = 0.5;
-            innerBar.drawRect(20, 60, 200, 24);
-            innerBar.endFill();
-            staminaBar.innerBar = innerBar;
-
-            //Create the front red rectangle
-            var outerBar = hudLayer.addGraphics();
-            outerBar.beginFill(0xFFFFFF);
-            outerBar.drawRect(20, 60, 200, 24);
-            outerBar.endFill();
-            outerBar.tint = 0x0000FF;
-            staminaBar.outer = outerBar;
         }
 
 
@@ -299,6 +275,95 @@
         //-------------------------------------------------------------
         //Set up sounds---------------------------------------
         game.AudioManager.playSound("music_background");
+
+
+        //-------------------------------------------------------------
+        //-- Create Fog of War ----------------------------------------
+        //-------------------------------------------------------------
+
+        //Since the health bar is over the darkness, this must come first
+        if (hudLayer.properties.hasOwnProperty("fow")) {
+            if (hudLayer.properties.fow == true) {
+                var darkness = hudLayer.addGraphics()
+                    .beginFill(0x000000)
+                    .moveTo(0, 0)
+                    .lineTo(game.LogicManager.getWidth(), 0)
+                    .lineTo(game.LogicManager.getWidth(), game.LogicManager.getHeight())
+                    .lineTo(0, game.LogicManager.getHeight())
+                    .moveTo(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2)
+                    .arc(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2, player.properties.fow_distance, 0, Math.PI * 2)
+                    .addHole();
+                darkness.alpha = 0.90;
+                var totalDarkness = hudLayer.addGraphics()
+                totalDarkness.beginFill(0x000000)
+                totalDarkness.moveTo(0, 0)
+                totalDarkness.lineTo(game.LogicManager.getWidth(), 0)
+                totalDarkness.lineTo(game.LogicManager.getWidth(), game.LogicManager.getHeight())
+                totalDarkness.lineTo(0, game.LogicManager.getHeight())
+                totalDarkness.alpha = 0.4;
+                //darkness.drawRect(0, 0, game.LogicManager.getWidth(), game.LogicManager.getHeight());
+            }
+        }
+
+        //-------------------------------------------------------------
+        //--  Status Bars  --------------------------------------------
+        //-------------------------------------------------------------
+
+        //Create Health Bar
+        {
+            healthBar = hudLayer.addGraphics();
+
+            //Create Label
+            var label = hudLayer.addText();
+            label.text = "Health:";
+            label.style = {fill: "white", fontSize: 12};
+            label.position.set(20, 5);
+            healthBar.label = label;
+
+            //Create the black background rectangle
+            var innerBar = hudLayer.addGraphics();
+            innerBar.beginFill(0x000000);
+            innerBar.alpha = 0.5;
+            innerBar.drawRect(20, 20, 200, 24);
+            innerBar.endFill();
+            healthBar.innerBar = innerBar;
+
+            //Create the front red rectangle
+            var outerBar = hudLayer.addGraphics();
+            outerBar.beginFill(0xFFFFFF);
+            outerBar.drawRect(20, 20, 200, 24);
+            outerBar.endFill();
+            outerBar.tint = 0x00FF00;
+            healthBar.outer = outerBar;
+        }
+
+        //Create Stamina Bar
+        {
+            staminaBar = hudLayer.addGraphics();
+
+            //Create Label
+            var label = hudLayer.addText();
+            label.text = "Stamina:";
+            label.style = {fill: "white", fontSize: 12};
+            label.position.set(20, 45);
+            staminaBar.label = label;
+
+            //Create the black background rectangle
+            var innerBar = hudLayer.addGraphics();
+            innerBar.beginFill(0x000000);
+            innerBar.alpha = 0.5;
+            innerBar.drawRect(20, 60, 200, 24);
+            innerBar.endFill();
+            staminaBar.innerBar = innerBar;
+
+            //Create the front red rectangle
+            var outerBar = hudLayer.addGraphics();
+            outerBar.beginFill(0xFFFFFF);
+            outerBar.drawRect(20, 60, 200, 24);
+            outerBar.endFill();
+            outerBar.tint = 0x0000FF;
+            staminaBar.outer = outerBar;
+        }
 
 
         //-------------------------------------------------------------
@@ -374,7 +439,6 @@
 
             //Attack button (Spacebar)
             if (game.KeyboardManager.keysPressed[32] === true) {
-
                 //Play animation
                 if (player.facing === "down")
                     player.gid = Animations.player_attack_stick_down;
@@ -389,12 +453,15 @@
                 var closestCat = null;
                 var closestCatDistance = null;
                 if (player.properties.attack_rechargeState <= 0 && player.properties.stamina >= player.properties.attack_stamina) {
-                    console.log('attack');
+                    //console.log('attack');
                     for (var cat in cats) {
                         if (cats[cat].properties.state_dead != true) {
                             var currentCatDistance = game.LogicManager.distance(player, cats[cat]);
                             if (currentCatDistance <= player.properties.attack_range) {
-                                if (Math.abs(game.LogicManager.angle(player, cats[cat]) - player.direction) <= player.properties.attack_angle) {
+                                var angle = game.LogicManager.angle(player, cats[cat]) - player.direction;
+                                angle += (angle>180) ? -360 : (angle < -180) ? 360 : 0;
+                                //console.log(angle);
+                                if (Math.abs(angle) <= player.properties.attack_angle) {
                                     if (closestCat) {
                                         if (currentCatDistance < closestCatDistance) {
                                             closestCat = cat;
@@ -474,7 +541,7 @@
                 player.y -= moveY;
 
                 //Update player direction for attacks
-                player.direction = Math.atan2(0 - moveX, moveY) * 180 / Math.PI;
+                player.direction = Math.atan2(0- moveX, moveY) * 180 / Math.PI;
 
                 //Play or continue playing movement sound.
                 game.AudioManager.resumeSound(player.properties.sound_move);
@@ -512,7 +579,8 @@
                 //if (game.LogicManager.distance(player, cats[cat]) <= cats[cat].properties.sight)
                 //  cats[cat].properties.chase = true;
                 if (cats[cat].properties.chase === false) {
-                    if (game.LogicManager.lineOfSight(player, cats[cat], collisionLayer)) {
+                    if (game.LogicManager.lineOfSight(player, cats[cat], collisionLayer) &&
+                        game.LogicManager.distance(player, cats[cat]) <= cats[cat].properties.sight) {
                         cats[cat].properties.chase = true;
                         //console.log("Cat: " + cat + " can see you");
                         game.AudioManager.playSound(cats[cat].properties.sound_move);
@@ -580,6 +648,21 @@
                     }
                     game.AudioManager.resumeSound(cats[cat].properties.sound_move);
                 }
+
+
+                //-----------------------------------------------------
+                //-- Cat Visability -----------------------------------
+                //-----------------------------------------------------
+
+                if (hudLayer.properties.hasOwnProperty("fow")) {
+                    if (hudLayer.properties.fow == true) {
+                        if(game.LogicManager.distance(player, cats[cat])<player.properties.fow_distance+10){
+                            cats[cat].visible = true;
+                        }else
+                            cats[cat].visible = false;
+                    }
+                }
+
             }
         }
 
@@ -591,6 +674,16 @@
             //test if the player is hitting the object
             if (specialObjects.hasOwnProperty(key) && specialObjects[key].visible && game.LogicManager.hitTest(player, specialObjects[key])) {
                 switch (specialObjects[key].name) {
+                    case "letter":
+                        letterLayer.label = letterLayer.addText();
+                        letterLayer.label.text = specialObjects[key].properties.text;
+                        letterLayer.label.style = {fill: "white", fontSize: 20};
+                        letterLayer.label.position.set(90,90);
+                        letterLayer.visible = true;
+
+                        specialObjects[key].visible = false;
+                        game.setLoop(youJustGotALetter);
+                        break;
                     case "health":
                         player.properties.health = 100;
                         updateHealthBar();
@@ -598,7 +691,7 @@
                         break;
                     case "load_x_level":
                         persistenceSet();
-                        console.log("Peer Level");
+                        console.log("Loading Level...");
                         LoadLevel(++currentLevel);
                         return;
                 }
