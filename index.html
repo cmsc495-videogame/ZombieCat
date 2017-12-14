@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Zombie Cat 0.4.1</title>
+    <title>Zombie Cat 0.4.2</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.1/pixi.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.5/howler.js"></script>
     <script type="text/javascript" src="DeadCat/Utils.js"></script>
@@ -16,7 +16,14 @@
 </head>
 <body>
 <!--<p>CMSC495 Project</p>-->
+<div id="vid">
+    <video id="credits">
+        <source src="credits.mp4" type="video/mp4" />
+    </video>
+</div>
+
 <div id="display"></div>
+
 <style type="text/css">
     html, body {
         height: 100%;
@@ -38,7 +45,19 @@
         background-image:url('loading.gif');
         background-repeat:no-repeat;
         background-position:center;
-
+        z-index: 0;
+    }
+    #vid{
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        z-index: 100;
+        visibility: hidden;
+    }
+    video{
+        width: 100%;
+        height: auto;
+        max-height: 100%;
     }
 </style>
 <script type="text/javascript">
@@ -54,7 +73,7 @@
     //  Main Variables
 
     var game;
-    Levels = ["mainmenu.json", "shipLevel.json", "port.json", "city.json"];
+    Levels = ["mainmenu.json", "shipLevel.json"]; //"port.json", "city.json"
     //testing: Levels = ["mainmenu.json" ,"city.json"];
     game = new DeadCat("maps/" + Levels[0], mainMenuSetup, MainMenuLoop);
 
@@ -128,7 +147,10 @@
         game.destroy();
         if (level == 0)
             game = new DeadCat("maps/" + Levels[0], mainMenuSetup, MainMenuLoop);
-        else
+        else if(level >= Levels.length){
+            document.getElementById("vid").style.visibility='visible';
+            document.getElementById("credits").play();
+        }else
             game = new DeadCat("maps/" + Levels[level], setup, menuloop);
         currentLevel = level;
 
@@ -182,7 +204,7 @@
         {
             //Create Label
             var versionLabel = hudLayer.addText();
-            versionLabel.text = "ZombieCat v0.4.1";
+            versionLabel.text = "ZombieCat v0.4.2";
             versionLabel.style = {fill: "white", fontSize: 20};
             versionLabel.position.set(600, 550);
         }
