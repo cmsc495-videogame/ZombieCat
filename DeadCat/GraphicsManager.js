@@ -2,7 +2,7 @@
 Team Zombie Cat
 Dead Cat Game Engine - Graphics (PIXI)
 
-Author: William Kendall
+Authors: William Kendall, John Sakosky, Kevin Helms, Vladimir Roman, Benjamin Sheren
 */
 
 !function ($w, PIXI, dcObject, dcLayer) {
