@@ -5,6 +5,14 @@
          "height":100,
          "name":"Grass",
          "opacity":1,
+         "properties":
+            {
+             "static":true
+            },
+         "propertytypes":
+            {
+             "static":"bool"
+            },
          "type":"tilelayer",
          "visible":true,
          "width":160,
@@ -2280,7 +2288,7 @@
                     {
                      "loop":true,
                      "rate":1,
-                     "sound":"audio\/music\/Level_Up_Kevin_MacLeod.mp3",
+                     "sound":"audio\/music\/Exit_the_Premises_Kevin_MacLeod.mp3",
                      "volume":0.3
                     },
                  "propertytypes":
@@ -2294,8 +2302,8 @@
                  "type":"",
                  "visible":true,
                  "width":20,
-                 "x":1842,
-                 "y":2965
+                 "x":1642,
+                 "y":3017
                 }, 
                 {
                  "height":20,
@@ -2385,6 +2393,14 @@
         }],
  "nextobjectid":191,
  "orientation":"orthogonal",
+ "properties":
+    {
+     "static":true
+    },
+ "propertytypes":
+    {
+     "static":"bool"
+    },
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
  "tileheight":32,

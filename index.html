@@ -293,7 +293,8 @@
                     .moveTo(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2)
                     .arc(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2, player.properties.fow_distance, 0, Math.PI * 2)
                     .addHole();
-                darkness.alpha = 0.90;
+                //darkness.alpha = 0.90;
+                darkness.alpha = 0.70;
                 var totalDarkness = hudLayer.addGraphics()
                 totalDarkness.beginFill(0x000000)
                 totalDarkness.moveTo(0, 0)
