@@ -383,7 +383,7 @@
         //create inventory (letters label)
         {
             lettersLabel = hudLayer.addText();
-            lettersLabel.style = {fill: "white", fontSize: 12};
+            lettersLabel.style = {fill: "white", fontSize: 14};
             updateLetterLabel();
         }
 
@@ -780,7 +780,7 @@
     function updateLetterLabel()
     {
         lettersLabel.text = "Letters: " + player.inventory.letters + "/" + lettersTotal;
-        lettersLabel.position.set(game.LogicManager.getWidth() - lettersLabel.width - 20, 45);
+        lettersLabel.position.set(game.LogicManager.getWidth() - lettersLabel.width - 20, 10);
     }
 
     //--Sleep Function-------------------------------------------------------
