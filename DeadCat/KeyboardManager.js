@@ -18,6 +18,5 @@
         _kbm.keysPressed[key.which] = true;
     }
 
-
     $w._DeadCat_KeyboardManager = KeyboardManager;
 }(this);
