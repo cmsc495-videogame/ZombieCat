@@ -185,6 +185,9 @@
     var staminaBar = null;
     var staminaTimer = 0;
 
+    var lettersLabel = null;
+    var lettersTotal = 0;
+
     var objectLayer = null;
     var mainMenuLayer = null;
     var hudLayer = null;
@@ -206,6 +209,8 @@
 
         letterLayer = game.LogicManager.getLayerByName("LETTER");
         game.LogicManager.positionAbsolute(letterLayer, "top-left");
+
+
 
         //-------------------------------------------------------------
         //--  Display Version Number  ---------------------------------
@@ -233,6 +238,13 @@
         var specialLayer = game.LogicManager.getLayerByName("Special");
         specialObjects = game.LogicManager.getObjectsInLayer(specialLayer);
 
+        //get how many letters in the level
+        lettersTotal = 0;
+        for(var key in specialObjects)
+        {
+            if(specialObjects[key].name == "letter")
+                lettersTotal++;
+        }
 
         //-------------------------------------------------------------
         //--  Player  -------------------------------------------------
@@ -246,6 +258,8 @@
         player.oldPlayerGid = player.gid;
         player.facing = "down";
         player.direction = 270;  //Track direction of movement for attacks
+        player.inventory = {};
+        player.inventory.letters = 0;
 
         //copies the animations from the player layer to a list
         for (var ani in objectLayer.children) {
@@ -366,6 +380,12 @@
             staminaBar.outer = outerBar;
         }
 
+        //create inventory (letters label)
+        {
+            lettersLabel = hudLayer.addText();
+            lettersLabel.style = {fill: "white", fontSize: 12};
+            updateLetterLabel();
+        }
 
         //-------------------------------------------------------------
         //--  Other  --------------------------------------------------
@@ -676,6 +696,8 @@
             if (specialObjects.hasOwnProperty(key) && specialObjects[key].visible && game.LogicManager.hitTest(player, specialObjects[key])) {
                 switch (specialObjects[key].name) {
                     case "letter":
+                        player.inventory.letters++;
+                        updateLetterLabel();
                         letterLayer.label = letterLayer.addText();
                         letterLayer.label.text = specialObjects[key].properties.text;
                         letterLayer.label.style = {fill: "white", fontSize: 20};
@@ -691,6 +713,8 @@
                         specialObjects[key].visible = false;
                         break;
                     case "load_x_level":
+                        if(player.inventory.letters < lettersTotal)
+                            break;
                         persistenceSet();
                         console.log("Loading Level...");
                         LoadLevel(++currentLevel);
@@ -751,6 +775,12 @@
         //Does not display health below 0
         if (staminaBar.outer.width < 0)
             staminaBar.outer.width = 0;
+    }
+
+    function updateLetterLabel()
+    {
+        lettersLabel.text = "Letters: " + player.inventory.letters + "/" + lettersTotal;
+        lettersLabel.position.set(game.LogicManager.getWidth() - lettersLabel.width - 20, 45);
     }
 
     //--Sleep Function-------------------------------------------------------
