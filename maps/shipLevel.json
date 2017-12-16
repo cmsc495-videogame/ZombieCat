@@ -590,12 +590,78 @@
                 {
                  "gid":990,
                  "height":48,
+                 "id":145,
+                 "name":"letter",
+                 "properties":
+                    {
+                     "sound":"sfx_pickup_letter",
+                     "text":"Capt said we best be leavin in a hurry.  Don\u2019t know\nwhy I\u2019m writing this when I should be abandoning\nship.  I just had the urge to take the time in the midst\nof chaos to document my thoughts\u2026. \nO god!  What is that!!!"
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string",
+                     "text":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":48,
+                 "x":2324.48484848485,
+                 "y":3015.39393939394
+                }, 
+                {
+                 "gid":990,
+                 "height":48,
+                 "id":144,
+                 "name":"letter",
+                 "properties":
+                    {
+                     "sound":"sfx_pickup_letter",
+                     "text":"To: shipping company\n\nThings have been going south really fast.  My advice\nis that everyone finds their own way off of the ship\nASAP.  Most of the crew fled as soon as they heard,\nthere aren\u2019t any lifeboats left.  But there are some\nlife rings at the starboard mid-ship.  And we\u2019re not\ntoo far from shore.  Wish us luck!\n\n- Captian Ben\n"
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string",
+                     "text":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":48,
+                 "x":1579.0303030303,
+                 "y":3363.87878787879
+                }, 
+                {
+                 "gid":990,
+                 "height":48,
+                 "id":146,
+                 "name":"letter",
+                 "properties":
+                    {
+                     "sound":"sfx_pickup_letter",
+                     "text":"Vlad was bit by one of those darn cats earlier, almost\ntook his arm off.  Ship\u2019s doctor ended up having to.\nHe says that he\u2019s never seen anything like it before.\nOthers on the crew say they\u2019ve seen other cats\nrunning around.  It\u2019s getting a bit too creepy.  We\u2019re\ngoing to talk to the captain on the Bridge.\n\n-Larry (Second Mate)\n"
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string",
+                     "text":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":48,
+                 "x":863.878787878788,
+                 "y":2794.18181818182
+                }, 
+                {
+                 "gid":990,
+                 "height":48,
                  "id":140,
                  "name":"letter",
                  "properties":
                     {
                      "sound":"sfx_pickup_letter",
-                     "text":"To: ships company\n\nThings have been going south really fast.\nMy advice is that everyone finds their own way off of\nthe ship.\n\n- Captian Ben"
+                     "text":"Boatswain's Log\n\nI overheard some of the officers saying that they \nhave a meeting port side to discuss the cats onboard.\nI didn\u2019t know there was any live cargo\u2026 Don\u2019t know\nwhy they were whispering about it either.\n"
                     },
                  "propertytypes":
                     {
@@ -1415,7 +1481,7 @@
                      "attack_range":50,
                      "attack_rechargeState":0,
                      "attack_rechargeTime":30,
-                     "attack_stamina":20,
+                     "attack_stamina":30,
                      "fow_distance":200,
                      "health":100,
                      "sound_attack":"sfx_player_attack",
@@ -1424,10 +1490,10 @@
                      "sound_miss":"sfx_player_miss",
                      "sound_move":"sfx_player_walk",
                      "sprint_speed":1.3,
-                     "sprint_stamina":40,
+                     "sprint_stamina":30,
                      "stamina":100,
                      "stamina_max":100,
-                     "stamina_rechargeRate":4,
+                     "stamina_rechargeRate":10,
                      "state_animate":true
                     },
                  "propertytypes":
@@ -2317,7 +2383,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":144,
+ "nextobjectid":147,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",

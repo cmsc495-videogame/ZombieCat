@@ -220,12 +220,34 @@
                 {
                  "gid":990,
                  "height":48,
+                 "id":190,
+                 "name":"letter",
+                 "properties":
+                    {
+                     "sound":"sfx_pickup_letter",
+                     "text":"To: Shipping Yard\n\nReaserch on the ship has been a mistake.\nThe cats has mutated into making them only more violent.\nSomeone needs to stop these wayward kitties.\nThere should be a bio lab in the city that can help.\n\n- Captian Ben"
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string",
+                     "text":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":48,
+                 "x":2476,
+                 "y":456
+                }, 
+                {
+                 "gid":990,
+                 "height":48,
                  "id":186,
                  "name":"letter",
                  "properties":
                     {
                      "sound":"sfx_pickup_letter",
-                     "text":"To: Shipping Yard\n\nReaserch on the ship has been a mistake.\nThe cats has mutated into making them only more violent.\nSomeone needs to stop these wayward kitties.\n\n- Captian Ben"
+                     "text":"There\u2019s been some strange activity on the north side\nof the yard. I\u2019m headed over there now to take a look.\n\n-Mr. Bigshot\nOffice Manager"
                     },
                  "propertytypes":
                     {
@@ -247,7 +269,7 @@
                  "properties":
                     {
                      "sound":"sfx_pickup_letter",
-                     "text":"To: Personel\n\nDo to recent events, the yard has incressed health packs\nshould you be attacked by a cat.\nLocations:\n-South by the main office in the parking lot\n-Center of the yard\n-West by the ocean"
+                     "text":"To: Personel\n\nDo to recent events, the yard has incressed health packs\nshould you be attacked by a cat.\nLocations:\n-South by the main office in the parking lot\n-Center of the yard\n-West by the ocean\n\nThe office manager had the keys to the main gate with him."
                     },
                  "propertytypes":
                     {
@@ -260,6 +282,28 @@
                  "width":48,
                  "x":410,
                  "y":1692
+                }, 
+                {
+                 "gid":990,
+                 "height":48,
+                 "id":191,
+                 "name":"letter",
+                 "properties":
+                    {
+                     "sound":"sfx_pickup_letter",
+                     "text":"I found the office manager's jacket... don't know\nwhat happened to him.  But his keys were in there...\nI'm getting out of here!\n\n-<redacted>"
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string",
+                     "text":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":48,
+                 "x":3768,
+                 "y":572
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -284,7 +328,7 @@
                      "attack_rechargeState":0,
                      "attack_rechargeTime":30,
                      "attack_stamina":20,
-                     "fow_distance":100,
+                     "fow_distance":130,
                      "health":100,
                      "sound_attack":"sfx_player_attack",
                      "sound_die":"sfx_player_die",
@@ -2421,7 +2465,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":190,
+ "nextobjectid":192,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",

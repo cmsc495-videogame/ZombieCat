@@ -301,7 +301,7 @@
                      "sprint_stamina":40,
                      "stamina":100,
                      "stamina_max":100,
-                     "stamina_rechargeRate":4,
+                     "stamina_rechargeRate":10,
                      "state_animate":true
                     },
                  "propertytypes":
