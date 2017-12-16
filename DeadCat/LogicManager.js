@@ -236,7 +236,7 @@ Authors: William Kendall, John Sakosky, Kevin Helms, Vladimir Roman, Benjamin Sh
                 if (layer.staticLayerChildren[tile].collision.hasCollision) {
                     //not sure if this makes hittest any faster
                     //a gpu would be great at this
-                    if (Math.sqrt(Math.pow(layer.staticLayerChildren[tile].x - obj.x, 2) + Math.pow(layer.staticLayerChildren[tile].y - obj.y, 2)) < (obj.width + layer.staticLayerChildren[tile].width) + ( obj.height + layer.staticLayerChildren[tile].height) * 1.5) ;
+                    if (this.distance(obj, layer.staticLayerChildren[tile]) <= (obj.height+obj.width+layer.staticLayerChildren[tile].width+layer.staticLayerChildren[tile].height))
                     if ((obj.x + obj.collision.x) + obj.collision.width > (layer.staticLayerChildren[tile].x + layer.staticLayerChildren[tile].collision.x) &&
                         (obj.x + obj.collision.x) < (layer.staticLayerChildren[tile].x + layer.staticLayerChildren[tile].collision.x) + layer.staticLayerChildren[tile].collision.width &&
                         (obj.y + obj.collision.y ) + obj.collision.height > (layer.staticLayerChildren[tile].y + layer.staticLayerChildren[tile].collision.y) &&
@@ -253,7 +253,7 @@ Authors: William Kendall, John Sakosky, Kevin Helms, Vladimir Roman, Benjamin Sh
                 if (layer.children[tile].collision.hasCollision) {
                     //not sure if this makes hittest any faster
                     //a gpu would be great at this
-                    if (Math.sqrt(Math.pow(layer.children[tile].x - obj.x, 2) + Math.pow(layer.children[tile].y - obj.y, 2)) < (obj.width + layer.children[tile].width) + ( obj.height + layer.children[tile].height) * 1.5) ;
+                    if (this.distance(obj, layer.children[tile]) <= (obj.height+obj.width+layer.children[tile].width+layer.children[tile].height))
                     if ((obj.x + obj.collision.x) + obj.collision.width > (layer.children[tile].x + layer.children[tile].collision.x) &&
                         (obj.x + obj.collision.x) < (layer.children[tile].x + layer.children[tile].collision.x) + layer.children[tile].collision.width &&
                         (obj.y + obj.collision.y ) + obj.collision.height > (layer.children[tile].y + layer.children[tile].collision.y) &&
@@ -304,6 +304,8 @@ Authors: William Kendall, John Sakosky, Kevin Helms, Vladimir Roman, Benjamin Sh
         if (collisionLayer.properties.static == true) {
             for (tile in collisionLayer.staticLayerChildren) {
                 if (collisionLayer.staticLayerChildren[tile].collision.hasCollision) {
+                    if(this.distance(obj1,obj2) < this.distance(obj1, collisionLayer.staticLayerChildren[tile] ) )
+                        continue;
                     x1 = (collisionLayer.staticLayerChildren[tile].x + collisionLayer.staticLayerChildren[tile].collision.x);
                     x2 = (collisionLayer.staticLayerChildren[tile].x + collisionLayer.staticLayerChildren[tile].collision.x +  collisionLayer.staticLayerChildren[tile].collision.width);
                     y1 = (collisionLayer.staticLayerChildren[tile].y + collisionLayer.staticLayerChildren[tile].collision.y);
@@ -320,6 +322,8 @@ Authors: William Kendall, John Sakosky, Kevin Helms, Vladimir Roman, Benjamin Sh
         {
             for (tile in collisionLayer.children) {
                 if (collisionLayer.children[tile].collision.hasCollision) {
+                    if(this.distance(obj1,obj2) < this.distance(obj1, collisionLayer.children[tile] ) )
+                        continue;
                     x1 = (collisionLayer.children[tile].x + collisionLayer.children[tile].collision.x);
                     x2 = (collisionLayer.children[tile].x + collisionLayer.children[tile].collision.x +  collisionLayer.children[tile].collision.width);
                     y1 = (collisionLayer.children[tile].y + collisionLayer.children[tile].collision.y);

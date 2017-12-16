@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Zombie Cat 0.4.2</title>
+    <title>Zombie Cat 0.4.3</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.1/pixi.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.5/howler.js"></script>
     <script type="text/javascript" src="DeadCat/Utils.js"></script>
@@ -73,12 +73,14 @@
     //  Main Variables
 
     var game;
-    Levels = ["mainmenu.json", "shipLevel.json", "port.json", "city.json"];
+    Levels = ["mainmenu.json", "insideCrate.json", "shipLevel.json", "port.json", "city.json"];
     //testing: Levels = ["mainmenu.json" ,"city.json"];
     game = new DeadCat("maps/" + Levels[0], mainMenuSetup, MainMenuLoop);
 
     persistence = false;
     persistence_health = 0;
+
+    //update_intervel = 40;  //Used for stamina and others (in ms);
 
     //#######################################################################
 
@@ -185,6 +187,9 @@
     var staminaBar = null;
     var staminaTimer = 0;
 
+    var lettersLabel = null;
+    var lettersTotal = 0;
+
     var objectLayer = null;
     var mainMenuLayer = null;
     var hudLayer = null;
@@ -207,13 +212,15 @@
         letterLayer = game.LogicManager.getLayerByName("LETTER");
         game.LogicManager.positionAbsolute(letterLayer, "top-left");
 
+
+
         //-------------------------------------------------------------
         //--  Display Version Number  ---------------------------------
         //-------------------------------------------------------------
         {
             //Create Label
             var versionLabel = hudLayer.addText();
-            versionLabel.text = "ZombieCat v0.4.2";
+            versionLabel.text = "ZombieCat v0.4.3";
             versionLabel.style = {fill: "white", fontSize: 20};
             versionLabel.position.set(600, 550);
         }
@@ -233,6 +240,13 @@
         var specialLayer = game.LogicManager.getLayerByName("Special");
         specialObjects = game.LogicManager.getObjectsInLayer(specialLayer);
 
+        //get how many letters in the level
+        lettersTotal = 0;
+        for(var key in specialObjects)
+        {
+            if(specialObjects[key].name == "letter")
+                lettersTotal++;
+        }
 
         //-------------------------------------------------------------
         //--  Player  -------------------------------------------------
@@ -246,6 +260,8 @@
         player.oldPlayerGid = player.gid;
         player.facing = "down";
         player.direction = 270;  //Track direction of movement for attacks
+        player.inventory = {};
+        player.inventory.letters = 0;
 
         //copies the animations from the player layer to a list
         for (var ani in objectLayer.children) {
@@ -293,7 +309,8 @@
                     .moveTo(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2)
                     .arc(game.LogicManager.getWidth() / 2, game.LogicManager.getHeight() / 2, player.properties.fow_distance, 0, Math.PI * 2)
                     .addHole();
-                darkness.alpha = 0.90;
+                //darkness.alpha = 0.90;
+                darkness.alpha = 0.70;
                 var totalDarkness = hudLayer.addGraphics()
                 totalDarkness.beginFill(0x000000)
                 totalDarkness.moveTo(0, 0)
@@ -365,6 +382,12 @@
             staminaBar.outer = outerBar;
         }
 
+        //create inventory (letters label)
+        {
+            lettersLabel = hudLayer.addText();
+            lettersLabel.style = {fill: "white", fontSize: 14};
+            updateLetterLabel();
+        }
 
         //-------------------------------------------------------------
         //--  Other  --------------------------------------------------
@@ -395,8 +418,9 @@
         player.gid = player.oldPlayerGid;
 
         var oldx = player.x;
-        var oldy = player.y
+        var oldy = player.y;
 
+        var updating = false;
 
         //-------------------------------------------------------------
         //-- Player Health --------------------------------------------
@@ -426,19 +450,20 @@
 
             //Recharge Stamina
             if (player.properties.stamina < player.properties.stamina_max) {
-                if (staminaTimer <= new Date().getTime()) {
-                    if (player.properties.stamina + player.properties.stamina_rechargeRate >= player.properties.stamina_max) {
+                //if (staminaTimer <= alpha) {
+                    if (player.properties.stamina + player.properties.stamina_rechargeRate*delta/30 >= player.properties.stamina_max) {
                         player.properties.stamina = player.properties.stamina_max;
                     } else {
-                        player.properties.stamina += player.properties.stamina_rechargeRate;
+                        player.properties.stamina += (player.properties.stamina_rechargeRate*delta/20);
                     }
+                    updating = true;
                     updateStaminaBar();
-                    staminaTimer = new Date().getTime() + 500
-                }
+                    //staminaTimer = alpha + update_intervel/1000;
+                //}
             }
 
             //Attack button (Spacebar)
-            if (game.KeyboardManager.keysPressed[32] === true) {
+            if (game.KeyboardManager.keysPressed[32] === true && player.properties.stamina >= player.properties.attack_stamina) {
                 //Play animation
                 if (player.facing === "down")
                     player.gid = Animations.player_attack_stick_down;
@@ -452,7 +477,7 @@
                 //Attack cats nearby when attack is recharged
                 var closestCat = null;
                 var closestCatDistance = null;
-                if (player.properties.attack_rechargeState <= 0 && player.properties.stamina >= player.properties.attack_stamina) {
+                if (player.properties.attack_rechargeState <= 0) {
                     //console.log('attack');
                     for (var cat in cats) {
                         if (cats[cat].properties.state_dead != true) {
@@ -504,23 +529,30 @@
         //-- Player Movement ------------------------------------------
         //-------------------------------------------------------------
         {
+            var boost = 1.0;
+            if (game.KeyboardManager.keysPressed[16] === true && player.properties.stamina>player.properties.sprint_stamina*delta) {
+                boost = player.properties.sprint_speed;
+                if (updating || player.properties.stamina>=player.properties.stamina_max) {
+                    player.properties.stamina -= (player.properties.sprint_stamina*delta/20);
+                }
+            }
             if (game.KeyboardManager.keysPressed[87] === true) {
-                moveY += mvDelta;
+                moveY += mvDelta*boost;
                 player.gid = Animations.player_move_forward;
                 player.facing = "up";
             }
             if (game.KeyboardManager.keysPressed[83] === true) {
-                moveY -= mvDelta;
+                moveY -= mvDelta*boost;
                 player.gid = Animations.player_move_back;
                 player.facing = "down";
             }
             if (game.KeyboardManager.keysPressed[65] === true) {
-                moveX += mvDelta;
+                moveX += mvDelta*boost;
                 player.gid = Animations.player_move_left;
                 player.facing = "left";
             }
             if (game.KeyboardManager.keysPressed[68] === true) {
-                moveX -= mvDelta;
+                moveX -= mvDelta*boost;
                 player.gid = Animations.player_move_right;
                 player.facing = "right";
             }
@@ -675,6 +707,8 @@
             if (specialObjects.hasOwnProperty(key) && specialObjects[key].visible && game.LogicManager.hitTest(player, specialObjects[key])) {
                 switch (specialObjects[key].name) {
                     case "letter":
+                        player.inventory.letters++;
+                        updateLetterLabel();
                         letterLayer.label = letterLayer.addText();
                         letterLayer.label.text = specialObjects[key].properties.text;
                         letterLayer.label.style = {fill: "white", fontSize: 20};
@@ -690,11 +724,15 @@
                         specialObjects[key].visible = false;
                         break;
                     case "load_x_level":
+                        if(player.inventory.letters < lettersTotal)
+                            break;
                         persistenceSet();
                         console.log("Loading Level...");
                         LoadLevel(++currentLevel);
                         return;
                 }
+                if(specialObjects[key].hasOwnProperty("properties"))
+                    game.AudioManager.playSound(specialObjects[key].properties.sound);
             }
         }
 
@@ -750,6 +788,12 @@
         //Does not display health below 0
         if (staminaBar.outer.width < 0)
             staminaBar.outer.width = 0;
+    }
+
+    function updateLetterLabel()
+    {
+        lettersLabel.text = "Letters: " + player.inventory.letters + "/" + lettersTotal;
+        lettersLabel.position.set(game.LogicManager.getWidth() - lettersLabel.width - 20, 10);
     }
 
     //--Sleep Function-------------------------------------------------------
