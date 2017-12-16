@@ -720,6 +720,7 @@
                         LoadLevel(++currentLevel);
                         return;
                 }
+                game.AudioManager.playSound(specialObjects[key].properties.sound);
             }
         }
 

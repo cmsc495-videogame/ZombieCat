@@ -104,6 +104,14 @@
                  "height":48,
                  "id":117,
                  "name":"health",
+                 "properties":
+                    {
+                     "sound":"sfx_powerup_health"
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -115,6 +123,14 @@
                  "height":323,
                  "id":119,
                  "name":"load_x_level",
+                 "properties":
+                    {
+                     "sound":""
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -127,6 +143,14 @@
                  "height":48,
                  "id":135,
                  "name":"health",
+                 "properties":
+                    {
+                     "sound":"sfx_powerup_health"
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -139,6 +163,14 @@
                  "height":48,
                  "id":136,
                  "name":"health",
+                 "properties":
+                    {
+                     "sound":"sfx_powerup_health"
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -150,6 +182,14 @@
                  "height":353,
                  "id":151,
                  "name":"load_x_level",
+                 "properties":
+                    {
+                     "sound":""
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -162,6 +202,14 @@
                  "height":48,
                  "id":183,
                  "name":"health",
+                 "properties":
+                    {
+                     "sound":"sfx_powerup_health"
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -176,10 +224,12 @@
                  "name":"letter",
                  "properties":
                     {
+                     "sound":"sfx_pickup_letter",
                      "text":"To: Shipping Yard\n\nReaserch on the ship has been a mistake.\nThe cats has mutated into making them only more violent.\nSomeone needs to stop these wayward kitties.\n\n- Captian Ben"
                     },
                  "propertytypes":
                     {
+                     "sound":"string",
                      "text":"string"
                     },
                  "rotation":0,
@@ -196,10 +246,12 @@
                  "name":"letter",
                  "properties":
                     {
+                     "sound":"sfx_pickup_letter",
                      "text":"To: Personel\n\nDo to recent events, the yard has incressed health packs\nshould you be attacked by a cat.\nLocations:\n-South by the main office in the parking lot\n-Center of the yard\n-West by the ocean"
                     },
                  "propertytypes":
                     {
+                     "sound":"string",
                      "text":"string"
                     },
                  "rotation":0,
@@ -2257,6 +2309,56 @@
                 {
                  "height":20,
                  "id":122,
+                 "name":"sfx_powerup_health",
+                 "properties":
+                    {
+                     "loop":false,
+                     "rate":1,
+                     "sound":"audio\/sfx_powerup_health.wav",
+                     "volume":1
+                    },
+                 "propertytypes":
+                    {
+                     "loop":"bool",
+                     "rate":"float",
+                     "sound":"string",
+                     "volume":"float"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":20,
+                 "x":1094,
+                 "y":735
+                }, 
+                {
+                 "height":20,
+                 "id":188,
+                 "name":"sfx_pickup_letter",
+                 "properties":
+                    {
+                     "loop":false,
+                     "rate":1,
+                     "sound":"audio\/sfx_powerup-1.wav",
+                     "volume":1
+                    },
+                 "propertytypes":
+                    {
+                     "loop":"bool",
+                     "rate":"float",
+                     "sound":"string",
+                     "volume":"float"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":20,
+                 "x":2474,
+                 "y":1622
+                }, 
+                {
+                 "height":20,
+                 "id":189,
                  "name":"sfx_player_miss",
                  "properties":
                     {
@@ -2276,8 +2378,8 @@
                  "type":"",
                  "visible":true,
                  "width":20,
-                 "x":1094,
-                 "y":735
+                 "x":2474,
+                 "y":1622
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2315,7 +2417,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":188,
+ "nextobjectid":190,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
