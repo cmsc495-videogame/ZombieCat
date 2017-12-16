@@ -80,6 +80,8 @@
     persistence = false;
     persistence_health = 0;
 
+    update_intervel = 5;  //Used for stamina and others (in ms);
+
     //#######################################################################
 
 
@@ -416,8 +418,9 @@
         player.gid = player.oldPlayerGid;
 
         var oldx = player.x;
-        var oldy = player.y
+        var oldy = player.y;
 
+        var updating = false;
 
         //-------------------------------------------------------------
         //-- Player Health --------------------------------------------
@@ -448,18 +451,19 @@
             //Recharge Stamina
             if (player.properties.stamina < player.properties.stamina_max) {
                 if (staminaTimer <= new Date().getTime()) {
-                    if (player.properties.stamina + player.properties.stamina_rechargeRate >= player.properties.stamina_max) {
+                    if (player.properties.stamina + player.properties.stamina_rechargeRate*update_intervel/1000 >= player.properties.stamina_max) {
                         player.properties.stamina = player.properties.stamina_max;
                     } else {
-                        player.properties.stamina += player.properties.stamina_rechargeRate;
+                        player.properties.stamina += (player.properties.stamina_rechargeRate*update_intervel/1000);
                     }
+                    updating = true;
                     updateStaminaBar();
-                    staminaTimer = new Date().getTime() + 500
+                    staminaTimer = new Date().getTime() + update_intervel;
                 }
             }
 
             //Attack button (Spacebar)
-            if (game.KeyboardManager.keysPressed[32] === true) {
+            if (game.KeyboardManager.keysPressed[32] === true && player.properties.stamina >= player.properties.attack_stamina) {
                 //Play animation
                 if (player.facing === "down")
                     player.gid = Animations.player_attack_stick_down;
@@ -525,23 +529,30 @@
         //-- Player Movement ------------------------------------------
         //-------------------------------------------------------------
         {
+            var boost = 1.0;
+            if (game.KeyboardManager.keysPressed[16] === true && player.properties.stamina>player.properties.sprint_stamina*update_intervel/1000) {
+                boost = player.properties.sprint_speed;
+                if (updating || player.properties.stamina>=player.properties.stamina_max) {
+                    player.properties.stamina -= (player.properties.sprint_stamina*update_intervel/1000);
+                }
+            }
             if (game.KeyboardManager.keysPressed[87] === true) {
-                moveY += mvDelta;
+                moveY += mvDelta*boost;
                 player.gid = Animations.player_move_forward;
                 player.facing = "up";
             }
             if (game.KeyboardManager.keysPressed[83] === true) {
-                moveY -= mvDelta;
+                moveY -= mvDelta*boost;
                 player.gid = Animations.player_move_back;
                 player.facing = "down";
             }
             if (game.KeyboardManager.keysPressed[65] === true) {
-                moveX += mvDelta;
+                moveX += mvDelta*boost;
                 player.gid = Animations.player_move_left;
                 player.facing = "left";
             }
             if (game.KeyboardManager.keysPressed[68] === true) {
-                moveX -= mvDelta;
+                moveX -= mvDelta*boost;
                 player.gid = Animations.player_move_right;
                 player.facing = "right";
             }
