@@ -328,7 +328,7 @@
                      "attack_rechargeState":0,
                      "attack_rechargeTime":30,
                      "attack_stamina":20,
-                     "fow_distance":130,
+                     "fow_distance":100,
                      "health":100,
                      "sound_attack":"sfx_player_attack",
                      "sound_die":"sfx_player_die",
