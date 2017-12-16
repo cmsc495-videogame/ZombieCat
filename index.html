@@ -73,7 +73,6 @@
     //  Main Variables
 
     var game;
-    var alpha=0;
     Levels = ["mainmenu.json", "shipLevel.json", "port.json", "city.json"];
     //testing: Levels = ["mainmenu.json" ,"city.json"];
     game = new DeadCat("maps/" + Levels[0], mainMenuSetup, MainMenuLoop);
@@ -81,7 +80,7 @@
     persistence = false;
     persistence_health = 0;
 
-    update_intervel = 40;  //Used for stamina and others (in ms);
+    //update_intervel = 40;  //Used for stamina and others (in ms);
 
     //#######################################################################
 
@@ -423,8 +422,6 @@
 
         var updating = false;
 
-        alpha += delta;
-
         //-------------------------------------------------------------
         //-- Player Health --------------------------------------------
         //-------------------------------------------------------------
@@ -453,16 +450,16 @@
 
             //Recharge Stamina
             if (player.properties.stamina < player.properties.stamina_max) {
-                if (staminaTimer <= alpha) {
-                    if (player.properties.stamina + player.properties.stamina_rechargeRate*update_intervel/1000 >= player.properties.stamina_max) {
+                //if (staminaTimer <= alpha) {
+                    if (player.properties.stamina + player.properties.stamina_rechargeRate*delta/20 >= player.properties.stamina_max) {
                         player.properties.stamina = player.properties.stamina_max;
                     } else {
-                        player.properties.stamina += (player.properties.stamina_rechargeRate*update_intervel/1000);
+                        player.properties.stamina += (player.properties.stamina_rechargeRate*delta/20);
                     }
                     updating = true;
                     updateStaminaBar();
-                    staminaTimer = alpha + update_intervel/1000;
-                }
+                    //staminaTimer = alpha + update_intervel/1000;
+                //}
             }
 
             //Attack button (Spacebar)
@@ -533,10 +530,10 @@
         //-------------------------------------------------------------
         {
             var boost = 1.0;
-            if (game.KeyboardManager.keysPressed[16] === true && player.properties.stamina>player.properties.sprint_stamina*update_intervel/1000) {
+            if (game.KeyboardManager.keysPressed[16] === true && player.properties.stamina>player.properties.sprint_stamina*delta) {
                 boost = player.properties.sprint_speed;
                 if (updating || player.properties.stamina>=player.properties.stamina_max) {
-                    player.properties.stamina -= (player.properties.sprint_stamina*update_intervel/1000);
+                    player.properties.stamina -= (player.properties.sprint_stamina*delta/20);
                 }
             }
             if (game.KeyboardManager.keysPressed[87] === true) {
