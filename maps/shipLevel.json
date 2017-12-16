@@ -628,8 +628,8 @@
                  "type":"",
                  "visible":true,
                  "width":48,
-                 "x":1579.0303030303,
-                 "y":3363.87878787879
+                 "x":1611,
+                 "y":3411
                 }, 
                 {
                  "gid":990,
@@ -650,8 +650,8 @@
                  "type":"",
                  "visible":true,
                  "width":48,
-                 "x":863.878787878788,
-                 "y":2794.18181818182
+                 "x":1045,
+                 "y":2789
                 }, 
                 {
                  "gid":990,
@@ -2296,6 +2296,62 @@
                  "width":48,
                  "x":1511,
                  "y":658
+                }, 
+                {
+                 "gid":914,
+                 "height":48,
+                 "id":147,
+                 "name":"Zombie",
+                 "properties":
+                    {
+                     "AttackDistance":50,
+                     "ani_move_back":"cat_move_back",
+                     "ani_move_forward":"cat_move_forward",
+                     "ani_move_left":"cat_move_left",
+                     "ani_move_right":"cat_move_right",
+                     "attack_damage":5,
+                     "attack_range":50,
+                     "attack_rechargeState":0,
+                     "attack_rechargeTime":100,
+                     "chase":false,
+                     "health":50,
+                     "sight":500,
+                     "sound_attack":"sfx_cat_attack",
+                     "sound_die":"sfx_cat_die",
+                     "sound_hurt":"sfx_cat_hurt",
+                     "sound_move":"sfx_cat_walk",
+                     "speed":2,
+                     "state_animate":true,
+                     "state_dead":false
+                    },
+                 "propertytypes":
+                    {
+                     "AttackDistance":"int",
+                     "ani_move_back":"string",
+                     "ani_move_forward":"string",
+                     "ani_move_left":"string",
+                     "ani_move_right":"string",
+                     "attack_damage":"int",
+                     "attack_range":"int",
+                     "attack_rechargeState":"int",
+                     "attack_rechargeTime":"int",
+                     "chase":"bool",
+                     "health":"int",
+                     "sight":"float",
+                     "sound_attack":"string",
+                     "sound_die":"string",
+                     "sound_hurt":"string",
+                     "sound_move":"string",
+                     "speed":"float",
+                     "state_animate":"bool",
+                     "state_dead":"bool"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":48,
+                 "x":973,
+                 "y":2921
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2383,7 +2439,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":147,
+ "nextobjectid":148,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
