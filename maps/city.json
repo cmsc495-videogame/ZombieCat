@@ -104,6 +104,14 @@
                  "height":48,
                  "id":117,
                  "name":"health",
+                 "properties":
+                    {
+                     "sound":"sfx_pwerup_health"
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -116,6 +124,14 @@
                  "height":48,
                  "id":135,
                  "name":"health",
+                 "properties":
+                    {
+                     "sound":"sfx_pwerup_health"
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -128,6 +144,14 @@
                  "height":48,
                  "id":136,
                  "name":"health",
+                 "properties":
+                    {
+                     "sound":"sfx_pwerup_health"
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -151,6 +175,14 @@
                  "height":48,
                  "id":183,
                  "name":"health",
+                 "properties":
+                    {
+                     "sound":"sfx_pwerup_health"
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -165,10 +197,12 @@
                  "name":"letter",
                  "properties":
                     {
+                     "sound":"sfx_pickup_letter",
                      "text":"To: Kevin\n\nIt is no longer safe here, I will be joining with the others\nto the north.\n\nStay safe,\nKendall"
                     },
                  "propertytypes":
                     {
+                     "sound":"string",
                      "text":"string"
                     },
                  "rotation":0,
@@ -185,10 +219,12 @@
                  "name":"letter",
                  "properties":
                     {
+                     "sound":"sfx_pickup_letter",
                      "text":"John's Diary - Day 39:\n\nA few weeks ago when this all started,\nI watched a homeless man get into a container in the shipping\nyard from across the fence. To my suprise, they soon\nloaded onto a ship with him inside."
                     },
                  "propertytypes":
                     {
+                     "sound":"string",
                      "text":"string"
                     },
                  "rotation":0,
@@ -205,10 +241,12 @@
                  "name":"letter",
                  "properties":
                     {
+                     "sound":"sfx_pickup_letter",
                      "text":"To: whom it concerns.\n\nTo many cats in the city. They ate most of our group.\nMy advice to you would be to hide. Perhaps in a food \nshipping container in the container yard. Supplys should last\na month.\n\nwe're sorry,\nThe others."
                     },
                  "propertytypes":
                     {
+                     "sound":"string",
                      "text":"string"
                     },
                  "rotation":0,
@@ -2333,6 +2371,56 @@
                 {
                  "height":20,
                  "id":122,
+                 "name":"sfx_powerup_health",
+                 "properties":
+                    {
+                     "loop":false,
+                     "rate":1,
+                     "sound":"audio\/sfx_powerup_health.wav",
+                     "volume":1
+                    },
+                 "propertytypes":
+                    {
+                     "loop":"bool",
+                     "rate":"float",
+                     "sound":"string",
+                     "volume":"float"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":20,
+                 "x":906,
+                 "y":299
+                }, 
+                {
+                 "height":20,
+                 "id":192,
+                 "name":"sfx_pickup_letter",
+                 "properties":
+                    {
+                     "loop":false,
+                     "rate":1,
+                     "sound":"audio\/sfx_powerup-1.wav",
+                     "volume":1
+                    },
+                 "propertytypes":
+                    {
+                     "loop":"bool",
+                     "rate":"float",
+                     "sound":"string",
+                     "volume":"float"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":20,
+                 "x":1871.81818181818,
+                 "y":1359.69696969697
+                }, 
+                {
+                 "height":20,
+                 "id":191,
                  "name":"sfx_player_miss",
                  "properties":
                     {
@@ -2352,8 +2440,8 @@
                  "type":"",
                  "visible":true,
                  "width":20,
-                 "x":906,
-                 "y":299
+                 "x":1871.81818181818,
+                 "y":1359.69696969697
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2391,7 +2479,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":191,
+ "nextobjectid":193,
  "orientation":"orthogonal",
  "properties":
     {

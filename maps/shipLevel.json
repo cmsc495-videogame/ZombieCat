@@ -407,6 +407,56 @@
                 {
                  "height":20,
                  "id":122,
+                 "name":"sfx_powerup_health",
+                 "properties":
+                    {
+                     "loop":false,
+                     "rate":1,
+                     "sound":"audio\/sfx_powerup_health.wav",
+                     "volume":1
+                    },
+                 "propertytypes":
+                    {
+                     "loop":"bool",
+                     "rate":"float",
+                     "sound":"string",
+                     "volume":"float"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":20,
+                 "x":1094,
+                 "y":735
+                }, 
+                {
+                 "height":20,
+                 "id":142,
+                 "name":"sfx_pickup_letter",
+                 "properties":
+                    {
+                     "loop":false,
+                     "rate":1,
+                     "sound":"audio\/sfx_powerup-1.wav",
+                     "volume":1
+                    },
+                 "propertytypes":
+                    {
+                     "loop":"bool",
+                     "rate":"float",
+                     "sound":"string",
+                     "volume":"float"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":20,
+                 "x":1102,
+                 "y":743
+                }, 
+                {
+                 "height":20,
+                 "id":143,
                  "name":"sfx_player_miss",
                  "properties":
                     {
@@ -426,8 +476,8 @@
                  "type":"",
                  "visible":true,
                  "width":20,
-                 "x":1094,
-                 "y":735
+                 "x":1102,
+                 "y":743
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -463,6 +513,14 @@
                  "height":48,
                  "id":117,
                  "name":"health",
+                 "properties":
+                    {
+                     "sound":"sfx_powerup_health"
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -474,6 +532,14 @@
                  "height":109,
                  "id":119,
                  "name":"load_x_level",
+                 "properties":
+                    {
+                     "sound":""
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -486,6 +552,14 @@
                  "height":48,
                  "id":135,
                  "name":"health",
+                 "properties":
+                    {
+                     "sound":"sfx_powerup_health"
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -498,6 +572,14 @@
                  "height":48,
                  "id":136,
                  "name":"health",
+                 "properties":
+                    {
+                     "sound":"sfx_powerup_health"
+                    },
+                 "propertytypes":
+                    {
+                     "sound":"string"
+                    },
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -512,10 +594,12 @@
                  "name":"letter",
                  "properties":
                     {
+                     "sound":"sfx_pickup_letter",
                      "text":"To: ships company\n\nThings have been going south really fast.\nMy advice is that everyone finds their own way off of\nthe ship.\n\n- Captian Ben"
                     },
                  "propertytypes":
                     {
+                     "sound":"string",
                      "text":"string"
                     },
                  "rotation":0,
@@ -2229,7 +2313,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":142,
+ "nextobjectid":144,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
