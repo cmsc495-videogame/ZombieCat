@@ -451,7 +451,7 @@
             //Recharge Stamina
             if (player.properties.stamina < player.properties.stamina_max) {
                 //if (staminaTimer <= alpha) {
-                    if (player.properties.stamina + player.properties.stamina_rechargeRate*delta/20 >= player.properties.stamina_max) {
+                    if (player.properties.stamina + player.properties.stamina_rechargeRate*delta/30 >= player.properties.stamina_max) {
                         player.properties.stamina = player.properties.stamina_max;
                     } else {
                         player.properties.stamina += (player.properties.stamina_rechargeRate*delta/20);
